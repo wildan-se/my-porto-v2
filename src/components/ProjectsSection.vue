@@ -14,6 +14,7 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger';
 gsap.registerPlugin(ScrollTrigger);
 
 const selectedProject = ref(null);
+const sectionRef = ref(null);
 
 const openModal = (project) => {
   selectedProject.value = project;
@@ -140,9 +141,6 @@ onMounted(() => {
   const container = document.querySelector(".horizontal-scroll-container");
   const track = document.querySelector(".horizontal-track");
   
-  // Calculate total width of all cards + gaps
-  // We need to move the track to the left by (totalWidth - viewportWidth)
-  
   if (track && container) {
       scrollTriggerInstance = gsap.to(track, {
       xPercent: -100 * (projects.length - 1) / projects.length, // Move based on number of items
@@ -150,14 +148,14 @@ onMounted(() => {
       scrollTrigger: {
         trigger: container,
         pin: true,
-        scrub: 1,
-        // Adjust the 'end' value to control speed. 
-        // "bottom bottom" means scroll length = container width, but we want it longer for slower scroll
-        end: "+=3000", 
+        scrub: 0.5,
+        end: "+=2000", 
+        anticipatePin: 1,
+        invalidateOnRefresh: true, // Recalculate on resize
+        fastScrollEnd: true // Prevent sticking on fast scrolls
       }
     });
 
-    // Fade out the intro text as we scroll
     gsap.to(".intro-text", {
       opacity: 0,
       x: -50,
@@ -165,7 +163,7 @@ onMounted(() => {
         trigger: container,
         start: "top top",
         end: "+=500", // Fades out relatively quickly
-        scrub: 1
+        scrub: 0.5
       }
     });
   }
@@ -174,14 +172,14 @@ onMounted(() => {
 onUnmounted(() => {
   if (scrollTriggerInstance) {
      // Clean up
-     // scrollTriggerInstance.kill(); // This might kill global ST, usually not needed in Vue unless route change
   }
+  ScrollTrigger.getAll().forEach(t => t.kill());
 });
 
 </script>
 
 <template>
-  <section id="projects" class="py-24 transition-colors relative horizontal-scroll-container overflow-hidden">
+  <section id="projects" ref="sectionRef" class="pt-24 pb-24 transition-colors relative horizontal-scroll-container overflow-hidden">
     <div class="container mx-auto px-4 sm:px-6 lg:px-8 h-full flex flex-col justify-center">
       
       <!-- Intro (Static) -->
@@ -203,7 +201,7 @@ onUnmounted(() => {
            <h3 class="text-4xl md:text-6xl font-bold text-slate-800 dark:text-white leading-tight">
              Membangun <br/>
              pengalaman yang <br/>
-             <span class="text-transparent bg-clip-text bg-gradient-to-r from-indigo-500 to-purple-500">bermakna.</span>
+             <span class="text-transparent bg-clip-text bg-linear-to-r from-indigo-500 to-purple-500">bermakna.</span>
            </h3>
            <div class="mt-8 flex gap-4">
               <span class="w-12 h-1 bg-slate-300 dark:bg-slate-700 rounded-full"></span>

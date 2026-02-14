@@ -11,9 +11,11 @@
   "dependencies": {
     "@tailwindcss/vite": "^4.1.18",
     "@vueuse/core": "^14.2.0",
+    "aos": "^2.3.4",
     "gsap": "^3.14.2",
     "lucide-vue-next": "^0.563.0",
     "motion": "^12.33.0",
+    "typewriter-effect": "^2.22.0",
     "vue": "^3.5.25",
     "vue3-marquee": "^4.2.2"
   },
