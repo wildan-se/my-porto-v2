@@ -359,12 +359,15 @@ onUnmounted(() => {
 </script>
 
 <template>
-  <section id="skills" class="py-24 transition-colors">
+  <section id="skills" class="py-16 sm:py-20 md:py-24 transition-colors">
     <div class="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
       <!-- Header Section with AOS -->
-      <div class="text-center mb-20 relative z-20" data-aos="fade-up">
+      <div
+        class="text-center mb-12 sm:mb-16 md:mb-20 relative z-20"
+        data-aos="fade-up"
+      >
         <h2
-          class="text-3xl md:text-5xl font-bold mb-4 text-slate-800 dark:text-white"
+          class="text-3xl sm:text-4xl md:text-5xl font-bold mb-4 text-slate-800 dark:text-white"
         >
           Skills &
           <span class="text-indigo-600 dark:text-indigo-400">Tools</span>
@@ -374,11 +377,11 @@ onUnmounted(() => {
 
       <!-- 3D Rotating Gallery Container (GSAP Animated) -->
       <div
-        class="flex client-gallery perspective-1000 relative h-[500px] items-center justify-center"
+        class="flex client-gallery perspective-1000 relative h-[350px] sm:h-[400px] md:h-[500px] items-center justify-center"
       >
         <!-- Background decorative blob matching other sections -->
         <div
-          class="absolute w-[500px] h-[500px] bg-indigo-500/20 rounded-full blur-[100px] -z-10 animate-pulse pointer-events-none"
+          class="absolute w-[300px] h-[300px] sm:w-[400px] sm:h-[400px] md:w-[500px] md:h-[500px] bg-indigo-500/20 rounded-full blur-[80px] sm:blur-[100px] -z-10 animate-pulse pointer-events-none"
         ></div>
 
         <div
@@ -396,11 +399,11 @@ onUnmounted(() => {
               <!-- Wrapper for individual floating animation -->
               <div class="card-floater">
                 <div
-                  class="relative p-6 w-38 h-28 flex items-center justify-center glass-card rounded-2xl shadow-lg dark:shadow-slate-900/30 pointer-events-auto hover:scale-110 hover:shadow-xl hover:z-50 transition-all duration-300"
+                  class="relative p-4 sm:p-5 md:p-6 w-32 h-24 sm:w-36 sm:h-26 md:w-38 md:h-28 flex items-center justify-center glass-card rounded-2xl shadow-lg dark:shadow-slate-900/30 pointer-events-auto hover:scale-110 hover:shadow-xl hover:z-50 transition-all duration-300"
                 >
                   <svg
                     :viewBox="skill.icon.viewBox"
-                    class="w-14 h-14 transition-all duration-500 filter grayscale"
+                    class="w-10 h-10 sm:w-12 sm:h-12 md:w-14 md:h-14 transition-all duration-500 filter grayscale"
                     :class="{
                       'group-hover:grayscale-0': skill.name !== 'Express',
                       'group-hover:invert': skill.name === 'Express',
@@ -476,10 +479,23 @@ onUnmounted(() => {
   margin: auto;
   width: fit-content;
   /* Rotate around Y axis, then push out to radius */
-  transform: rotateY(calc(var(--index) * var(--angle))) translateZ(450px);
+  /* Responsive radius: 250px on mobile, 350px on tablet, 450px on desktop */
+  transform: rotateY(calc(var(--index) * var(--angle))) translateZ(250px);
   backface-visibility: hidden;
   pointer-events: none; /* Don't block hover for other cards */
   transform-style: preserve-3d;
+}
+
+@media (min-width: 640px) {
+  .client-card {
+    transform: rotateY(calc(var(--index) * var(--angle))) translateZ(350px);
+  }
+}
+
+@media (min-width: 768px) {
+  .client-card {
+    transform: rotateY(calc(var(--index) * var(--angle))) translateZ(450px);
+  }
 }
 
 /* Individual Floating Animation */
