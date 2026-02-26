@@ -635,7 +635,7 @@ onUnmounted(() => {
               class="intro-card shrink-0 w-[42vw] lg:w-[32vw] flex flex-col justify-center pr-8 relative"
             >
               <span
-                class="text-7xl md:text-8xl font-bold text-slate-200 dark:text-slate-800/50 block -mb-8 -ml-5"
+                class="text-7xl md:text-8xl font-bold text-slate-200 dark:text-slate-800/50 block -mb-8"
                 >00</span
               >
               <h3
@@ -654,25 +654,8 @@ onUnmounted(() => {
               </p>
               <div class="flex gap-4 items-center">
                 <span
-                  class="w-12 h-1 bg-indigo-600 dark:bg-indigo-400 rounded-full"
+                  class="w-24 h-1 bg-indigo-600 dark:bg-indigo-400 rounded-full"
                 ></span>
-                <span
-                  class="text-sm text-slate-500 dark:text-slate-400 uppercase tracking-widest flex items-center gap-2"
-                  >Scroll to explore
-                  <svg
-                    class="w-4 h-4"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                    stroke="currentColor"
-                  >
-                    <path
-                      stroke-linecap="round"
-                      stroke-linejoin="round"
-                      stroke-width="2"
-                      d="M17 8l4 4m0 0l-4 4m4-4H3"
-                    />
-                  </svg>
-                </span>
               </div>
             </div>
 
