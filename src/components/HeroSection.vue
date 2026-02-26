@@ -652,7 +652,7 @@ const scrollToAbout = () => {
           class="flex flex-row items-center justify-center md:justify-start gap-2 md:gap-0 md:space-x-4"
         >
           <a
-            href="/public/cv_muhammad_wildan_septiano.pdf"
+            href="/cv_muhammad_wildan_septiano.pdf"
             target="_blank"
             class="px-4 py-2 md:px-8 md:py-3.5 bg-slate-900 text-white rounded-full font-medium hover:bg-slate-800 hover:-translate-y-0.5 transition-all dark:bg-indigo-600 dark:hover:bg-indigo-500 flex items-center gap-1.5 shadow-md md:shadow-xl shadow-indigo-500/20 text-xs md:text-base"
           >
