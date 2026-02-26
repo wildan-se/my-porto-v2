@@ -86,8 +86,8 @@ const contacts = [
               Hubungi Saya
             </h3>
             <p class="text-sm text-slate-400 leading-relaxed mb-8 text-justify">
-              Saya terbuka untuk proyek lepas, kolaborasi, maupun peluang karir
-              baru. Jangan ragu untuk menyapa!
+              Saya terbuka untuk proyek lepas dan kolaborasi. Jangan ragu untuk
+              menyapa!
             </p>
 
             <!-- Contact items -->
