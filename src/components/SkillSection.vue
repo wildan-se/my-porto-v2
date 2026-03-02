@@ -323,37 +323,73 @@ const skills = [
   { name: "MySQL", icon: techSvgs.mysql },
 ];
 
+let ctx;
+
 onMounted(() => {
-  const cards = document.querySelectorAll(".client-card");
-  const totalCards = cards.length;
-  // Calculate angle: 360 degrees circle / number of items
-  const angle = 360 / totalCards;
+  ctx = gsap.context(() => {
+    let mm = gsap.matchMedia();
 
-  cards.forEach((card, index) => {
-    // Set variable CSS --index for dynamic rotation in CSS
-    card.style.setProperty("--index", index);
-    card.style.setProperty("--angle", `${angle}deg`);
-  });
+    // Desktop Animation
+    mm.add("(min-width: 768px)", () => {
+      const cards = document.querySelectorAll(".client-card");
+      const totalCards = cards.length;
+      const angle = 360 / totalCards;
 
-  // 3D Entrance Animation: Fly in from scattered positions
-  // This is the specific "3D" animation
-  gsap.from(".client-card", {
-    y: () => Math.random() * 1000 - 500, // Random vertical start
-    x: () => Math.random() * 1000 - 500, // Random horizontal start
-    z: () => Math.random() * 1000 - 500, // Random depth start
-    rotation: () => Math.random() * 90 - 45, // Random wobble
-    opacity: 0,
-    duration: 2.5,
-    stagger: 0.1,
-    ease: "elastic.out(1, 0.75)", // Bouncy fly-in effect
-    scrollTrigger: {
-      trigger: ".client-gallery",
-      start: "top 70%",
-    },
+      cards.forEach((card, index) => {
+        card.style.setProperty("--index", index);
+        card.style.setProperty("--angle", `${angle}deg`);
+      });
+
+      gsap.from(".client-card", {
+        y: () => Math.random() * 1000 - 500,
+        x: () => Math.random() * 1000 - 500,
+        z: () => Math.random() * 1000 - 500,
+        rotation: () => Math.random() * 90 - 45,
+        opacity: 0,
+        duration: 2.5,
+        stagger: 0.1,
+        ease: "elastic.out(1, 0.75)",
+        scrollTrigger: {
+          trigger: "#skills",
+          start: "top 70%",
+        },
+      });
+    });
+
+    // Mobile Animation (Infinity Curved Path)
+    mm.add("(max-width: 767px)", () => {
+      const cards = gsap.utils.toArray(".curve-card");
+      
+      cards.forEach((card) => {
+        // Initial state before scroll
+        gsap.set(card, { scale: 0.6, opacity: 0.3 });
+        gsap.set(card.querySelector('.curve-icon'), { filter: "grayscale(100%) blur(2px)" });
+        gsap.set(card.querySelector('.skill-label'), { opacity: 0, y: 15, scale: 0.8 });
+
+        const tl = gsap.timeline({
+          scrollTrigger: {
+            trigger: card,
+            start: "top bottom-=80", // Start appearing when 80px above bottom
+            end: "bottom top+=80",   // End disappearing when 80px below top
+            scrub: 1, // Smoothly link to scrollbar with 1sec lag
+          }
+        });
+        
+        // Phase 1: Scroll into center (Grow & Light Up)
+        tl.to(card, { scale: 1.25, opacity: 1, duration: 1, ease: "power1.inOut", boxShadow: "0 0 30px rgba(99,102,241,0.5)" })
+          .to(card.querySelector('.curve-icon'), { filter: "grayscale(0%) blur(0px)", duration: 1 }, "<")
+          .to(card.querySelector('.skill-label'), { opacity: 1, y: 0, scale: 1, duration: 1 }, "<")
+        // Phase 2: Scroll past center (Shrink & Fade)
+          .to(card, { scale: 0.6, opacity: 0.3, duration: 1, ease: "power1.inOut", boxShadow: "0 10px 30px rgba(0,0,0,0.1)" })
+          .to(card.querySelector('.curve-icon'), { filter: "grayscale(100%) blur(2px)", duration: 1 }, "<")
+          .to(card.querySelector('.skill-label'), { opacity: 0, y: -15, scale: 0.8, duration: 1 }, "<");
+      });
+    });
   });
 });
 
 onUnmounted(() => {
+  if (ctx) ctx.revert();
   ScrollTrigger.getAll().forEach((t) => t.kill());
 });
 </script>
@@ -375,9 +411,54 @@ onUnmounted(() => {
         <div class="h-1 w-20 bg-indigo-500 mx-auto rounded-full"></div>
       </div>
 
-      <!-- 3D Rotating Gallery Container (GSAP Animated) -->
+      <!-- Mobile View: Infinity Curved Path -->
+      <div class="flex md:hidden relative w-full flex-col justify-center items-center z-10 px-2 mt-4 pb-24 overflow-visible">
+        <!-- Connecting curvy gradient line -->
+        <div class="absolute inset-y-0 w-1 rounded-full bg-linear-to-b from-indigo-500/0 via-indigo-500/40 to-indigo-500/0 dark:from-indigo-400/0 dark:via-indigo-400/30 dark:to-indigo-400/0 z-0"></div>
+        
+        <div class="mobile-curve-track w-full flex flex-col items-center gap-16 relative py-16">
+          
+          <div
+            v-for="(skill, index) in skills"
+            :key="'curve-' + skill.name"
+            class="curve-card relative bg-white/80 dark:bg-slate-800/90 backdrop-blur-md border border-white/50 dark:border-slate-700/50 rounded-full p-4 flex flex-col items-center justify-center w-[84px] h-[84px] shadow-[0_10px_30px_rgba(0,0,0,0.1)] dark:shadow-[0_10px_30px_rgba(0,0,0,0.4)] z-10 will-change-transform"
+            :style="{ transform: `translateX(${Math.sin((index / (skills.length - 1)) * Math.PI * 3.5) * 110}px)` }"
+          >
+            <!-- Icon Container -->
+            <div class="relative w-10 h-10 sm:w-12 sm:h-12 flex items-center justify-center pointer-events-none">
+              <svg
+                :viewBox="skill.icon.viewBox"
+                class="curve-icon w-full h-full will-change-filter"
+                :class="{
+                  'invert': skill.name === 'Express'
+                }"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <rect width="100%" height="100%" fill="white" fill-opacity="0" />
+                <path
+                  v-for="(path, i) in skill.icon.paths"
+                  :key="i"
+                  :d="path.d"
+                  :fill="path.fill"
+                  :fill-rule="path.fillRule"
+                  :stroke="path.stroke"
+                  :stroke-width="path.strokeWidth"
+                />
+              </svg>
+            </div>
+
+            <!-- Dynamic Floating Label -->
+            <span class="skill-label absolute -bottom-10 whitespace-nowrap text-xs font-bold px-3 py-1.5 bg-indigo-500/10 backdrop-blur-sm text-indigo-700 dark:bg-indigo-500/20 dark:text-indigo-200 border border-indigo-200 dark:border-indigo-500/30 rounded-full shadow-sm shadow-indigo-500/20 pointer-events-none will-change-transform">
+              {{ skill.name }}
+            </span>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- Desktop View: 3D Rotating Gallery Container (GSAP Animated) -->
       <div
-        class="flex client-gallery perspective-1000 relative h-[350px] sm:h-[400px] md:h-[500px] items-center justify-center"
+        class="hidden md:flex client-gallery perspective-1000 relative h-[500px] items-center justify-center"
       >
         <!-- Background decorative blob matching other sections -->
         <div
@@ -520,4 +601,6 @@ onUnmounted(() => {
     transform: translateY(-15px) rotateX(5deg);
   }
 }
+
+
 </style>
