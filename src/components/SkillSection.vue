@@ -356,15 +356,35 @@ onMounted(() => {
       });
     });
 
-    // Mobile Animation (Infinity Curved Path)
+    // Mobile Animation (Infinity Curved Path with Brand-Color Aura & Velocity Skew)
     mm.add("(max-width: 767px)", () => {
       const cards = gsap.utils.toArray(".curve-card");
+
+      // Helper for Hex to RGB to use in RGBA
+      const hexToRgb = (hex) => {
+        let result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
+        return result ? `${parseInt(result[1], 16)}, ${parseInt(result[2], 16)}, ${parseInt(result[3], 16)}` : null;
+      };
       
-      cards.forEach((card) => {
-        // Initial state before scroll
-        gsap.set(card, { scale: 0.6, opacity: 0.3 });
+      cards.forEach((card, index) => {
+        const skill = skills[index];
+        // Handle Express special case (black icon -> gray glow in dark mode)
+        const brandColor = skill.name === 'Express' ? '#a1a1aa' : (skill.icon.color || '#6366f1');
+        const rgbColor = hexToRgb(brandColor) || '99,102,241';
+        
+        // Dynamically style label color 
+        const label = card.querySelector('.skill-label');
+        if (label) {
+          label.style.color = brandColor;
+          label.style.borderColor = `rgba(${rgbColor}, 0.5)`;
+          label.style.backgroundColor = `rgba(${rgbColor}, 0.1)`;
+          label.style.boxShadow = `0 4px 6px rgba(${rgbColor}, 0.2)`;
+        }
+
+        // Initial state before scroll (Push card down initially for Parallax)
+        gsap.set(card, { scale: 0.6, opacity: 0.3, skewY: 0, y: 80 });
         gsap.set(card.querySelector('.curve-icon'), { filter: "grayscale(100%) blur(2px)" });
-        gsap.set(card.querySelector('.skill-label'), { opacity: 0, y: 15, scale: 0.8 });
+        gsap.set(label, { opacity: 0, y: 15, scale: 0.8 });
 
         const tl = gsap.timeline({
           scrollTrigger: {
@@ -375,14 +395,89 @@ onMounted(() => {
           }
         });
         
-        // Phase 1: Scroll into center (Grow & Light Up)
-        tl.to(card, { scale: 1.25, opacity: 1, duration: 1, ease: "power1.inOut", boxShadow: "0 0 30px rgba(99,102,241,0.5)" })
+        // Phase 1: Scroll into center (Grow, Light Up, and slide UP to 0)
+        tl.to(card, { 
+            scale: 1.25, 
+            opacity: 1, 
+            duration: 1, 
+            ease: "power1.inOut", 
+            boxShadow: `0 0 35px rgba(${rgbColor}, 0.6)`,
+            y: 0
+          })
           .to(card.querySelector('.curve-icon'), { filter: "grayscale(0%) blur(0px)", duration: 1 }, "<")
-          .to(card.querySelector('.skill-label'), { opacity: 1, y: 0, scale: 1, duration: 1 }, "<")
-        // Phase 2: Scroll past center (Shrink & Fade)
-          .to(card, { scale: 0.6, opacity: 0.3, duration: 1, ease: "power1.inOut", boxShadow: "0 10px 30px rgba(0,0,0,0.1)" })
+          .to(label, { opacity: 1, y: 0, scale: 1, duration: 1 }, "<")
+        // Phase 2: Scroll past center (Shrink, Fade, and slide UP out of view)
+          .to(card, { 
+            scale: 0.6, 
+            opacity: 0.3, 
+            duration: 1, 
+            ease: "power1.inOut", 
+            boxShadow: "0 10px 30px rgba(0,0,0,0.1)",
+            y: -80
+          })
           .to(card.querySelector('.curve-icon'), { filter: "grayscale(100%) blur(2px)", duration: 1 }, "<")
-          .to(card.querySelector('.skill-label'), { opacity: 0, y: -15, scale: 0.8, duration: 1 }, "<");
+          .to(label, { opacity: 0, y: -15, scale: 0.8, duration: 1 }, "<");
+      });
+
+      // Background Blob Parallax
+      gsap.fromTo('.parallax-bg', 
+        { yPercent: -50 }, 
+        {
+          yPercent: 150,
+          ease: "none",
+          scrollTrigger: {
+            trigger: ".mobile-curve-track",
+            start: "top bottom",
+            end: "bottom top",
+            scrub: true
+          }
+        }
+      );
+
+      // 1. The Neural Connection Line Draw Anime
+      // Animates the stroke-dashoffset of our wavy SVG line to match overall scroll
+      gsap.fromTo(".neural-line-path", 
+        { drawSVG: "0%" }, // Need DrawSVGPlugin for full path or we can use strokeDashoffset natively
+        {
+          strokeDashoffset: 0, // Assuming we set strokeDasharray to path length via CSS/Vue
+          ease: "none",
+          scrollTrigger: {
+            trigger: ".mobile-curve-track",
+            start: "top center",
+            end: "bottom center",
+            scrub: 0.5
+          }
+        }
+      );
+
+      // 2. Scroll Velocity Skew (Gravitasi/Angin)
+      const maxSkew = 15; // Max degrees of skew
+      let proxy = { skew: 0 };
+      const skewSetter = gsap.quickSetter(cards, "skewY", "deg"); 
+      const clamp = gsap.utils.clamp(-maxSkew, maxSkew);
+
+      ScrollTrigger.create({
+        trigger: ".mobile-curve-track",
+        start: "top bottom",
+        end: "bottom top",
+        onUpdate: (self) => {
+          // Multiply velocity by arbitrary small number to get a skew amount
+          const velocity = clamp(self.getVelocity() / -100);
+          
+          // Only tween if significantly changed to save performance
+          if (Math.abs(velocity - proxy.skew) > 0.5) {
+            proxy.skew = velocity;
+            // Use a quickTo or tween to smoothly apply and release
+            gsap.to(proxy, {
+              skew: 0, 
+              duration: 0.8, 
+              ease: "power3", 
+              overwrite: true, 
+              onUpdate: () => skewSetter(proxy.skew) 
+            });
+            skewSetter(velocity); // Set immediately for responsiveness
+          }
+        }
       });
     });
   });
@@ -413,16 +508,42 @@ onUnmounted(() => {
 
       <!-- Mobile View: Infinity Curved Path -->
       <div class="flex md:hidden relative w-full flex-col justify-center items-center z-10 px-2 mt-4 pb-24 overflow-visible">
-        <!-- Connecting curvy gradient line -->
-        <div class="absolute inset-y-0 w-1 rounded-full bg-linear-to-b from-indigo-500/0 via-indigo-500/40 to-indigo-500/0 dark:from-indigo-400/0 dark:via-indigo-400/30 dark:to-indigo-400/0 z-0"></div>
         
+        <!-- Parallax glowing background core -->
+        <div class="parallax-bg absolute top-0 mt-20 left-1/2 -translate-x-1/2 w-48 h-48 sm:w-64 sm:h-64 bg-indigo-500/20 dark:bg-indigo-600/30 rounded-full blur-[70px] pointer-events-none z-0"></div>
+
+        <!-- Neural Connection Line SVG -->
+        <div class="absolute inset-0 z-0 pointer-events-none flex justify-center mt-16 pb-16">
+          <svg class="h-full w-full max-w-[300px] neural-svg" preserveAspectRatio="none" viewBox="0 0 200 1000">
+            <!-- Background faint line -->
+            <path 
+              class="neural-line-bg"
+              d="M 100 0 C 180 150, 20 250, 100 400 C 180 550, 20 650, 100 800 C 180 950, 20 1000, 100 1000" 
+              fill="none" 
+              stroke="rgba(99, 102, 241, 0.1)" 
+              stroke-width="4"
+              vector-effect="non-scaling-stroke"
+            />
+            <!-- Glowing active line, animated via offset -->
+            <path 
+              class="neural-line-path drop-shadow-[0_0_8px_rgba(99,102,241,0.8)]"
+              d="M 100 0 C 180 150, 20 250, 100 400 C 180 550, 20 650, 100 800 C 180 950, 20 1000, 100 1000" 
+              fill="none" 
+              stroke="#818cf8" 
+              stroke-width="5"
+              stroke-linecap="round"
+              vector-effect="non-scaling-stroke"
+            />
+          </svg>
+        </div>
+
         <div class="mobile-curve-track w-full flex flex-col items-center gap-16 relative py-16">
           
           <div
             v-for="(skill, index) in skills"
             :key="'curve-' + skill.name"
             class="curve-card relative bg-white/80 dark:bg-slate-800/90 backdrop-blur-md border border-white/50 dark:border-slate-700/50 rounded-full p-4 flex flex-col items-center justify-center w-[84px] h-[84px] shadow-[0_10px_30px_rgba(0,0,0,0.1)] dark:shadow-[0_10px_30px_rgba(0,0,0,0.4)] z-10 will-change-transform"
-            :style="{ transform: `translateX(${Math.sin((index / (skills.length - 1)) * Math.PI * 3.5) * 110}px)` }"
+            :style="{ transform: `translateX(${Math.sin((index / (skills.length - 1)) * Math.PI * 3.5) * 80}px)` }"
           >
             <!-- Icon Container -->
             <div class="relative w-10 h-10 sm:w-12 sm:h-12 flex items-center justify-center pointer-events-none">
@@ -448,7 +569,7 @@ onUnmounted(() => {
             </div>
 
             <!-- Dynamic Floating Label -->
-            <span class="skill-label absolute -bottom-10 whitespace-nowrap text-xs font-bold px-3 py-1.5 bg-indigo-500/10 backdrop-blur-sm text-indigo-700 dark:bg-indigo-500/20 dark:text-indigo-200 border border-indigo-200 dark:border-indigo-500/30 rounded-full shadow-sm shadow-indigo-500/20 pointer-events-none will-change-transform">
+            <span class="skill-label absolute -bottom-10 whitespace-nowrap text-xs font-bold px-3 py-1.5 backdrop-blur-md rounded-full pointer-events-none will-change-transform font-sans">
               {{ skill.name }}
             </span>
           </div>
@@ -603,4 +724,10 @@ onUnmounted(() => {
 }
 
 
+/* --- Mobile SVG Neural Line Physics --- */
+.neural-line-path {
+  /* Set a large dash array to cover path, then we offset it dynamically in JS */
+  stroke-dasharray: 2000;
+  stroke-dashoffset: 2000;
+}
 </style>
