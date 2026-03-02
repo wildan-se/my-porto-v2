@@ -576,7 +576,7 @@ const scrollToAbout = () => {
           >
             <img
               src="/src/assets/myfoto.webp"
-              alt="Profile"
+              alt="Foto Profil Muhammad Wildan Septiano - Full Stack Developer"
               class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
             />
             <!-- Overlay Gradient -->

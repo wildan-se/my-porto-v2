@@ -184,7 +184,8 @@ const getCardStyle = (index) => {
               <!-- Image -->
               <img
                 :src="achievement.image"
-                :alt="achievement.title"
+                :alt="`Ilustrasi pencapaian ${achievement.title}`"
+                loading="lazy"
                 class="w-full h-full object-cover"
               />
 

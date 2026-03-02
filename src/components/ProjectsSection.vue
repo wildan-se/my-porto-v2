@@ -459,7 +459,8 @@ onUnmounted(() => {
                 ></div>
                 <img
                   :src="project.image"
-                  :alt="project.title"
+                  :alt="`Gambar Project ${project.title}`"
+                  loading="lazy"
                   class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
                 />
 
@@ -686,7 +687,8 @@ onUnmounted(() => {
 
                 <img
                   :src="project.image"
-                  :alt="project.title"
+                  :alt="`Thumbnail Project ${project.title}`"
+                  loading="lazy"
                   class="project-card-image w-full h-full object-contain transition-transform duration-700 group-hover:scale-105"
                 />
 
@@ -818,7 +820,8 @@ onUnmounted(() => {
                   >
                     <img
                       :src="selectedProject.image"
-                      :alt="selectedProject.title"
+                      :alt="`Detail Gambar Project ${selectedProject.title}`"
+                      loading="lazy"
                       class="w-full h-full object-contain transition-transform duration-700 ease-out group-hover/img:scale-110"
                     />
                     <!-- gradient for title readability -->
@@ -1038,7 +1041,8 @@ onUnmounted(() => {
                   <div class="relative h-48 sm:h-56 shrink-0">
                     <img
                       :src="selectedProject.image"
-                      :alt="selectedProject.title"
+                      :alt="`Detail Gambar Project ${selectedProject.title}`"
+                      loading="lazy"
                       class="w-full h-full object-cover"
                     />
                     <div

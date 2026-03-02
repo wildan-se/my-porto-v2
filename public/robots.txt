@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://wlsedev.netlify.app/sitemap.xml
