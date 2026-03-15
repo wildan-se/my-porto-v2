@@ -1,4 +1,4 @@
-<script setup>
+﻿<script setup>
 import {
   Github,
   Linkedin,
@@ -8,6 +8,7 @@ import {
 } from "lucide-vue-next";
 import { useDark } from "@vueuse/core";
 import { ref, onMounted, onUnmounted } from "vue";
+import { createTimeline, animate as animeAnimate, stagger } from "animejs";
 
 const isDark = useDark();
 
@@ -499,18 +500,86 @@ const animate = () => {
   mouseRaf = requestAnimationFrame(animate);
 };
 
+// --- Name Animation: Elegant stagger reveal ────────────────────────────
+// opacity + y only = pure compositor = zero repaint, zero lag
+const initNameAnimation = () => {
+  const nameEls = document.querySelectorAll('.ml7-name .letters');
+  if (!nameEls.length) return;
+
+  // Process all lines of the name
+  nameEls.forEach(el => {
+    el.innerHTML = el.textContent.replace(/\S/g, "<span class='letter'>$&</span>");
+  });
+
+  const letters = document.querySelectorAll('.ml7-name .letter');
+
+  animeAnimate(letters, {
+    opacity : [0, 1],
+    y       : ['1.5em', 0],
+    duration: 1000,
+    ease    : 'outExpo',
+    delay   : stagger(38),
+  });
+};
+
+
+// --- Quote: Typewriter Effect (pure JS — zero animejs overhead)
+// Far more performant than per-char splitText animation.
+// Just textContent updates = minimal DOM work, no GPU layers.
+let typewriterTimer = null;
+const initQuoteAnimation = () => {
+  const el = document.querySelector('#hero-quote .quote-text');
+  if (!el) return;
+
+  const fullText = '"Web programming mah gampang, kecuali kalau browser bilang:" \'Error 404, otak not found!\'';
+  let index = 0;
+  let typing = true;
+  el.textContent = '';
+
+  const tick = () => {
+    if (typing) {
+      // Type forward
+      el.textContent = fullText.slice(0, index);
+      index++;
+      if (index > fullText.length) {
+        typing = false;
+        // Pause at end before erasing
+        typewriterTimer = setTimeout(tick, 2500);
+        return;
+      }
+    } else {
+      // Erase backward
+      el.textContent = fullText.slice(0, index);
+      index--;
+      if (index < 0) {
+        typing = true;
+        index = 0;
+        // Pause before retyping
+        typewriterTimer = setTimeout(tick, 600);
+        return;
+      }
+    }
+    typewriterTimer = setTimeout(tick, typing ? 45 : 25);
+  };
+
+  typewriterTimer = setTimeout(tick, 800); // initial delay
+};
+
 onMounted(() => {
   scrollState.current = window.scrollY;
   scrollState.smooth = window.scrollY;
   window.addEventListener("mousemove", onMouseMove, { passive: true });
   window.addEventListener("scroll", onScroll, { passive: true });
   mouseRaf = requestAnimationFrame(animate);
+  initNameAnimation();
+  initQuoteAnimation();
 });
 
 onUnmounted(() => {
   window.removeEventListener("mousemove", onMouseMove);
   window.removeEventListener("scroll", onScroll);
   cancelAnimationFrame(mouseRaf);
+  if (typewriterTimer) clearTimeout(typewriterTimer);
 });
 
 const scrollToAbout = () => {
@@ -632,20 +701,29 @@ const scrollToAbout = () => {
         </div>
 
         <h1
-          class="text-2xl md:text-5xl lg:text-7xl font-bold tracking-tight mb-2 md:mb-6 text-slate-800 dark:text-white leading-tight"
+          class="text-4xl md:text-6xl lg:text-7xl font-bold tracking-tight mb-4 md:mb-8 text-slate-800 dark:text-white leading-[1.1]"
         >
-          Muhammad
-          <span
-            class="text-transparent bg-clip-text bg-linear-to-r from-indigo-500 to-purple-600 dark:from-indigo-400 dark:to-purple-400"
-            >Wildan Septiano</span
-          >
+          <span class="ml7-name flex flex-col">
+            <span class="text-wrapper-name block">
+              <span class="letters">Muhammad</span>
+            </span>
+            <span class="text-wrapper-name block text-indigo-500 dark:text-indigo-400">
+              <span class="letters">Wildan</span>
+            </span>
+            <span class="text-wrapper-name block">
+              <span class="letters">Septiano</span>
+            </span>
+          </span>
         </h1>
 
         <p
+          id="hero-quote"
           class="text-xs md:text-xl text-slate-600 dark:text-slate-300 mb-3 md:mb-8 md:max-w-lg leading-relaxed px-2 md:px-0"
         >
-          "Web programming mah gampang, kecuali kalau browser bilang:" ‘Error
-          404, otak not found!’
+          <span
+            class="quote-text"
+
+          ></span><span class="cursor-blink">|</span>
         </p>
 
         <div
@@ -752,4 +830,53 @@ const scrollToAbout = () => {
     transform: translateY(-15px);
   }
 }
+
+/* ===== Moving Letter Animation (ml7 style) ===== */
+.ml7-name {
+  position: relative;
+  display: inline-block;
+  color: inherit;
+}
+
+.ml7-name .text-wrapper-name {
+  position: relative;
+  display: block;
+  /* Dihapus padding vertikal berlebih & overflow hidden
+     agar tinggi murni sesuai line-height dan tidak ada gap aneh.
+     Opacity animation sudah cukup menyembunyikan efek bleed. */
+}
+
+/* :deep() required: .letter injected via innerHTML */
+.ml7-name :deep(.letter) {
+  display: inline-block;
+  color: inherit;
+  will-change: transform, opacity;
+}
+
+
+/* ===== Typewriter cursor blink ===== */
+.cursor-blink {
+  display: inline-block;
+  color: #6366f1;
+  font-weight: 700;
+  animation: blink 1s step-end infinite;
+  margin-left: 1px;
+}
+
+@keyframes blink {
+  0%, 100% { opacity: 1; }
+  50%       { opacity: 0; }
+}
+
+/* Fixed height: typewriter chars won't push layout below */
+#hero-quote {
+  min-height: 4.875em;     /* reserves 3 lines of leading-relaxed (1.625) */
+  display: block;          /* normal block, height won't collapse         */
+}
+
+.quote-text {
+  white-space: normal;
+  word-break: break-word;
+}
 </style>
+
