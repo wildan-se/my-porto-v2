@@ -11,7 +11,7 @@ import ScrollControls from "./components/ScrollControls.vue";
 
 <template>
   <div
-    class="min-h-screen font-sans bg-slate-50 dark:bg-[#0f172a] text-slate-700 dark:text-slate-200 transition-colors duration-500"
+    class="min-h-screen font-sans bg-zinc-50 dark:bg-[#0f172a] text-zinc-700 dark:text-zinc-200 transition-colors duration-500"
   >
     <Navbar />
     <ScrollControls />

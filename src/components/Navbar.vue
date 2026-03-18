@@ -118,10 +118,10 @@ const toggleTheme = async () => {
           : 'navbar--top border-transparent shadow-none',
         isDark
           ? isScrolled
-            ? 'bg-slate-900/70 border-slate-700/50'
+            ? 'bg-zinc-900/70 border-zinc-700/50'
             : 'bg-transparent'
           : isScrolled
-            ? 'bg-white/70 border-slate-200/50'
+            ? 'bg-white/70 border-zinc-200/50'
             : 'bg-transparent',
       ]"
     >
@@ -131,7 +131,7 @@ const toggleTheme = async () => {
           href="#"
           class="text-xl font-bold font-mono tracking-tighter hover:opacity-80 transition-opacity flex items-center"
         >
-          <span :class="isDark ? 'text-slate-100' : 'text-slate-900'"
+          <span :class="isDark ? 'text-zinc-100' : 'text-zinc-900'"
             >&lt;WLSE/&gt;</span
           >
         </a>
@@ -146,8 +146,8 @@ const toggleTheme = async () => {
             class="px-4 py-2 rounded-full text-sm font-medium transition-all duration-300 cursor-pointer"
             :class="
               isDark
-                ? 'text-slate-300 hover:text-white hover:bg-slate-800'
-                : 'text-slate-600 hover:text-slate-900 hover:bg-slate-100'
+                ? 'text-zinc-300 hover:text-white hover:bg-zinc-800'
+                : 'text-zinc-600 hover:text-zinc-900 hover:bg-zinc-100'
             "
           >
             {{ link.name }}
@@ -155,17 +155,17 @@ const toggleTheme = async () => {
 
           <div
             class="w-px h-5 mx-2"
-            :class="isDark ? 'bg-slate-700' : 'bg-slate-200'"
+            :class="isDark ? 'bg-zinc-700' : 'bg-zinc-200'"
           ></div>
 
           <!-- Dark Mode Toggle -->
           <button
             @click="toggleTheme"
-            class="p-2.5 rounded-full cursor-pointer focus:outline-none focus:ring-2 focus:ring-indigo-500/50 transition-all duration-300 group relative overflow-hidden"
+            class="p-2.5 rounded-full cursor-pointer focus:outline-none focus:ring-2 focus:ring-emerald-500/50 transition-all duration-300 group relative overflow-hidden"
             :class="
               isDark
-                ? 'hover:bg-amber-500/10 text-amber-400'
-                : 'hover:bg-indigo-500/10 text-indigo-600'
+                ? 'hover:bg-emerald-500/10 text-emerald-400'
+                : 'hover:bg-emerald-500/10 text-emerald-600'
             "
           >
             <transition name="icon-rotate" mode="out-in">
@@ -183,8 +183,8 @@ const toggleTheme = async () => {
             class="bg-transparent p-2 rounded-full focus:outline-none transition-colors"
             :class="
               isDark
-                ? 'text-slate-300 hover:bg-slate-800'
-                : 'text-slate-600 hover:bg-slate-100'
+                ? 'text-zinc-300 hover:bg-zinc-800'
+                : 'text-zinc-600 hover:bg-zinc-100'
             "
           >
             <span class="sr-only">Open main menu</span>
@@ -208,8 +208,8 @@ const toggleTheme = async () => {
           class="absolute top-full left-0 right-0 mt-2 mx-auto w-full max-w-[calc(100%-2rem)] md:hidden rounded-2xl shadow-xl border overflow-hidden"
           :class="
             isDark
-              ? 'bg-slate-900 border-slate-800'
-              : 'bg-white border-slate-200'
+              ? 'bg-zinc-900 border-zinc-800'
+              : 'bg-white border-zinc-200'
           "
         >
           <div class="p-2 space-y-1">
@@ -221,28 +221,28 @@ const toggleTheme = async () => {
               class="block px-4 py-3 rounded-xl text-base font-medium transition-colors"
               :class="
                 isDark
-                  ? 'text-slate-300 hover:bg-slate-800 hover:text-white'
-                  : 'text-slate-600 hover:bg-slate-50 hover:text-slate-900'
+                  ? 'text-zinc-300 hover:bg-zinc-800 hover:text-white'
+                  : 'text-zinc-600 hover:bg-zinc-50 hover:text-zinc-900'
               "
             >
               {{ link.name }}
             </a>
             <div
               class="h-px my-2"
-              :class="isDark ? 'bg-slate-800' : 'bg-slate-100'"
+              :class="isDark ? 'bg-zinc-800' : 'bg-zinc-100'"
             ></div>
             <button
               @click="toggleTheme"
               class="flex items-center space-x-3 w-full text-left px-4 py-3 rounded-xl transition-all duration-300"
               :class="
-                isDark ? 'hover:bg-amber-500/10' : 'hover:bg-indigo-500/10'
+                isDark ? 'hover:bg-emerald-500/10' : 'hover:bg-emerald-500/10'
               "
             >
               <transition name="icon-rotate" mode="out-in">
-                <Sun v-if="isDark" key="sun" class="h-5 w-5 text-amber-400" />
-                <Moon v-else key="moon" class="h-5 w-5 text-indigo-600" />
+                <Sun v-if="isDark" key="sun" class="h-5 w-5 text-emerald-400" />
+                <Moon v-else key="moon" class="h-5 w-5 text-emerald-600" />
               </transition>
-              <span :class="isDark ? 'text-slate-300' : 'text-slate-600'">{{
+              <span :class="isDark ? 'text-zinc-300' : 'text-zinc-600'">{{
                 isDark ? "Light Mode" : "Dark Mode"
               }}</span>
             </button>

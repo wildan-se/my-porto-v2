@@ -645,11 +645,11 @@ const scrollToAbout = () => {
     >
       <div
         ref="blob1Target"
-        class="absolute -top-[10%] -left-[10%] w-[300px] h-[300px] sm:w-[600px] sm:h-[600px] bg-indigo-500/20 rounded-full blur-[80px] sm:blur-[100px] animate-blob will-change-transform"
+        class="absolute -top-[10%] -left-[10%] w-[300px] h-[300px] sm:w-[600px] sm:h-[600px] bg-emerald-500/20 rounded-full blur-[80px] sm:blur-[100px] animate-blob will-change-transform"
       ></div>
       <div
         ref="blob2Target"
-        class="absolute bottom-[10%] right-[10%] w-[250px] h-[250px] sm:w-[500px] sm:h-[500px] bg-purple-500/20 rounded-full blur-[80px] sm:blur-[100px] animate-blob animation-delay-2000 will-change-transform"
+        class="absolute bottom-[10%] right-[10%] w-[250px] h-[250px] sm:w-[500px] sm:h-[500px] bg-lime-500/20 rounded-full blur-[80px] sm:blur-[100px] animate-blob animation-delay-2000 will-change-transform"
       ></div>
     </div>
 
@@ -669,7 +669,7 @@ const scrollToAbout = () => {
           <!-- Back Layer: Large Hexagon Outline -->
           <div
             ref="layer1Target"
-            class="absolute inset-0 border-2 border-indigo-500/30 rounded-3xl will-change-transform"
+            class="absolute inset-0 border-2 border-emerald-500/30 rounded-3xl will-change-transform"
           >
             <div class="w-full h-full transform rotate-12 scale-110"></div>
           </div>
@@ -677,7 +677,7 @@ const scrollToAbout = () => {
           <!-- Middle Layer: Solid Shape -->
           <div
             ref="layer2Target"
-            class="absolute inset-4 bg-linear-to-br from-indigo-600 to-purple-600 rounded-3xl opacity-20 will-change-transform"
+            class="absolute inset-4 bg-linear-to-br from-emerald-600 to-lime-600 rounded-3xl opacity-20 will-change-transform"
           >
             <div class="w-full h-full transform -rotate-6"></div>
           </div>
@@ -685,7 +685,7 @@ const scrollToAbout = () => {
           <!-- Front Layer: Image Mask -->
           <div
             ref="layer3Target"
-            class="absolute inset-0 z-20 overflow-hidden rounded-[2rem] shadow-2xl border-4 border-white dark:border-slate-800 transform-style-3d bg-slate-200 will-change-transform"
+            class="absolute inset-0 z-20 overflow-hidden rounded-[2rem] shadow-2xl border-4 border-white dark:border-zinc-800 transform-style-3d bg-zinc-200 will-change-transform"
           >
             <img
               src="/src/assets/myfoto.webp"
@@ -694,7 +694,7 @@ const scrollToAbout = () => {
             />
             <!-- Overlay Gradient -->
             <div
-              class="absolute inset-0 bg-linear-to-t from-indigo-900/40 to-transparent"
+              class="absolute inset-0 bg-linear-to-t from-emerald-900/40 to-transparent"
             ></div>
           </div>
 
@@ -702,7 +702,7 @@ const scrollToAbout = () => {
           <div
             v-for="icon in techIcons"
             :key="icon.name"
-            class="block absolute z-30 p-1 md:p-2 bg-white dark:bg-slate-800 rounded-lg md:rounded-xl shadow-md md:shadow-xl animate-float"
+            class="block absolute z-30 p-1 md:p-2 bg-white dark:bg-zinc-800 rounded-lg md:rounded-xl shadow-md md:shadow-xl animate-float"
             :style="`${icon.pos} animation-delay: ${icon.delay}`"
             :title="icon.name"
           >
@@ -735,23 +735,23 @@ const scrollToAbout = () => {
       <!-- Text Side (Right) -->
       <div class="text-center md:text-left order-2 z-10 md:pl-8">
         <div
-          class="inline-block px-2.5 py-1 mb-2 md:px-3 md:py-1.5 md:mb-6 rounded-full bg-indigo-100/50 dark:bg-indigo-900/30 border border-indigo-200/50 dark:border-indigo-800/50 backdrop-blur-sm"
+          class="inline-block px-2.5 py-1 mb-2 md:px-3 md:py-1.5 md:mb-6 rounded-full bg-emerald-100/50 dark:bg-emerald-900/30 border border-emerald-200/50 dark:border-emerald-800/50 backdrop-blur-sm"
         >
           <span
-            class="text-[10px] md:text-sm font-semibold text-indigo-600 dark:text-indigo-300 tracking-wide uppercase"
+            class="text-[10px] md:text-sm font-semibold text-emerald-600 dark:text-emerald-300 tracking-wide uppercase"
           >
             Mau nya Fullstack Developer
           </span>
         </div>
 
         <h1
-          class="text-4xl md:text-6xl lg:text-7xl font-bold tracking-tight mb-4 md:mb-8 text-slate-800 dark:text-white leading-[1.1]"
+          class="text-4xl md:text-6xl lg:text-7xl font-bold tracking-tight mb-4 md:mb-8 text-zinc-800 dark:text-white leading-[1.1]"
         >
           <span class="ml7-name flex flex-col">
             <span class="text-wrapper-name block">
               <span class="letters">Muhammad</span>
             </span>
-            <span class="text-wrapper-name block text-indigo-500 dark:text-indigo-400">
+            <span class="text-wrapper-name block text-emerald-500 dark:text-emerald-400">
               <span class="letters">Wildan</span>
             </span>
             <span class="text-wrapper-name block">
@@ -762,7 +762,7 @@ const scrollToAbout = () => {
 
         <p
           id="hero-quote"
-          class="text-xs md:text-xl text-slate-600 dark:text-slate-300 mb-3 md:mb-8 md:max-w-lg leading-relaxed px-2 md:px-0"
+          class="text-xs md:text-xl text-zinc-600 dark:text-zinc-300 mb-3 md:mb-8 md:max-w-lg leading-relaxed px-2 md:px-0"
         >
           <span
             class="quote-text"
@@ -776,14 +776,14 @@ const scrollToAbout = () => {
           <a
             href="/cv_muhammad_wildan_septiano.pdf"
             target="_blank"
-            class="px-4 py-2 md:px-8 md:py-3.5 bg-slate-900 text-white rounded-full font-medium hover:bg-slate-800 hover:-translate-y-0.5 transition-all dark:bg-indigo-600 dark:hover:bg-indigo-500 flex items-center gap-1.5 shadow-md md:shadow-xl shadow-indigo-500/20 text-xs md:text-base"
+            class="px-4 py-2 md:px-8 md:py-3.5 bg-zinc-900 text-white rounded-full font-medium hover:bg-zinc-800 hover:-translate-y-0.5 transition-all dark:bg-emerald-600 dark:hover:bg-emerald-500 flex items-center gap-1.5 shadow-md md:shadow-xl shadow-emerald-500/20 text-xs md:text-base"
           >
             <FileText class="w-4 h-4 sm:w-5 sm:h-5" />
             <span>Download CV</span>
           </a>
           <a
             href="#contact"
-            class="px-4 py-2 md:px-8 md:py-3.5 glass-card text-slate-700 rounded-full font-medium hover:bg-white/80 transition-colors dark:text-slate-300 dark:hover:bg-slate-800/80 text-xs md:text-base"
+            class="px-4 py-2 md:px-8 md:py-3.5 glass-card text-zinc-700 rounded-full font-medium hover:bg-white/80 transition-colors dark:text-zinc-300 dark:hover:bg-zinc-800/80 text-xs md:text-base"
           >
             Contact Me
           </a>
@@ -795,21 +795,21 @@ const scrollToAbout = () => {
           <a
             href="https://github.com/wildan-se"
             target="_blank"
-            class="text-slate-400 hover:text-slate-900 dark:hover:text-white transition-colors transform hover:scale-110"
+            class="text-zinc-400 hover:text-zinc-900 dark:hover:text-white transition-colors transform hover:scale-110"
           >
             <Github class="w-4 h-4 md:w-6 md:h-6" />
           </a>
           <a
             href="https://www.linkedin.com/in/muhammadwildanseptiano/"
             target="_blank"
-            class="text-slate-400 hover:text-slate-900 dark:hover:text-white transition-colors transform hover:scale-110"
+            class="text-zinc-400 hover:text-zinc-900 dark:hover:text-white transition-colors transform hover:scale-110"
           >
             <Linkedin class="w-4 h-4 md:w-6 md:h-6" />
           </a>
           <a
             href="https://www.instagram.com/wlse._/"
             target="_blank"
-            class="text-slate-400 hover:text-slate-900 dark:hover:text-white transition-colors transform hover:scale-110"
+            class="text-zinc-400 hover:text-zinc-900 dark:hover:text-white transition-colors transform hover:scale-110"
           >
             <Instagram class="w-4 h-4 md:w-6 md:h-6" />
           </a>
@@ -823,7 +823,7 @@ const scrollToAbout = () => {
       @click="scrollToAbout"
     >
       <ArrowDown
-        class="w-5 h-5 sm:w-6 sm:h-6 text-slate-400 hover:text-slate-600 dark:text-slate-500 dark:hover:text-slate-300"
+        class="w-5 h-5 sm:w-6 sm:h-6 text-zinc-400 hover:text-zinc-600 dark:text-zinc-500 dark:hover:text-zinc-300"
       />
     </div>
   </section>
@@ -901,7 +901,7 @@ const scrollToAbout = () => {
 /* ===== Typewriter cursor blink ===== */
 .cursor-blink {
   display: inline-block;
-  color: #6366f1;
+  color: #10b981;
   font-weight: 700;
   animation: blink 1s step-end infinite;
   margin-left: 1px;

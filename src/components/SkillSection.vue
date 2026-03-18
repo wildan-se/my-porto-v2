@@ -369,7 +369,7 @@ onMounted(() => {
       cards.forEach((card, index) => {
         const skill = skills[index];
         // Handle Express special case (black icon -> gray glow in dark mode)
-        const brandColor = skill.name === 'Express' ? '#a1a1aa' : (skill.icon.color || '#6366f1');
+        const brandColor = skill.name === 'Express' ? '#a1a1aa' : (skill.icon.color || '#10b981');
         const rgbColor = hexToRgb(brandColor) || '99,102,241';
         
         // Dynamically style label color 
@@ -498,19 +498,19 @@ onUnmounted(() => {
         data-aos="fade-up"
       >
         <h2
-          class="text-3xl sm:text-4xl md:text-5xl font-bold mb-4 text-slate-800 dark:text-white"
+          class="text-3xl sm:text-4xl md:text-5xl font-bold mb-4 text-zinc-800 dark:text-white"
         >
           Skills &
-          <span class="text-indigo-600 dark:text-indigo-400">Tools</span>
+          <span class="text-emerald-600 dark:text-emerald-400">Tools</span>
         </h2>
-        <div class="h-1 w-20 bg-indigo-500 mx-auto rounded-full"></div>
+        <div class="h-1 w-20 bg-emerald-500 mx-auto rounded-full"></div>
       </div>
 
       <!-- Mobile View: Infinity Curved Path -->
       <div class="flex md:hidden relative w-full flex-col justify-center items-center z-10 px-2 mt-4 pb-24 overflow-visible">
         
         <!-- Parallax glowing background core -->
-        <div class="parallax-bg absolute top-0 mt-20 left-1/2 -translate-x-1/2 w-48 h-48 sm:w-64 sm:h-64 bg-indigo-500/20 dark:bg-indigo-600/30 rounded-full blur-[70px] pointer-events-none z-0"></div>
+        <div class="parallax-bg absolute top-0 mt-20 left-1/2 -translate-x-1/2 w-48 h-48 sm:w-64 sm:h-64 bg-emerald-500/20 dark:bg-emerald-600/30 rounded-full blur-[70px] pointer-events-none z-0"></div>
 
         <!-- Neural Connection Line SVG -->
         <div class="absolute inset-0 z-0 pointer-events-none flex justify-center mt-16 pb-16">
@@ -542,7 +542,7 @@ onUnmounted(() => {
           <div
             v-for="(skill, index) in skills"
             :key="'curve-' + skill.name"
-            class="curve-card relative bg-white/80 dark:bg-slate-800/90 backdrop-blur-md border border-white/50 dark:border-slate-700/50 rounded-full p-4 flex flex-col items-center justify-center w-[84px] h-[84px] shadow-[0_10px_30px_rgba(0,0,0,0.1)] dark:shadow-[0_10px_30px_rgba(0,0,0,0.4)] z-10 will-change-transform"
+            class="curve-card relative bg-white/80 dark:bg-zinc-800/90 backdrop-blur-md border border-white/50 dark:border-zinc-700/50 rounded-full p-4 flex flex-col items-center justify-center w-[84px] h-[84px] shadow-[0_10px_30px_rgba(0,0,0,0.1)] dark:shadow-[0_10px_30px_rgba(0,0,0,0.4)] z-10 will-change-transform"
             :style="{ transform: `translateX(${Math.sin((index / (skills.length - 1)) * Math.PI * 3.5) * 80}px)` }"
           >
             <!-- Icon Container -->
@@ -583,7 +583,7 @@ onUnmounted(() => {
       >
         <!-- Background decorative blob matching other sections -->
         <div
-          class="absolute w-[300px] h-[300px] sm:w-[400px] sm:h-[400px] md:w-[500px] md:h-[500px] bg-indigo-500/20 rounded-full blur-[80px] sm:blur-[100px] -z-10 animate-pulse pointer-events-none"
+          class="absolute w-[300px] h-[300px] sm:w-[400px] sm:h-[400px] md:w-[500px] md:h-[500px] bg-emerald-500/20 rounded-full blur-[80px] sm:blur-[100px] -z-10 animate-pulse pointer-events-none"
         ></div>
 
         <div
@@ -601,7 +601,7 @@ onUnmounted(() => {
               <!-- Wrapper for individual floating animation -->
               <div class="card-floater">
                 <div
-                  class="relative p-4 sm:p-5 md:p-6 w-32 h-24 sm:w-36 sm:h-26 md:w-38 md:h-28 flex items-center justify-center glass-card rounded-2xl shadow-lg dark:shadow-slate-900/30 pointer-events-auto hover:scale-110 hover:shadow-xl hover:z-50 transition-all duration-300"
+                  class="relative p-4 sm:p-5 md:p-6 w-32 h-24 sm:w-36 sm:h-26 md:w-38 md:h-28 flex items-center justify-center glass-card rounded-2xl shadow-lg dark:shadow-zinc-900/30 pointer-events-auto hover:scale-110 hover:shadow-xl hover:z-50 transition-all duration-300"
                 >
                   <svg
                     :viewBox="skill.icon.viewBox"
@@ -632,7 +632,7 @@ onUnmounted(() => {
 
                   <!-- Floating Tooltip -->
                   <span
-                    class="text-xs font-bold text-indigo-600 dark:text-indigo-300 opacity-0 group-hover:opacity-100 transition-opacity duration-300 absolute -bottom-8 bg-white/90 dark:bg-slate-800/90 px-3 py-1 rounded-full shadow-md backdrop-blur-sm whitespace-nowrap border border-indigo-100 dark:border-indigo-900"
+                    class="text-xs font-bold text-emerald-600 dark:text-emerald-300 opacity-0 group-hover:opacity-100 transition-opacity duration-300 absolute -bottom-8 bg-white/90 dark:bg-zinc-800/90 px-3 py-1 rounded-full shadow-md backdrop-blur-sm whitespace-nowrap border border-emerald-100 dark:border-emerald-900"
                   >
                     {{ skill.name }}
                   </span>

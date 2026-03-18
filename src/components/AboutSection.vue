@@ -19,23 +19,23 @@ const fullCodeLines = [
   },
   {
     line: 2,
-    content: `&nbsp;&nbsp;<span class="text-sky-300">name</span>: <span class="text-green-400">'Muhammad Wildan Septiano'</span>,`,
+    content: `&nbsp;&nbsp;<span class="text-lime-300">name</span>: <span class="text-green-400">'Muhammad Wildan Septiano'</span>,`,
   },
   {
     line: 3,
-    content: `&nbsp;&nbsp;<span class="text-sky-300">role</span>: <span class="text-green-400">'Student'</span>,`,
+    content: `&nbsp;&nbsp;<span class="text-lime-300">role</span>: <span class="text-green-400">'Student'</span>,`,
   },
   {
     line: 4,
-    content: `&nbsp;&nbsp;<span class="text-sky-300">university</span>: <span class="text-green-400">'Universitas Raharja'</span>,`,
+    content: `&nbsp;&nbsp;<span class="text-lime-300">university</span>: <span class="text-green-400">'Universitas Raharja'</span>,`,
   },
   {
     line: 5,
-    content: `&nbsp;&nbsp;<span class="text-sky-300">major</span>: <span class="text-green-400">'Computer Systems'</span>,`,
+    content: `&nbsp;&nbsp;<span class="text-lime-300">major</span>: <span class="text-green-400">'Computer Systems'</span>,`,
   },
   {
     line: 6,
-    content: `&nbsp;&nbsp;<span class="text-sky-300">focus</span>: [`,
+    content: `&nbsp;&nbsp;<span class="text-lime-300">focus</span>: [`,
   },
   {
     line: 7,
@@ -48,7 +48,7 @@ const fullCodeLines = [
   { line: 9, content: `&nbsp;&nbsp;],` },
   {
     line: 10,
-    content: `&nbsp;&nbsp;<span class="text-sky-300">status</span>: <span class="text-green-400">'Open to opportunities'</span>`,
+    content: `&nbsp;&nbsp;<span class="text-lime-300">status</span>: <span class="text-green-400">'Open to opportunities'</span>`,
   },
   { line: 11, content: `};` },
 ];
@@ -149,13 +149,13 @@ const handleMouseLeave = () => {
       <!-- Section Header -->
       <div class="text-center mb-12 sm:mb-16">
         <h2
-          class="text-3xl sm:text-4xl md:text-5xl font-bold text-slate-800 dark:text-white mb-4"
+          class="text-3xl sm:text-4xl md:text-5xl font-bold text-zinc-800 dark:text-white mb-4"
         >
-          <span class="text-slate-400 font-mono"></span>About
-          <span class="text-indigo-600 dark:text-indigo-400">Me</span
-          ><span class="text-slate-400 font-mono"></span>
+          <span class="text-zinc-400 font-mono"></span>About
+          <span class="text-emerald-600 dark:text-emerald-400">Me</span
+          ><span class="text-zinc-400 font-mono"></span>
         </h2>
-        <div class="h-1 w-20 bg-indigo-500 mx-auto rounded-full"></div>
+        <div class="h-1 w-20 bg-emerald-500 mx-auto rounded-full"></div>
       </div>
 
       <!-- Code Editor Window Container (Stable Hitbox) -->
@@ -169,7 +169,7 @@ const handleMouseLeave = () => {
       >
         <div
           ref="cardRef"
-          class="rounded-xl overflow-hidden shadow-2xl bg-[#1e1e1e] border border-slate-700 will-change-transform"
+          class="rounded-xl overflow-hidden shadow-2xl bg-[#1e1e1e] border border-zinc-700 will-change-transform"
         >
           <!-- Window Chrome / Title Bar -->
           <div
@@ -187,7 +187,7 @@ const handleMouseLeave = () => {
               ></div>
             </div>
             <div
-              class="text-slate-400 text-[10px] sm:text-xs font-mono select-none"
+              class="text-zinc-400 text-[10px] sm:text-xs font-mono select-none"
             >
               src/components/aboutMe.js
             </div>
@@ -204,13 +204,13 @@ const handleMouseLeave = () => {
             >
               <!-- Static Line Numbers -->
               <div
-                class="w-6 sm:w-8 md:w-12 text-slate-600 text-right pr-2 sm:pr-4 select-none shrink-0 border-r border-slate-800 mr-2 sm:mr-4 h-full"
+                class="w-6 sm:w-8 md:w-12 text-zinc-600 text-right pr-2 sm:pr-4 select-none shrink-0 border-r border-zinc-800 mr-2 sm:mr-4 h-full"
               >
                 <div v-for="n in 11" :key="n">{{ n }}</div>
               </div>
 
               <!-- Typewriter Content -->
-              <div class="text-slate-300 relative w-full">
+              <div class="text-zinc-300 relative w-full">
                 <div
                   ref="typewriterTarget"
                   class="whitespace-pre-wrap break-words"
@@ -244,7 +244,7 @@ const handleMouseLeave = () => {
 <style>
 /* Custom Cursor Style for Typewriter */
 .Typewriter__cursor {
-  color: #6366f1; /* Indigo-500 */
+  color: #10b981; /* Indigo-500 */
   font-weight: bold;
 }
 </style>

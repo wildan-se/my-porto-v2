@@ -60,7 +60,7 @@ onUnmounted(() => {
             <button 
                 v-if="showScrollTop"
                 @click="scrollToTop"
-                class="p-3 bg-white/80 cursor-pointer dark:bg-slate-800/80 backdrop-blur-md border border-slate-200 dark:border-slate-700 rounded-full shadow-lg hover:shadow-indigo-500/30 text-slate-600 dark:text-slate-300 hover:text-indigo-600 dark:hover:text-indigo-400 hover:-translate-y-1 transition-all duration-300 group"
+                class="p-3 bg-white/80 cursor-pointer dark:bg-zinc-800/80 backdrop-blur-md border border-zinc-200 dark:border-zinc-700 rounded-full shadow-lg hover:shadow-emerald-500/30 text-zinc-600 dark:text-zinc-300 hover:text-emerald-600 dark:hover:text-emerald-400 hover:-translate-y-1 transition-all duration-300 group"
                 aria-label="Scroll to top"
             >
                 <ArrowUp class="w-5 h-5 group-hover:animate-bounce" />
@@ -79,7 +79,7 @@ onUnmounted(() => {
             <button 
                 v-if="showScrollBottom"
                 @click="scrollToBottom"
-                class="p-3 bg-white/80 cursor-pointer dark:bg-slate-800/80 backdrop-blur-md border border-slate-200 dark:border-slate-700 rounded-full shadow-lg hover:shadow-indigo-500/30 text-slate-600 dark:text-slate-300 hover:text-indigo-600 dark:hover:text-indigo-400 hover:translate-y-1 transition-all duration-300 group"
+                class="p-3 bg-white/80 cursor-pointer dark:bg-zinc-800/80 backdrop-blur-md border border-zinc-200 dark:border-zinc-700 rounded-full shadow-lg hover:shadow-emerald-500/30 text-zinc-600 dark:text-zinc-300 hover:text-emerald-600 dark:hover:text-emerald-400 hover:translate-y-1 transition-all duration-300 group"
                  aria-label="Scroll to bottom"
             >
                 <ArrowDown class="w-5 h-5 group-hover:animate-bounce" />

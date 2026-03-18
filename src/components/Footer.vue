@@ -26,11 +26,11 @@ const socials = [
 
 <template>
   <footer
-    class="relative bg-slate-50 dark:bg-slate-950 border-t border-slate-200 dark:border-slate-800/60 transition-colors duration-500 overflow-hidden"
+    class="relative bg-zinc-50 dark:bg-zinc-950 border-t border-zinc-200 dark:border-zinc-800/60 transition-colors duration-500 overflow-hidden"
   >
     <!-- subtle top gradient accent -->
     <div
-      class="absolute top-0 left-0 right-0 h-px bg-linear-to-r from-transparent via-indigo-500/40 to-transparent"
+      class="absolute top-0 left-0 right-0 h-px bg-linear-to-r from-transparent via-emerald-500/40 to-transparent"
     ></div>
 
     <div class="max-w-5xl mx-auto px-6 py-12 sm:py-16">
@@ -41,13 +41,13 @@ const socials = [
         <!-- Brand + tagline -->
         <div class="flex flex-col gap-3 max-w-xs">
           <span
-            class="text-xl font-bold text-slate-900 dark:text-white tracking-tight"
+            class="text-xl font-bold text-zinc-900 dark:text-white tracking-tight"
           >
-            &lt;<span class="text-indigo-500">WLSE</span>/&gt;
+            &lt;<span class="text-emerald-500">WLSE</span>/&gt;
           </span>
-          <p class="text-sm text-slate-500 dark:text-slate-400 leading-relaxed">
+          <p class="text-sm text-zinc-500 dark:text-zinc-400 leading-relaxed">
             Sebaik-baik nya manusia adalah
-            <span class="text-slate-700 dark:text-slate-200 font-medium"
+            <span class="text-zinc-700 dark:text-zinc-200 font-medium"
               >yang paling bermanfaat bagi manusia lainnya.</span
             >
           </p>
@@ -56,7 +56,7 @@ const socials = [
         <!-- Nav links -->
         <nav class="flex flex-col gap-2">
           <p
-            class="text-[11px] font-semibold uppercase tracking-widest text-slate-400 dark:text-slate-500 mb-1"
+            class="text-[11px] font-semibold uppercase tracking-widest text-zinc-400 dark:text-zinc-500 mb-1"
           >
             Navigation
           </p>
@@ -64,7 +64,7 @@ const socials = [
             v-for="link in navLinks"
             :key="link.label"
             :href="link.href"
-            class="text-sm text-slate-500 dark:text-slate-400 hover:text-indigo-500 dark:hover:text-indigo-400 transition-colors"
+            class="text-sm text-zinc-500 dark:text-zinc-400 hover:text-emerald-500 dark:hover:text-emerald-400 transition-colors"
           >
             {{ link.label }}
           </a>
@@ -73,7 +73,7 @@ const socials = [
         <!-- Socials -->
         <div class="flex flex-col gap-2">
           <p
-            class="text-[11px] font-semibold uppercase tracking-widest text-slate-400 dark:text-slate-500 mb-1"
+            class="text-[11px] font-semibold uppercase tracking-widest text-zinc-400 dark:text-zinc-500 mb-1"
           >
             Find Me
           </p>
@@ -84,7 +84,7 @@ const socials = [
               :href="s.href"
               :title="s.label"
               target="_blank"
-              class="w-9 h-9 flex items-center justify-center rounded-xl bg-slate-200/70 dark:bg-slate-800 text-slate-500 dark:text-slate-400 hover:bg-indigo-500 hover:text-white dark:hover:bg-indigo-500 dark:hover:text-white transition-all duration-200"
+              class="w-9 h-9 flex items-center justify-center rounded-xl bg-zinc-200/70 dark:bg-zinc-800 text-zinc-500 dark:text-zinc-400 hover:bg-emerald-500 hover:text-white dark:hover:bg-emerald-500 dark:hover:text-white transition-all duration-200"
             >
               <component :is="s.icon" class="w-4 h-4" />
             </a>
@@ -93,13 +93,13 @@ const socials = [
       </div>
 
       <!-- Divider -->
-      <div class="h-px bg-slate-200 dark:bg-slate-800"></div>
+      <div class="h-px bg-zinc-200 dark:bg-zinc-800"></div>
 
       <!-- Bottom row -->
       <div
         class="mt-6 flex flex-col sm:flex-row items-center justify-center gap-2"
       >
-        <p class="text-xs text-slate-400 dark:text-slate-500">
+        <p class="text-xs text-zinc-400 dark:text-zinc-500">
           &copy; {{ new Date().getFullYear() }} Muhammad Wildan Septiano. All
           rights reserved.
         </p>

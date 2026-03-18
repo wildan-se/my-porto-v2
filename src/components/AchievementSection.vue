@@ -85,12 +85,12 @@ const iconMap = {
 };
 
 const categoryColors = {
-  Competition: "from-amber-500 to-orange-500",
-  Certification: "from-blue-500 to-cyan-500",
+  Competition: "from-emerald-500 to-lime-500",
+  Certification: "from-blue-500 to-emerald-500",
   "Open Source": "from-green-500 to-emerald-500",
   Design: "from-pink-500 to-rose-500",
-  Recognition: "from-indigo-500 to-violet-500",
-  Academic: "from-purple-500 to-fuchsia-500",
+  Recognition: "from-emerald-500 to-violet-500",
+  Academic: "from-lime-500 to-emerald-500",
 };
 
 const activeIndex = ref(2); // Start from middle
@@ -159,12 +159,12 @@ const getCardStyle = (index) => {
     <div class="container mx-auto px-4 sm:px-6 lg:px-8">
       <div class="text-center mb-16">
         <h2
-          class="text-3xl md:text-5xl font-bold mb-4 text-slate-800 dark:text-white"
+          class="text-3xl md:text-5xl font-bold mb-4 text-zinc-800 dark:text-white"
         >
           Achievement
-          <span class="text-indigo-600 dark:text-indigo-400">Gallery</span>
+          <span class="text-emerald-600 dark:text-emerald-400">Gallery</span>
         </h2>
-        <p class="text-lg text-slate-600 dark:text-slate-400 max-w-2xl mx-auto">
+        <p class="text-lg text-zinc-600 dark:text-zinc-400 max-w-2xl mx-auto">
           A visual showcase of milestones and recognitions.
         </p>
       </div>
@@ -381,7 +381,7 @@ const getCardStyle = (index) => {
 .indicator-active {
   width: 32px;
   border-radius: 4px;
-  background: #6366f1;
+  background: #10b981;
 }
 
 :root.dark .indicator {

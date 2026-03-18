@@ -61,8 +61,8 @@ const projects = [
     date: "2025",
     demo: "#",
     code: "#",
-    color: "bg-indigo-500", // Card header color
-    accent: "text-indigo-500",
+    color: "bg-emerald-500", // Card header color
+    accent: "text-emerald-500",
     category: "Web App",
   },
   {
@@ -125,8 +125,8 @@ const projects = [
     date: "2025",
     demo: "#",
     code: "#",
-    color: "bg-purple-500",
-    accent: "text-purple-500",
+    color: "bg-lime-500",
+    accent: "text-lime-500",
     category: "Personal",
   },
   {
@@ -180,8 +180,8 @@ Sistem menggunakan protokol MQTT untuk komunikasi bidirectional yang cepat dan r
     date: "2024",
     demo: "#",
     code: "#",
-    color: "bg-cyan-500",
-    accent: "text-cyan-500",
+    color: "bg-emerald-500",
+    accent: "text-emerald-500",
     category: "IoT",
   },
 ];
@@ -344,17 +344,17 @@ onUnmounted(() => {
       <!-- Intro Text - Mobile Only -->
       <div class="md:hidden mb-8 sm:mb-10 text-center relative">
         <p
-          class="text-xs font-bold uppercase tracking-[0.3em] text-indigo-600 dark:text-indigo-400 mb-3"
+          class="text-xs font-bold uppercase tracking-[0.3em] text-emerald-600 dark:text-emerald-400 mb-3"
         >
           Portfolio
         </p>
         <h2
-          class="text-3xl sm:text-4xl font-bold mb-3 text-slate-800 dark:text-white"
+          class="text-3xl sm:text-4xl font-bold mb-3 text-zinc-800 dark:text-white"
         >
-          My <span class="text-indigo-600 dark:text-indigo-400">Projects</span>
+          My <span class="text-emerald-600 dark:text-emerald-400">Projects</span>
         </h2>
         <p
-          class="text-base sm:text-lg text-slate-500 dark:text-slate-400 max-w-sm mx-auto"
+          class="text-base sm:text-lg text-zinc-500 dark:text-zinc-400 max-w-sm mx-auto"
         >
           Perjalanan melalui proyek-proyek saya.
         </p>
@@ -370,8 +370,8 @@ onUnmounted(() => {
             class="p-2.5 rounded-full border-2 transition-all duration-300 disabled:opacity-30 disabled:cursor-not-allowed hover:scale-110 active:scale-95"
             :class="
               currentCardIndex === 0
-                ? 'bg-slate-100 dark:bg-slate-800 border-slate-200 dark:border-slate-700'
-                : 'bg-white dark:bg-slate-900 border-indigo-500 dark:border-indigo-400 hover:bg-indigo-50 dark:hover:bg-indigo-950/30 shadow-lg shadow-indigo-500/20'
+                ? 'bg-zinc-100 dark:bg-zinc-800 border-zinc-200 dark:border-zinc-700'
+                : 'bg-white dark:bg-zinc-900 border-emerald-500 dark:border-emerald-400 hover:bg-emerald-50 dark:hover:bg-emerald-950/30 shadow-lg shadow-emerald-500/20'
             "
           >
             <svg
@@ -379,8 +379,8 @@ onUnmounted(() => {
               class="w-4 h-4 transition-colors"
               :class="
                 currentCardIndex === 0
-                  ? 'text-slate-400'
-                  : 'text-indigo-600 dark:text-indigo-400'
+                  ? 'text-zinc-400'
+                  : 'text-emerald-600 dark:text-emerald-400'
               "
               fill="none"
               viewBox="0 0 24 24"
@@ -396,7 +396,7 @@ onUnmounted(() => {
           </button>
 
           <div
-            class="px-4 py-2 rounded-full bg-indigo-600 dark:bg-indigo-500 text-white text-sm font-bold min-w-[80px] text-center shadow-lg"
+            class="px-4 py-2 rounded-full bg-emerald-600 dark:bg-emerald-500 text-white text-sm font-bold min-w-[80px] text-center shadow-lg"
           >
             {{ currentCardIndex + 1 }} of {{ projects.length }}
           </div>
@@ -407,8 +407,8 @@ onUnmounted(() => {
             class="p-2.5 rounded-full border-2 transition-all duration-300 disabled:opacity-30 disabled:cursor-not-allowed hover:scale-110 active:scale-95"
             :class="
               currentCardIndex === projects.length - 1
-                ? 'bg-slate-100 dark:bg-slate-800 border-slate-200 dark:border-slate-700'
-                : 'bg-white dark:bg-slate-900 border-indigo-500 dark:border-indigo-400 hover:bg-indigo-50 dark:hover:bg-indigo-950/30 shadow-lg shadow-indigo-500/20'
+                ? 'bg-zinc-100 dark:bg-zinc-800 border-zinc-200 dark:border-zinc-700'
+                : 'bg-white dark:bg-zinc-900 border-emerald-500 dark:border-emerald-400 hover:bg-emerald-50 dark:hover:bg-emerald-950/30 shadow-lg shadow-emerald-500/20'
             "
           >
             <svg
@@ -416,8 +416,8 @@ onUnmounted(() => {
               class="w-4 h-4 transition-colors"
               :class="
                 currentCardIndex === projects.length - 1
-                  ? 'text-slate-400'
-                  : 'text-indigo-600 dark:text-indigo-400'
+                  ? 'text-zinc-400'
+                  : 'text-emerald-600 dark:text-emerald-400'
               "
               fill="none"
               viewBox="0 0 24 24"
@@ -448,14 +448,14 @@ onUnmounted(() => {
             :style="getCardStyle(index)"
           >
             <div
-              class="relative group cursor-pointer h-full bg-white dark:bg-slate-900 rounded-2xl shadow-2xl overflow-hidden border-2 border-slate-200 dark:border-slate-800 hover:border-indigo-500/50 dark:hover:border-indigo-400/50 transition-all duration-300"
+              class="relative group cursor-pointer h-full bg-white dark:bg-zinc-900 rounded-2xl shadow-2xl overflow-hidden border-2 border-zinc-200 dark:border-zinc-800 hover:border-emerald-500/50 dark:hover:border-emerald-400/50 transition-all duration-300"
               @click="openModal(project)"
             >
               <!-- Image Container -->
               <div class="h-70 sm:h-80 w-full overflow-hidden relative">
                 <!-- Gradient Overlay -->
                 <div
-                  class="absolute inset-0 bg-gradient-to-br from-slate-900/20 via-transparent to-transparent z-10"
+                  class="absolute inset-0 bg-gradient-to-br from-zinc-900/20 via-transparent to-transparent z-10"
                 ></div>
                 <img
                   :src="project.image"
@@ -480,7 +480,7 @@ onUnmounted(() => {
                   <span
                     v-for="t in project.tech.slice(0, 3)"
                     :key="t"
-                    class="px-2.5 py-1 bg-slate-900/95 text-slate-100 text-[11px] font-bold tracking-wide rounded border border-slate-700 shadow-lg backdrop-blur-sm"
+                    class="px-2.5 py-1 bg-zinc-900/95 text-zinc-100 text-[11px] font-bold tracking-wide rounded border border-zinc-700 shadow-lg backdrop-blur-sm"
                   >
                     {{ t }}
                   </span>
@@ -501,12 +501,12 @@ onUnmounted(() => {
                 </div>
 
                 <h3
-                  class="text-xl sm:text-2xl font-bold text-slate-900 dark:text-white mb-2 line-clamp-1"
+                  class="text-xl sm:text-2xl font-bold text-zinc-900 dark:text-white mb-2 line-clamp-1"
                 >
                   {{ project.title }}
                 </h3>
                 <p
-                  class="text-sm text-slate-500 dark:text-slate-400 line-clamp-2 mb-4"
+                  class="text-sm text-zinc-500 dark:text-zinc-400 line-clamp-2 mb-4"
                 >
                   {{ project.description }}
                 </p>
@@ -514,16 +514,16 @@ onUnmounted(() => {
                 <!-- Action Buttons -->
                 <div class="flex gap-2">
                   <button
-                    class="flex-1 py-2.5 px-3 bg-indigo-600 hover:bg-indigo-700 dark:bg-indigo-500 dark:hover:bg-indigo-600 text-white text-sm font-semibold rounded-lg transition-all duration-300 flex items-center justify-center gap-2 shadow-lg hover:-translate-y-0.5"
+                    class="flex-1 py-2.5 px-3 bg-emerald-600 hover:bg-emerald-700 dark:bg-emerald-500 dark:hover:bg-emerald-600 text-white text-sm font-semibold rounded-lg transition-all duration-300 flex items-center justify-center gap-2 shadow-lg hover:-translate-y-0.5"
                   >
                     <ExternalLink class="w-3.5 h-3.5" />
                     View Details
                   </button>
                   <button
-                    class="p-2.5 border border-slate-200 dark:border-slate-700 hover:border-indigo-500 dark:hover:border-indigo-400 hover:bg-indigo-50 dark:hover:bg-indigo-950/30 rounded-lg transition-all duration-300 hover:-translate-y-0.5"
+                    class="p-2.5 border border-zinc-200 dark:border-zinc-700 hover:border-emerald-500 dark:hover:border-emerald-400 hover:bg-emerald-50 dark:hover:bg-emerald-950/30 rounded-lg transition-all duration-300 hover:-translate-y-0.5"
                   >
                     <Github
-                      class="w-4 h-4 text-slate-600 dark:text-slate-300 hover:text-indigo-600 dark:hover:text-indigo-400"
+                      class="w-4 h-4 text-zinc-600 dark:text-zinc-300 hover:text-emerald-600 dark:hover:text-emerald-400"
                     />
                   </button>
                 </div>
@@ -535,7 +535,7 @@ onUnmounted(() => {
         <!-- Swipe Hint -->
         <div
           v-if="currentCardIndex === 0"
-          class="flex items-center justify-center gap-3 mt-6 text-xs text-slate-500 dark:text-slate-400"
+          class="flex items-center justify-center gap-3 mt-6 text-xs text-zinc-500 dark:text-zinc-400"
         >
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -576,38 +576,38 @@ onUnmounted(() => {
       >
         <!-- Intro Text - stays pinned at top while track scrolls -->
         <div
-          class="intro-text-top flex items-end justify-between pb-6 mb-8 border-b border-slate-200 dark:border-slate-800"
+          class="intro-text-top flex items-end justify-between pb-6 mb-8 border-b border-zinc-200 dark:border-zinc-800"
         >
           <div class="flex items-center gap-6">
             <div class="flex flex-col items-center gap-2 shrink-0">
               <span
-                class="text-[10px] font-bold uppercase tracking-[0.3em] text-indigo-600 dark:text-indigo-400"
+                class="text-[10px] font-bold uppercase tracking-[0.3em] text-emerald-600 dark:text-emerald-400"
                 >Works</span
               >
-              <span class="w-px h-10 bg-slate-300 dark:bg-slate-700"></span>
+              <span class="w-px h-10 bg-zinc-300 dark:bg-zinc-700"></span>
               <span
-                class="text-[10px] font-mono font-bold text-slate-400 dark:text-slate-600"
+                class="text-[10px] font-mono font-bold text-zinc-400 dark:text-zinc-600"
                 >0{{ projects.length }}</span
               >
             </div>
             <div>
               <h2
-                class="text-4xl lg:text-5xl font-black text-slate-900 dark:text-white leading-none tracking-tight"
+                class="text-4xl lg:text-5xl font-black text-zinc-900 dark:text-white leading-none tracking-tight"
               >
                 My
-                <span class="text-indigo-600 dark:text-indigo-400"
+                <span class="text-emerald-600 dark:text-emerald-400"
                   >Projects</span
                 >
               </h2>
               <p
-                class="text-sm lg:text-base text-slate-500 dark:text-slate-400 mt-2"
+                class="text-sm lg:text-base text-zinc-500 dark:text-zinc-400 mt-2"
               >
                 Perjalanan melalui proyek saya.
               </p>
             </div>
           </div>
           <div
-            class="flex items-center gap-2 text-xs text-slate-400 dark:text-slate-600 uppercase tracking-widest shrink-0"
+            class="flex items-center gap-2 text-xs text-zinc-400 dark:text-zinc-600 uppercase tracking-widest shrink-0"
           >
             <span>Scroll to explore</span>
             <svg
@@ -636,26 +636,26 @@ onUnmounted(() => {
               class="intro-card shrink-0 w-[42vw] lg:w-[32vw] flex flex-col justify-center pr-8 relative"
             >
               <span
-                class="text-7xl md:text-8xl font-bold text-slate-200 dark:text-slate-800/50 block -mb-8"
+                class="text-7xl md:text-8xl font-bold text-zinc-200 dark:text-zinc-800/50 block -mb-8"
                 >00</span
               >
               <h3
-                class="text-3xl md:text-4xl lg:text-5xl font-bold text-slate-800 dark:text-white leading-tight mb-3"
+                class="text-3xl md:text-4xl lg:text-5xl font-bold text-zinc-800 dark:text-white leading-tight mb-3"
               >
                 Crafting Digital
-                <span class="text-indigo-600 dark:text-indigo-400"
+                <span class="text-emerald-600 dark:text-emerald-400"
                   >Solutions</span
                 >
               </h3>
               <p
-                class="text-sm text-slate-600 dark:text-slate-400 mb-6 max-w-xs"
+                class="text-sm text-zinc-600 dark:text-zinc-400 mb-6 max-w-xs"
               >
                 Koleksi karya terbaik yang menggabungkan kreativitas, teknologi,
                 dan passion untuk menciptakan solusi yang meaningful.
               </p>
               <div class="flex gap-4 items-center">
                 <span
-                  class="w-24 h-1 bg-indigo-600 dark:bg-indigo-400 rounded-full"
+                  class="w-24 h-1 bg-emerald-600 dark:bg-emerald-400 rounded-full"
                 ></span>
               </div>
             </div>
@@ -669,11 +669,11 @@ onUnmounted(() => {
             >
               <!-- Image Container -->
               <div
-                class="w-full aspect-video overflow-hidden rounded-2xl lg:rounded-3xl relative shadow-xl bg-slate-950 dark:bg-slate-900 transform transition-all duration-500 group-hover:shadow-indigo-500/30 group-hover:-translate-y-1"
+                class="w-full aspect-video overflow-hidden rounded-2xl lg:rounded-3xl relative shadow-xl bg-zinc-950 dark:bg-zinc-900 transform transition-all duration-500 group-hover:shadow-emerald-500/30 group-hover:-translate-y-1"
               >
                 <!-- Gradient Overlay -->
                 <div
-                  class="absolute inset-0 bg-gradient-to-br from-slate-900/40 via-slate-900/20 to-transparent group-hover:opacity-0 transition-opacity z-10 duration-500"
+                  class="absolute inset-0 bg-gradient-to-br from-zinc-900/40 via-zinc-900/20 to-transparent group-hover:opacity-0 transition-opacity z-10 duration-500"
                 ></div>
 
                 <!-- Animated Shadow Glow on Hover -->
@@ -681,7 +681,7 @@ onUnmounted(() => {
                   class="absolute inset-0 z-20 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none"
                 >
                   <div
-                    class="absolute inset-0 rounded-3xl shadow-2xl shadow-indigo-500/30"
+                    class="absolute inset-0 rounded-3xl shadow-2xl shadow-emerald-500/30"
                   ></div>
                 </div>
 
@@ -700,7 +700,7 @@ onUnmounted(() => {
                     v-for="(t, i) in project.tech"
                     :key="t"
                     :style="{ transitionDelay: `${i * 50}ms` }"
-                    class="px-3 py-1.5 bg-slate-900/95 text-slate-100 text-xs font-bold tracking-wide rounded-md border border-slate-700 shadow-[0_4px_12px_rgba(0,0,0,0.5)] backdrop-blur-md transform translate-y-3 group-hover:translate-y-0 transition-all duration-300"
+                    class="px-3 py-1.5 bg-zinc-900/95 text-zinc-100 text-xs font-bold tracking-wide rounded-md border border-zinc-700 shadow-[0_4px_12px_rgba(0,0,0,0.5)] backdrop-blur-md transform translate-y-3 group-hover:translate-y-0 transition-all duration-300"
                   >
                     {{ t }}
                   </span>
@@ -723,7 +723,7 @@ onUnmounted(() => {
                       ></span>
                     </span>
                     <span
-                      class="w-8 h-px bg-slate-300 dark:bg-slate-700 opacity-60 group-hover:opacity-100 transition-opacity"
+                      class="w-8 h-px bg-zinc-300 dark:bg-zinc-700 opacity-60 group-hover:opacity-100 transition-opacity"
                     ></span>
                     <span
                       :class="`text-[10px] font-bold uppercase tracking-widest ${project.accent} opacity-60`"
@@ -731,21 +731,21 @@ onUnmounted(() => {
                     >
                   </div>
                   <button
-                    class="p-2 rounded-full border border-slate-200 dark:border-slate-700 hover:border-indigo-500 dark:hover:border-indigo-400 transition-all duration-300 group-hover:scale-110 group-hover:rotate-12"
+                    class="p-2 rounded-full border border-zinc-200 dark:border-zinc-700 hover:border-emerald-500 dark:hover:border-emerald-400 transition-all duration-300 group-hover:scale-110 group-hover:rotate-12"
                   >
                     <ExternalLink
-                      class="w-3.5 h-3.5 text-slate-500 dark:text-slate-400 group-hover:text-indigo-600 dark:group-hover:text-indigo-400 transition-colors"
+                      class="w-3.5 h-3.5 text-zinc-500 dark:text-zinc-400 group-hover:text-emerald-600 dark:group-hover:text-emerald-400 transition-colors"
                     />
                   </button>
                 </div>
 
                 <h3
-                  class="text-base md:text-lg lg:text-xl font-bold text-slate-900 dark:text-white group-hover:text-indigo-600 dark:group-hover:text-indigo-400 transition-colors leading-tight line-clamp-1"
+                  class="text-base md:text-lg lg:text-xl font-bold text-zinc-900 dark:text-white group-hover:text-emerald-600 dark:group-hover:text-emerald-400 transition-colors leading-tight line-clamp-1"
                 >
                   {{ project.title }}
                 </h3>
                 <p
-                  class="text-xs md:text-sm text-slate-500 dark:text-slate-400 line-clamp-2 group-hover:text-slate-700 dark:group-hover:text-slate-300 transition-colors"
+                  class="text-xs md:text-sm text-zinc-500 dark:text-zinc-400 line-clamp-2 group-hover:text-zinc-700 dark:group-hover:text-zinc-300 transition-colors"
                 >
                   {{ project.description }}
                 </p>
@@ -771,7 +771,7 @@ onUnmounted(() => {
       >
         <div
           v-if="selectedProject"
-          class="fixed inset-0 z-[99999] flex items-center justify-center p-0 md:p-4 bg-slate-900/70 backdrop-blur-sm"
+          class="fixed inset-0 z-[99999] flex items-center justify-center p-0 md:p-4 bg-zinc-900/70 backdrop-blur-sm"
           @click.self="closeModal"
         >
           <!-- Modal Wrapper (relative, no overflow-hidden) -->
@@ -779,7 +779,7 @@ onUnmounted(() => {
             <!-- Close button: half-outside modal top-right corner -->
             <button
               @click="closeModal"
-              class="hidden md:flex absolute -top-4 -right-4 cursor-pointer w-9 h-9 items-center justify-center rounded-full bg-slate-800 text-white hover:bg-slate-700 border border-white/20 transition-all duration-200 z-[100000] shadow-xl"
+              class="hidden md:flex absolute -top-4 -right-4 cursor-pointer w-9 h-9 items-center justify-center rounded-full bg-zinc-800 text-white hover:bg-zinc-700 border border-white/20 transition-all duration-200 z-[100000] shadow-xl"
             >
               <X :size="15" />
             </button>
@@ -794,7 +794,7 @@ onUnmounted(() => {
             >
               <div
                 v-if="selectedProject"
-                class="w-full h-full md:rounded-3xl bg-slate-950 overflow-hidden flex flex-col shadow-2xl"
+                class="w-full h-full md:rounded-3xl bg-zinc-950 overflow-hidden flex flex-col shadow-2xl"
                 style="
                   background-image: radial-gradient(
                     rgba(255, 255, 255, 0.035) 1px,
@@ -861,7 +861,7 @@ onUnmounted(() => {
                     style="
                       grid-column: span 1;
                       grid-row: span 1;
-                      background: linear-gradient(135deg, #4f46e5, #7c3aed);
+                      background: linear-gradient(135deg, #059669, #84cc16);
                     "
                   >
                     <!-- decorative circles -->
@@ -872,7 +872,7 @@ onUnmounted(() => {
                       class="absolute -left-5 -top-5 w-16 h-16 rounded-full border border-white/15"
                     ></div>
                     <p
-                      class="text-[10px] font-bold uppercase tracking-widest text-indigo-200 relative z-10"
+                      class="text-[10px] font-bold uppercase tracking-widest text-emerald-200 relative z-10"
                     >
                       Year
                     </p>
@@ -904,14 +904,14 @@ onUnmounted(() => {
                     </div>
                     <!-- subtle top-left dot -->
                     <div
-                      class="absolute top-0 left-0 w-20 h-20 rounded-full bg-indigo-500/10 -translate-x-1/2 -translate-y-1/2 pointer-events-none"
+                      class="absolute top-0 left-0 w-20 h-20 rounded-full bg-emerald-500/10 -translate-x-1/2 -translate-y-1/2 pointer-events-none"
                     ></div>
 
                     <!-- Label -->
                     <div class="flex items-center gap-1.5 relative z-10">
-                      <span class="w-1 h-3 rounded-full bg-indigo-400"></span>
+                      <span class="w-1 h-3 rounded-full bg-emerald-400"></span>
                       <p
-                        class="text-[10px] font-bold uppercase tracking-widest text-indigo-300/70"
+                        class="text-[10px] font-bold uppercase tracking-widest text-emerald-300/70"
                       >
                         Role
                       </p>
@@ -923,9 +923,9 @@ onUnmounted(() => {
                         {{ selectedProject.role }}
                       </p>
                       <div class="mt-2 flex items-center gap-1.5">
-                        <Layers :size="11" class="text-indigo-400 shrink-0" />
+                        <Layers :size="11" class="text-emerald-400 shrink-0" />
                         <span
-                          class="text-[10px] text-indigo-300/50 uppercase tracking-wider font-semibold"
+                          class="text-[10px] text-emerald-300/50 uppercase tracking-wider font-semibold"
                           >Developer</span
                         >
                       </div>
@@ -944,7 +944,7 @@ onUnmounted(() => {
                       “
                     </div>
                     <p
-                      class="text-[10px] font-bold uppercase tracking-widest text-slate-500 mb-2 shrink-0 relative z-10"
+                      class="text-[10px] font-bold uppercase tracking-widest text-zinc-500 mb-2 shrink-0 relative z-10"
                     >
                       About Project
                     </p>
@@ -952,7 +952,7 @@ onUnmounted(() => {
                       class="flex-1 overflow-y-auto pr-1 min-h-0 bento-scroll"
                     >
                       <p
-                        class="text-xs text-justify text-slate-300 leading-relaxed whitespace-pre-line"
+                        class="text-xs text-justify text-zinc-300 leading-relaxed whitespace-pre-line"
                       >
                         {{ selectedProject.longDescription }}
                       </p>
@@ -965,7 +965,7 @@ onUnmounted(() => {
                     style="grid-column: span 1; grid-row: span 2"
                   >
                     <p
-                      class="text-[10px] font-bold uppercase tracking-widest text-slate-500 mb-2 shrink-0"
+                      class="text-[10px] font-bold uppercase tracking-widest text-zinc-500 mb-2 shrink-0"
                     >
                       Features
                     </p>
@@ -983,7 +983,7 @@ onUnmounted(() => {
                           >{{ i + 1 }}</span
                         >
                         <span
-                          class="text-[11px] text-slate-300 leading-tight"
+                          class="text-[11px] text-zinc-300 leading-tight"
                           >{{ feature }}</span
                         >
                       </div>
@@ -996,7 +996,7 @@ onUnmounted(() => {
                     style="grid-column: span 1; grid-row: span 1"
                   >
                     <p
-                      class="text-[10px] font-bold uppercase tracking-widest text-slate-500 mb-2 shrink-0"
+                      class="text-[10px] font-bold uppercase tracking-widest text-zinc-500 mb-2 shrink-0"
                     >
                       Tech Stack
                     </p>
@@ -1005,7 +1005,7 @@ onUnmounted(() => {
                         <span
                           v-for="tech in selectedProject.tech"
                           :key="tech"
-                          class="px-2 py-0.5 text-[10px] font-semibold rounded-md bg-white/8 text-slate-300 border border-white/10"
+                          class="px-2 py-0.5 text-[10px] font-semibold rounded-md bg-white/8 text-zinc-300 border border-white/10"
                           >{{ tech }}</span
                         >
                       </div>
@@ -1020,14 +1020,14 @@ onUnmounted(() => {
                     <a
                       :href="selectedProject.demo"
                       target="_blank"
-                      class="w-full inline-flex justify-center items-center gap-1.5 px-3 py-2 text-xs font-bold text-white bg-indigo-600 hover:bg-indigo-500 rounded-lg transition-all duration-200"
+                      class="w-full inline-flex justify-center items-center gap-1.5 px-3 py-2 text-xs font-bold text-white bg-emerald-600 hover:bg-emerald-500 rounded-lg transition-all duration-200"
                     >
                       <ExternalLink :size="12" /> Live Demo
                     </a>
                     <a
                       :href="selectedProject.code"
                       target="_blank"
-                      class="w-full inline-flex justify-center items-center gap-1.5 px-3 py-2 text-xs font-bold text-slate-300 bg-white/8 hover:bg-white/15 rounded-lg border border-white/15 transition-all duration-200"
+                      class="w-full inline-flex justify-center items-center gap-1.5 px-3 py-2 text-xs font-bold text-zinc-300 bg-white/8 hover:bg-white/15 rounded-lg border border-white/15 transition-all duration-200"
                     >
                       <Github :size="12" /> Source Code
                     </a>
@@ -1046,7 +1046,7 @@ onUnmounted(() => {
                       class="w-full h-full object-cover"
                     />
                     <div
-                      class="absolute inset-0 bg-gradient-to-t from-slate-900 via-slate-900/40 to-transparent"
+                      class="absolute inset-0 bg-gradient-to-t from-zinc-900 via-zinc-900/40 to-transparent"
                     ></div>
 
                     <!-- Close Button -->
@@ -1077,7 +1077,7 @@ onUnmounted(() => {
 
                   <!-- Tab Navigation -->
                   <div
-                    class="sticky top-0 z-20 bg-white dark:bg-slate-900 border-b border-slate-200 dark:border-slate-800 shrink-0"
+                    class="sticky top-0 z-20 bg-white dark:bg-zinc-900 border-b border-zinc-200 dark:border-zinc-800 shrink-0"
                   >
                     <div class="flex">
                       <button
@@ -1085,14 +1085,14 @@ onUnmounted(() => {
                         class="flex-1 py-3 text-sm font-semibold transition-colors relative"
                         :class="
                           activeTab === 'overview'
-                            ? 'text-indigo-600 dark:text-indigo-400'
-                            : 'text-slate-500 dark:text-slate-400'
+                            ? 'text-emerald-600 dark:text-emerald-400'
+                            : 'text-zinc-500 dark:text-zinc-400'
                         "
                       >
                         Overview
                         <span
                           v-if="activeTab === 'overview'"
-                          class="absolute bottom-0 left-0 right-0 h-0.5 bg-indigo-600 dark:bg-indigo-400"
+                          class="absolute bottom-0 left-0 right-0 h-0.5 bg-emerald-600 dark:bg-emerald-400"
                         ></span>
                       </button>
                       <button
@@ -1100,14 +1100,14 @@ onUnmounted(() => {
                         class="flex-1 py-3 text-sm font-semibold transition-colors relative"
                         :class="
                           activeTab === 'tech'
-                            ? 'text-indigo-600 dark:text-indigo-400'
-                            : 'text-slate-500 dark:text-slate-400'
+                            ? 'text-emerald-600 dark:text-emerald-400'
+                            : 'text-zinc-500 dark:text-zinc-400'
                         "
                       >
                         Tech Stack
                         <span
                           v-if="activeTab === 'tech'"
-                          class="absolute bottom-0 left-0 right-0 h-0.5 bg-indigo-600 dark:bg-indigo-400"
+                          class="absolute bottom-0 left-0 right-0 h-0.5 bg-emerald-600 dark:bg-emerald-400"
                         ></span>
                       </button>
                       <button
@@ -1115,14 +1115,14 @@ onUnmounted(() => {
                         class="flex-1 py-3 text-sm font-semibold transition-colors relative"
                         :class="
                           activeTab === 'features'
-                            ? 'text-indigo-600 dark:text-indigo-400'
-                            : 'text-slate-500 dark:text-slate-400'
+                            ? 'text-emerald-600 dark:text-emerald-400'
+                            : 'text-zinc-500 dark:text-zinc-400'
                         "
                       >
                         Features
                         <span
                           v-if="activeTab === 'features'"
-                          class="absolute bottom-0 left-0 right-0 h-0.5 bg-indigo-600 dark:bg-indigo-400"
+                          class="absolute bottom-0 left-0 right-0 h-0.5 bg-emerald-600 dark:bg-emerald-400"
                         ></span>
                       </button>
                     </div>
@@ -1142,53 +1142,53 @@ onUnmounted(() => {
                       <div v-if="activeTab === 'overview'" class="p-4">
                         <div class="grid grid-cols-2 gap-3 mb-5">
                           <div
-                            class="p-3 bg-slate-50 dark:bg-slate-800/50 rounded-xl"
+                            class="p-3 bg-zinc-50 dark:bg-zinc-800/50 rounded-xl"
                           >
                             <p
-                              class="text-[10px] font-bold uppercase tracking-wider text-slate-400 mb-1"
+                              class="text-[10px] font-bold uppercase tracking-wider text-zinc-400 mb-1"
                             >
                               Year
                             </p>
                             <p
-                              class="text-base font-black text-slate-900 dark:text-white flex items-center gap-1.5"
+                              class="text-base font-black text-zinc-900 dark:text-white flex items-center gap-1.5"
                             >
-                              <Calendar :size="12" class="text-slate-400" />{{
+                              <Calendar :size="12" class="text-zinc-400" />{{
                                 selectedProject.date
                               }}
                             </p>
                           </div>
                           <div
-                            class="p-3 bg-slate-50 dark:bg-slate-800/50 rounded-xl"
+                            class="p-3 bg-zinc-50 dark:bg-zinc-800/50 rounded-xl"
                           >
                             <p
-                              class="text-[10px] font-bold uppercase tracking-wider text-slate-400 mb-1"
+                              class="text-[10px] font-bold uppercase tracking-wider text-zinc-400 mb-1"
                             >
                               Role
                             </p>
                             <p
-                              class="text-xs font-semibold text-slate-700 dark:text-slate-300 flex items-center gap-1.5"
+                              class="text-xs font-semibold text-zinc-700 dark:text-zinc-300 flex items-center gap-1.5"
                             >
                               <Layers
                                 :size="12"
-                                class="text-slate-400 shrink-0"
+                                class="text-zinc-400 shrink-0"
                               />{{ selectedProject.role }}
                             </p>
                           </div>
                         </div>
                         <h3
-                          class="text-[10px] font-bold uppercase tracking-wider text-slate-400 dark:text-slate-500 mb-2"
+                          class="text-[10px] font-bold uppercase tracking-wider text-zinc-400 dark:text-zinc-500 mb-2"
                         >
                           About Project
                         </h3>
                         <p
-                          class="text-sm text-justify text-slate-700 dark:text-slate-300 leading-relaxed whitespace-pre-line mb-4"
+                          class="text-sm text-justify text-zinc-700 dark:text-zinc-300 leading-relaxed whitespace-pre-line mb-4"
                         >
                           {{ selectedProject.longDescription }}
                         </p>
                       </div>
                       <div v-else-if="activeTab === 'tech'" class="p-4">
                         <h3
-                          class="text-[10px] font-bold uppercase tracking-wider text-slate-400 dark:text-slate-500 mb-3"
+                          class="text-[10px] font-bold uppercase tracking-wider text-zinc-400 dark:text-zinc-500 mb-3"
                         >
                           Technologies Used
                         </h3>
@@ -1196,14 +1196,14 @@ onUnmounted(() => {
                           <span
                             v-for="tech in selectedProject.tech"
                             :key="tech"
-                            class="px-3 py-2 text-sm font-semibold rounded-lg bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 border border-slate-200 dark:border-slate-700"
+                            class="px-3 py-2 text-sm font-semibold rounded-lg bg-zinc-100 dark:bg-zinc-800 text-zinc-700 dark:text-zinc-300 border border-zinc-200 dark:border-zinc-700"
                             >{{ tech }}</span
                           >
                         </div>
                       </div>
                       <div v-else-if="activeTab === 'features'" class="p-4">
                         <h3
-                          class="text-[10px] font-bold uppercase tracking-wider text-slate-400 dark:text-slate-500 mb-3"
+                          class="text-[10px] font-bold uppercase tracking-wider text-zinc-400 dark:text-zinc-500 mb-3"
                         >
                           Key Features
                         </h3>
@@ -1211,7 +1211,7 @@ onUnmounted(() => {
                           <div
                             v-for="(feature, i) in selectedProject.features"
                             :key="feature"
-                            class="flex items-start gap-3 p-3 rounded-lg bg-slate-50 dark:bg-slate-800/50"
+                            class="flex items-start gap-3 p-3 rounded-lg bg-zinc-50 dark:bg-zinc-800/50"
                           >
                             <span
                               class="shrink-0 w-6 h-6 flex items-center justify-center rounded-full text-xs font-bold"
@@ -1219,7 +1219,7 @@ onUnmounted(() => {
                               >{{ i + 1 }}</span
                             >
                             <span
-                              class="text-sm text-slate-700 dark:text-slate-300"
+                              class="text-sm text-zinc-700 dark:text-zinc-300"
                               >{{ feature }}</span
                             >
                           </div>
@@ -1230,20 +1230,20 @@ onUnmounted(() => {
 
                   <!-- Mobile Action Buttons -->
                   <div
-                    class="shrink-0 p-4 bg-white dark:bg-slate-900 border-t border-slate-200 dark:border-slate-800"
+                    class="shrink-0 p-4 bg-white dark:bg-zinc-900 border-t border-zinc-200 dark:border-zinc-800"
                   >
                     <div class="flex gap-3">
                       <a
                         :href="selectedProject.demo"
                         target="_blank"
-                        class="flex-1 inline-flex justify-center items-center gap-2 px-4 py-3 text-sm font-bold text-white bg-indigo-600 hover:bg-indigo-700 dark:bg-indigo-500 rounded-xl transition-all duration-200"
+                        class="flex-1 inline-flex justify-center items-center gap-2 px-4 py-3 text-sm font-bold text-white bg-emerald-600 hover:bg-emerald-700 dark:bg-emerald-500 rounded-xl transition-all duration-200"
                       >
                         <ExternalLink :size="16" /> Live Demo
                       </a>
                       <a
                         :href="selectedProject.code"
                         target="_blank"
-                        class="flex-1 inline-flex justify-center items-center gap-2 px-4 py-3 text-sm font-bold text-slate-700 dark:text-slate-300 bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 rounded-xl transition-all duration-200 border border-slate-200 dark:border-slate-700"
+                        class="flex-1 inline-flex justify-center items-center gap-2 px-4 py-3 text-sm font-bold text-zinc-700 dark:text-zinc-300 bg-zinc-100 dark:bg-zinc-800 hover:bg-zinc-200 dark:hover:bg-zinc-700 rounded-xl transition-all duration-200 border border-zinc-200 dark:border-zinc-700"
                       >
                         <Github :size="16" /> Source Code
                       </a>

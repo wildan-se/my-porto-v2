@@ -27,7 +27,7 @@ const contacts = [
     icon: Mail,
     label: "Email",
     value: "mwildanseptiano@gmail.com",
-    color: "text-indigo-400",
+    color: "text-emerald-400",
   },
 ];
 </script>
@@ -38,12 +38,12 @@ const contacts = [
       <!-- Section header -->
       <div class="text-center mb-12">
         <span
-          class="inline-block px-3 py-1 mb-3 rounded-full text-xs font-semibold uppercase tracking-widest bg-indigo-100/60 dark:bg-indigo-900/30 text-indigo-600 dark:text-indigo-400 border border-indigo-200/50 dark:border-indigo-700/50"
+          class="inline-block px-3 py-1 mb-3 rounded-full text-xs font-semibold uppercase tracking-widest bg-emerald-100/60 dark:bg-emerald-900/30 text-emerald-600 dark:text-emerald-400 border border-emerald-200/50 dark:border-emerald-700/50"
         >
           Contact
         </span>
         <h2
-          class="text-3xl sm:text-4xl font-bold text-slate-900 dark:text-white mb-3"
+          class="text-3xl sm:text-4xl font-bold text-zinc-900 dark:text-white mb-3"
         >
           Mari Berkolaborasi
         </h2>
@@ -51,18 +51,18 @@ const contacts = [
 
       <!-- Main card -->
       <div
-        class="rounded-2xl sm:rounded-3xl overflow-hidden border border-slate-200 dark:border-slate-800 shadow-xl shadow-slate-200/50 dark:shadow-slate-950/50 flex flex-col md:flex-row"
+        class="rounded-2xl sm:rounded-3xl overflow-hidden border border-zinc-200 dark:border-zinc-800 shadow-xl shadow-zinc-200/50 dark:shadow-zinc-950/50 flex flex-col md:flex-row"
       >
         <!-- Left info panel -->
         <div
-          class="relative md:w-5/12 bg-slate-900 dark:bg-slate-900 p-7 sm:p-10 flex flex-col justify-between overflow-hidden"
+          class="relative md:w-5/12 bg-zinc-900 dark:bg-zinc-900 p-7 sm:p-10 flex flex-col justify-between overflow-hidden"
         >
           <!-- bg decoration -->
           <div
-            class="absolute -top-16 -right-16 w-48 h-48 bg-indigo-600/20 rounded-full blur-3xl pointer-events-none"
+            class="absolute -top-16 -right-16 w-48 h-48 bg-emerald-600/20 rounded-full blur-3xl pointer-events-none"
           ></div>
           <div
-            class="absolute -bottom-16 -left-10 w-40 h-40 bg-purple-600/20 rounded-full blur-3xl pointer-events-none"
+            class="absolute -bottom-16 -left-10 w-40 h-40 bg-lime-600/20 rounded-full blur-3xl pointer-events-none"
           ></div>
           <!-- grid dot pattern -->
           <div
@@ -78,14 +78,14 @@ const contacts = [
 
           <div class="relative z-10">
             <div
-              class="w-10 h-10 rounded-xl bg-indigo-500/20 border border-indigo-500/30 flex items-center justify-center mb-6"
+              class="w-10 h-10 rounded-xl bg-emerald-500/20 border border-emerald-500/30 flex items-center justify-center mb-6"
             >
-              <MessageCircle class="w-5 h-5 text-indigo-400" />
+              <MessageCircle class="w-5 h-5 text-emerald-400" />
             </div>
             <h3 class="text-xl sm:text-2xl font-bold text-white mb-3">
               Hubungi Saya
             </h3>
-            <p class="text-sm text-slate-400 leading-relaxed mb-8 text-justify">
+            <p class="text-sm text-zinc-400 leading-relaxed mb-8 text-justify">
               Saya terbuka untuk proyek lepas dan kolaborasi. Jangan ragu untuk
               menyapa!
             </p>
@@ -104,11 +104,11 @@ const contacts = [
                 </div>
                 <div>
                   <p
-                    class="text-[10px] uppercase tracking-widest text-slate-500 font-semibold"
+                    class="text-[10px] uppercase tracking-widest text-zinc-500 font-semibold"
                   >
                     {{ c.label }}
                   </p>
-                  <p class="text-xs sm:text-sm text-slate-200 font-medium">
+                  <p class="text-xs sm:text-sm text-zinc-200 font-medium">
                     {{ c.value }}
                   </p>
                 </div>
@@ -118,12 +118,12 @@ const contacts = [
         </div>
 
         <!-- Right form panel -->
-        <div class="md:w-7/12 bg-white dark:bg-slate-950/80 p-7 sm:p-10">
+        <div class="md:w-7/12 bg-white dark:bg-zinc-950/80 p-7 sm:p-10">
           <form @submit.prevent="sendToWhatsApp" class="space-y-5">
             <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
               <div>
                 <label
-                  class="block text-xs font-semibold text-slate-500 dark:text-slate-400 uppercase tracking-wider mb-1.5"
+                  class="block text-xs font-semibold text-zinc-500 dark:text-zinc-400 uppercase tracking-wider mb-1.5"
                   >Nama</label
                 >
                 <input
@@ -131,12 +131,12 @@ const contacts = [
                   v-model="form.name"
                   required
                   placeholder="Muhammad Wildan"
-                  class="w-full rounded-xl border border-slate-200 dark:border-slate-700/60 bg-slate-50 dark:bg-slate-900 text-slate-900 dark:text-white text-sm px-4 py-2.5 outline-none focus:border-indigo-500 focus:ring-2 focus:ring-indigo-500/20 transition-all placeholder:text-slate-300 dark:placeholder:text-slate-600"
+                  class="w-full rounded-xl border border-zinc-200 dark:border-zinc-700/60 bg-zinc-50 dark:bg-zinc-900 text-zinc-900 dark:text-white text-sm px-4 py-2.5 outline-none focus:border-emerald-500 focus:ring-2 focus:ring-emerald-500/20 transition-all placeholder:text-zinc-300 dark:placeholder:text-zinc-600"
                 />
               </div>
               <div>
                 <label
-                  class="block text-xs font-semibold text-slate-500 dark:text-slate-400 uppercase tracking-wider mb-1.5"
+                  class="block text-xs font-semibold text-zinc-500 dark:text-zinc-400 uppercase tracking-wider mb-1.5"
                   >Email</label
                 >
                 <input
@@ -144,14 +144,14 @@ const contacts = [
                   v-model="form.email"
                   required
                   placeholder="email@domain.com"
-                  class="w-full rounded-xl border border-slate-200 dark:border-slate-700/60 bg-slate-50 dark:bg-slate-900 text-slate-900 dark:text-white text-sm px-4 py-2.5 outline-none focus:border-indigo-500 focus:ring-2 focus:ring-indigo-500/20 transition-all placeholder:text-slate-300 dark:placeholder:text-slate-600"
+                  class="w-full rounded-xl border border-zinc-200 dark:border-zinc-700/60 bg-zinc-50 dark:bg-zinc-900 text-zinc-900 dark:text-white text-sm px-4 py-2.5 outline-none focus:border-emerald-500 focus:ring-2 focus:ring-emerald-500/20 transition-all placeholder:text-zinc-300 dark:placeholder:text-zinc-600"
                 />
               </div>
             </div>
 
             <div>
               <label
-                class="block text-xs font-semibold text-slate-500 dark:text-slate-400 uppercase tracking-wider mb-1.5"
+                class="block text-xs font-semibold text-zinc-500 dark:text-zinc-400 uppercase tracking-wider mb-1.5"
                 >Pesan</label
               >
               <textarea
@@ -159,13 +159,13 @@ const contacts = [
                 required
                 rows="5"
                 placeholder="Halo, saya ingin mendiskusikan proyek..."
-                class="w-full rounded-xl border border-slate-200 dark:border-slate-700/60 bg-slate-50 dark:bg-slate-900 text-slate-900 dark:text-white text-sm px-4 py-2.5 outline-none focus:border-indigo-500 focus:ring-2 focus:ring-indigo-500/20 transition-all resize-none placeholder:text-slate-300 dark:placeholder:text-slate-600"
+                class="w-full rounded-xl border border-zinc-200 dark:border-zinc-700/60 bg-zinc-50 dark:bg-zinc-900 text-zinc-900 dark:text-white text-sm px-4 py-2.5 outline-none focus:border-emerald-500 focus:ring-2 focus:ring-emerald-500/20 transition-all resize-none placeholder:text-zinc-300 dark:placeholder:text-zinc-600"
               ></textarea>
             </div>
 
             <button
               type="submit"
-              class="w-full flex items-center justify-center gap-2 py-3 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white text-sm font-semibold transition-all duration-200 hover:-translate-y-0.5 shadow-lg shadow-indigo-500/25 group"
+              class="w-full flex items-center justify-center gap-2 py-3 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white text-sm font-semibold transition-all duration-200 hover:-translate-y-0.5 shadow-lg shadow-emerald-500/25 group"
             >
               <Send class="w-4 h-4" />
               Kirim via WhatsApp
@@ -174,7 +174,7 @@ const contacts = [
               />
             </button>
 
-            <p class="text-center text-xs text-slate-400 dark:text-slate-500">
+            <p class="text-center text-xs text-zinc-400 dark:text-zinc-500">
               Pesan akan dikirim langsung ke WhatsApp saya.
             </p>
           </form>
