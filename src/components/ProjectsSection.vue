@@ -45,15 +45,14 @@ const projects = [
     title: "E-Commerce",
     subtitle: "Complete Online Store",
     description:
-      "Full-featured online store with cart, checkout, payment gateway, and admin dashboard.",
+      "Full-featured online store with cart, checkout, and admin dashboard.",
     longDescription:
-      "lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
+      "Aplikasi web e-commerce full-stack yang saya kembangkan untuk menghadirkan pengalaman belanja online yang modern, cepat, dan aman, sekaligus menyediakan sistem manajemen toko yang efisien untuk admin. Pada sisi frontend, aplikasi dibangun menggunakan Vue.js 3 dengan pendekatan komponen dan reactive state, sehingga antarmuka terasa responsif serta mudah dipelihara. Pada halaman katalog produk, pengguna dapat melakukan pencarian produk secara real-time, sorting berdasarkan nama, harga, dan rating, serta beralih antara tampilan grid dan list untuk kenyamanan eksplorasi produk. UI dirancang responsif menggunakan Tailwind CSS + DaisyUI, dilengkapi loading skeleton, empty state, dan error state agar pengalaman pengguna tetap baik pada berbagai kondisi jaringan. Pada sisi backend, API dibangun menggunakan Express.js dengan arsitektur RESTful, menangani autentikasi pengguna menggunakan JWT (JSON Web Tokens) dan bcrypt untuk password hashing. Database MongoDB digunakan untuk menyimpan data produk, kategori, pengguna, dan pesanan, dengan validasi skema otomatis untuk memastikan integritas data. Fitur-fitur utama mencakup manajemen produk dan kategori, keranjang belanja dengan persistensi state, proses checkout yang aman, serta admin dashboard untuk monitoring dan pengelolaan toko. Selain itu, aplikasi ini juga dilengkapi dengan fitur pencarian produk real-time, pagination, dan validasi input yang ketat untuk mencegah error dan meningkatkan keamanan.",
     image: ecommerceImg,
     tech: ["MongoDB", "Express.js", "Vue", "Node.js"],
     features: [
       "User Authentication",
       "Shopping Cart",
-      "Payment Gateway",
       "Admin Dashboard",
       "Order Tracking",
     ],
