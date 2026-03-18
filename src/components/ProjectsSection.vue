@@ -480,7 +480,7 @@ onUnmounted(() => {
                   <span
                     v-for="t in project.tech.slice(0, 3)"
                     :key="t"
-                    class="px-2.5 py-1 bg-white/10 backdrop-blur-xl text-white text-xs font-semibold rounded-lg border border-white/20 shadow-lg"
+                    class="px-2.5 py-1 bg-slate-900/95 text-slate-100 text-[11px] font-bold tracking-wide rounded border border-slate-700 shadow-lg backdrop-blur-sm"
                   >
                     {{ t }}
                   </span>
@@ -602,7 +602,7 @@ onUnmounted(() => {
               <p
                 class="text-sm lg:text-base text-slate-500 dark:text-slate-400 mt-2"
               >
-                Perjalanan melalui proyek-proyek saya.
+                Perjalanan melalui proyek saya.
               </p>
             </div>
           </div>
@@ -692,15 +692,15 @@ onUnmounted(() => {
                   class="project-card-image w-full h-full object-contain transition-transform duration-700 group-hover:scale-105"
                 />
 
-                <!-- Floating Tech Tags -->
+                <!-- Floating Tech Tags (Tooltip style) -->
                 <div
-                  class="absolute top-4 left-4 z-20 flex flex-wrap gap-2 opacity-0 group-hover:opacity-100 transition-all duration-500"
+                  class="absolute top-4 left-4 right-4 z-20 flex flex-wrap gap-2 opacity-0 group-hover:opacity-100 transition-all duration-500"
                 >
                   <span
                     v-for="(t, i) in project.tech"
                     :key="t"
                     :style="{ transitionDelay: `${i * 50}ms` }"
-                    class="px-3 py-1.5 bg-white/10 backdrop-blur-xl text-white text-xs font-semibold rounded-lg border border-white/20 shadow-lg transform translate-y-2 group-hover:translate-y-0 transition-all duration-300"
+                    class="px-3 py-1.5 bg-slate-900/95 text-slate-100 text-xs font-bold tracking-wide rounded-md border border-slate-700 shadow-[0_4px_12px_rgba(0,0,0,0.5)] backdrop-blur-md transform translate-y-3 group-hover:translate-y-0 transition-all duration-300"
                   >
                     {{ t }}
                   </span>

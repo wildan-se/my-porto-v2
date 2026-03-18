@@ -8,7 +8,7 @@ import {
 } from "lucide-vue-next";
 import { useDark } from "@vueuse/core";
 import { ref, onMounted, onUnmounted } from "vue";
-import { createTimeline, animate as animeAnimate, stagger } from "animejs";
+import anime from "animejs/lib/anime.es.js";
 
 const isDark = useDark();
 
@@ -426,16 +426,27 @@ const onScroll = () => {
 };
 
 // Main Animation Loop
+// cache for previous styles to prevent redundant DOM writes
+const cache = { bg: '', port: '', l1: '', l2: '', l3: '', b1: '', b2: '', op: '' };
+
 const animate = () => {
-  // 1. Smooth out values using LERP
-  // 0.08 factor = slightly heavier feel, less jitter
+  // 1. Calculate deltas to see if we reached target
+  const dX = mouse.x - smoothMouse.x;
+  const dY = mouse.y - smoothMouse.y;
+  const dS = scrollState.current - scrollState.smooth;
+
+  // Threshold check to avoid processing when idle (saves CPU/GPU lag)
+  if (Math.abs(dX) < 0.001 && Math.abs(dY) < 0.001 && Math.abs(dS) < 0.1) {
+    mouseRaf = requestAnimationFrame(animate);
+    return; // Sleep! No DOM updates needed.
+  }
+
+  // 2. Smooth out values using LERP
   smoothMouse.x = lerp(smoothMouse.x, mouse.x, 0.08);
   smoothMouse.y = lerp(smoothMouse.y, mouse.y, 0.08);
-
-  // 0.1 factor for scroll = responsive but smooth
   scrollState.smooth = lerp(scrollState.smooth, scrollState.current, 0.1);
 
-  // 2. Calculate values for transforms (Math pre-calc)
+  // 3. Calculate values for transforms (Math pre-calc)
   const scrollY = scrollState.smooth;
   const mouseX = smoothMouse.x;
   const mouseY = smoothMouse.y;
@@ -443,58 +454,90 @@ const animate = () => {
   // --- Hero Container Fade & Parallax ---
   if (heroContainerTarget.value) {
     const progress = Math.min(scrollY / window.innerHeight, 1);
-    const opacity = 1 - progress * 1.5;
-    const scale = 1 - progress * 0.1;
-    const yOffset = scrollY * 0.5;
-
-    // Only apply if visible to save resources
+    const opacity = (1 - progress * 1.5).toFixed(3);
+    
     if (opacity > 0) {
-      heroContainerTarget.value.style.opacity = opacity.toFixed(3);
-      heroContainerTarget.value.style.transform = `translate3d(0, ${yOffset.toFixed(1)}px, 0) scale(${scale.toFixed(3)})`;
+      const scale = (1 - progress * 0.1).toFixed(3);
+      const yOffset = (scrollY * 0.5).toFixed(1);
+      const style = `translate3d(0, ${yOffset}px, 0) scale(${scale})`;
+      
+      if (cache.bg !== style || cache.op !== opacity) {
+        heroContainerTarget.value.style.opacity = opacity;
+        heroContainerTarget.value.style.transform = style;
+        heroContainerTarget.value.style.willChange = 'transform, opacity';
+        cache.bg = style;
+        cache.op = opacity;
+      }
     }
   }
 
   // --- 3D Portrait Tilt ---
   if (portraitTarget.value) {
-    const rotateX = mouseY * -10;
-    const rotateY = mouseX * 10;
-    portraitTarget.value.style.transform = `perspective(1000px) rotateX(${rotateX.toFixed(2)}deg) rotateY(${rotateY.toFixed(2)}deg)`;
+    const rotateX = (mouseY * -10).toFixed(2);
+    const rotateY = (mouseX * 10).toFixed(2);
+    const style = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg)`;
+    if (cache.port !== style) {
+      portraitTarget.value.style.transform = style;
+      portraitTarget.value.style.willChange = 'transform';
+      cache.port = style;
+    }
   }
 
   // --- Layer Parallax (Geometric Shapes) ---
-  // Using translate3d for hardware acceleration
   if (layer1Target.value) {
-    // Back layer: moves slow (depth 20px)
-    const x = mouseX * -20;
-    const y = mouseY * -20 + scrollY * 0.1;
-    layer1Target.value.style.transform = `translate3d(${x.toFixed(1)}px, ${y.toFixed(1)}px, 20px)`;
+    const x = (mouseX * -20).toFixed(1);
+    const y = (mouseY * -20 + scrollY * 0.1).toFixed(1);
+    const style = `translate3d(${x}px, ${y}px, 20px)`;
+    if (cache.l1 !== style) {
+      layer1Target.value.style.transform = style;
+      layer1Target.value.style.willChange = 'transform';
+      cache.l1 = style;
+    }
   }
 
   if (layer2Target.value) {
-    // Middle layer: moves medium (depth 40px)
-    const x = mouseX * -40;
-    const y = mouseY * -40 + scrollY * 0.2;
-    layer2Target.value.style.transform = `translate3d(${x.toFixed(1)}px, ${y.toFixed(1)}px, 40px)`;
+    const x = (mouseX * -40).toFixed(1);
+    const y = (mouseY * -40 + scrollY * 0.2).toFixed(1);
+    const style = `translate3d(${x}px, ${y}px, 40px)`;
+    if (cache.l2 !== style) {
+      layer2Target.value.style.transform = style;
+      layer2Target.value.style.willChange = 'transform';
+      cache.l2 = style;
+    }
   }
 
   if (layer3Target.value) {
-    // Front layer (Image): moves fast but stable (depth 60px)
-    const x = mouseX * -60;
-    const y = mouseY * -60 + scrollY * 0.05;
-    layer3Target.value.style.transform = `translate3d(${x.toFixed(1)}px, ${y.toFixed(1)}px, 60px)`;
+    const x = (mouseX * -60).toFixed(1);
+    const y = (mouseY * -60 + scrollY * 0.05).toFixed(1);
+    const style = `translate3d(${x}px, ${y}px, 60px)`;
+    if (cache.l3 !== style) {
+      layer3Target.value.style.transform = style;
+      layer3Target.value.style.willChange = 'transform';
+      cache.l3 = style;
+    }
   }
 
   // --- Background Blobs ---
   if (blob1Target.value) {
-    const x = mouseX * -40;
-    const y = mouseY * -30 + scrollY * 0.08;
-    blob1Target.value.style.transform = `translate3d(${x.toFixed(1)}px, ${y.toFixed(1)}px, 0)`;
+    const x = (mouseX * -40).toFixed(1);
+    const y = (mouseY * -30 + scrollY * 0.08).toFixed(1);
+    const style = `translate3d(${x}px, ${y}px, 0)`;
+    if (cache.b1 !== style) {
+      blob1Target.value.style.transform = style;
+      blob1Target.value.style.willChange = 'transform';
+      cache.b1 = style;
+    }
   }
 
   if (blob2Target.value) {
-    const x = mouseX * 25;
-    const y = mouseY * 20 + scrollY * 0.12;
-    blob2Target.value.style.transform = `translate3d(${x.toFixed(1)}px, ${y.toFixed(1)}px, 0)`;
+    const x = (mouseX * 25).toFixed(1);
+    const y = (mouseY * 20 + scrollY * 0.12).toFixed(1);
+    const style = `translate3d(${x}px, ${y}px, 0)`;
+    if (cache.b2 !== style) {
+      blob2Target.value.style.transform = style;
+      blob2Target.value.style.willChange = 'transform';
+      cache.b2 = style;
+    }
   }
 
   mouseRaf = requestAnimationFrame(animate);
@@ -513,12 +556,13 @@ const initNameAnimation = () => {
 
   const letters = document.querySelectorAll('.ml7-name .letter');
 
-  animeAnimate(letters, {
+  anime({
+    targets: letters,
     opacity : [0, 1],
-    y       : ['1.5em', 0],
+    translateY: ['1.5em', 0],
     duration: 1000,
-    ease    : 'outExpo',
-    delay   : stagger(38),
+    easing  : 'easeOutExpo',
+    delay   : anime.stagger(38),
   });
 };
 
