@@ -338,9 +338,9 @@ onUnmounted(() => {
   <section
     id="projects"
     ref="sectionRef"
-    class="pt-16 sm:pt-20 pb-16 sm:pb-20 md:py-0 transition-colors relative"
+    class="pt-16 sm:pt-20 pb-16 sm:pb-20 md:py-0 transition-colors relative w-full"
   >
-    <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="w-full max-w-[1920px] mx-auto px-4 sm:px-6 md:px-8 lg:px-12 xl:px-16">
       <!-- Intro Text - Mobile Only -->
       <div class="md:hidden mb-8 sm:mb-10 text-center relative">
         <p
@@ -435,7 +435,7 @@ onUnmounted(() => {
 
         <!-- Stacked Cards Container -->
         <div
-          class="relative mx-auto max-w-85 sm:max-w-85"
+          class="relative mx-auto w-full max-w-[340px] sm:max-w-[400px]"
           style="perspective: 1800px; min-height: 500px"
           @touchstart="handleTouchStart"
           @touchmove="handleTouchMove"
