@@ -1,4 +1,4 @@
-﻿<script setup>
+<script setup>
 import {
   Github,
   Linkedin,
@@ -637,7 +637,7 @@ const scrollToAbout = () => {
 <template>
   <section
     id="home"
-    class="relative min-h-screen flex items-center overflow-hidden px-4 py-10 sm:px-6 md:p-6 md:pt-24"
+    class="relative min-h-screen flex items-center overflow-hidden px-3 py-6 sm:px-6 md:p-6 md:pt-24"
   >
     <!-- Background Elements -->
     <div
@@ -655,16 +655,16 @@ const scrollToAbout = () => {
 
     <div
       ref="heroContainerTarget"
-      class="max-w-6xl w-full mx-auto grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-12 items-center h-full will-change-transform origin-center"
+      class="max-w-6xl w-full mx-auto grid grid-cols-1 md:grid-cols-2 gap-2 md:gap-12 items-center h-full will-change-transform origin-center"
     >
       <!-- 3D Geometric Portrait (Left Side) -->
       <div
-        class="relative flex justify-center md:justify-end order-1 h-[220px] md:h-[400px] perspective-1000 group cursor-pointer md:pr-8"
+        class="relative flex justify-center md:justify-end order-1 h-[180px] md:h-[400px] perspective-1000 group cursor-pointer md:pr-8"
       >
         <!-- Main Portrait Wrapper -->
         <div
           ref="portraitTarget"
-          class="relative w-40 h-40 md:w-80 md:h-80 lg:w-96 lg:h-96 transform-style-3d transition-transform duration-75 ease-out will-change-transform"
+          class="relative w-36 h-36 md:w-80 md:h-80 lg:w-96 lg:h-96 transform-style-3d transition-transform duration-75 ease-out will-change-transform"
         >
           <!-- Back Layer: Large Hexagon Outline -->
           <div
@@ -697,45 +697,49 @@ const scrollToAbout = () => {
               class="absolute inset-0 bg-linear-to-t from-emerald-900/40 to-transparent"
             ></div>
           </div>
+        </div>
 
-          <!-- Floating Elements (Tech Icons) - Show fewer on mobile -->
-          <div
-            v-for="icon in techIcons"
-            :key="icon.name"
-            class="block absolute z-30 p-1 md:p-2 bg-white dark:bg-zinc-800 rounded-lg md:rounded-xl shadow-md md:shadow-xl animate-float"
-            :style="`${icon.pos} animation-delay: ${icon.delay}`"
-            :title="icon.name"
-          >
-            <svg
-              :viewBox="icon.icon.viewBox"
-              class="w-3 h-3 md:w-6 md:h-6 lg:w-8 lg:h-8"
-              :class="{
-                'dark:brightness-0 dark:invert': [
-                  'Mikrotik',
-                  'Express',
-                  'IoT',
-                ].includes(icon.name),
-              }"
-              xmlns="http://www.w3.org/2000/svg"
+        <!-- Floating Tech Icons — OUTSIDE preserve-3d context so they render in front -->
+        <div class="absolute inset-0 flex justify-center md:justify-end md:pr-8 pointer-events-none">
+          <div class="relative w-36 h-36 md:w-80 md:h-80 lg:w-96 lg:h-96 z-50">
+            <div
+              v-for="(icon, idx) in techIcons"
+              :key="icon.name"
+              class="pointer-events-auto block absolute p-1.5 md:p-2.5 bg-white/90 dark:bg-zinc-800/90 backdrop-blur-sm rounded-lg md:rounded-xl shadow-lg md:shadow-xl ring-1 ring-emerald-500/20 dark:ring-emerald-400/20 animate-float-orbit"
+              :style="`${icon.pos} --float-delay: ${icon.delay}; --float-offset: ${idx * 30}deg`"
+              :title="icon.name"
             >
-              <path
-                v-for="(path, i) in icon.icon.paths"
-                :key="i"
-                :d="path.d"
-                :fill="path.fill"
-                :fill-rule="path.fillRule"
-                :stroke="path.stroke"
-                :stroke-width="path.strokeWidth"
-              />
-            </svg>
+              <svg
+                :viewBox="icon.icon.viewBox"
+                class="w-4 h-4 md:w-6 md:h-6 lg:w-8 lg:h-8"
+                :class="{
+                  'dark:brightness-0 dark:invert': [
+                    'Mikrotik',
+                    'Express',
+                    'IoT',
+                  ].includes(icon.name),
+                }"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  v-for="(path, i) in icon.icon.paths"
+                  :key="i"
+                  :d="path.d"
+                  :fill="path.fill"
+                  :fill-rule="path.fillRule"
+                  :stroke="path.stroke"
+                  :stroke-width="path.strokeWidth"
+                />
+              </svg>
+            </div>
           </div>
         </div>
       </div>
 
       <!-- Text Side (Right) -->
-      <div class="text-center md:text-left order-2 z-10 md:pl-8">
+      <div class="text-center md:text-left order-2 z-10 md:pl-8 mt-0 md:mt-0">
         <div
-          class="inline-block px-2.5 py-1 mb-2 md:px-3 md:py-1.5 md:mb-6 rounded-full bg-emerald-100/50 dark:bg-emerald-900/30 border border-emerald-200/50 dark:border-emerald-800/50 backdrop-blur-sm"
+          class="inline-block px-2 py-0.5 mb-1 md:px-3 md:py-1.5 md:mb-6 rounded-full bg-emerald-100/50 dark:bg-emerald-900/30 border border-emerald-200/50 dark:border-emerald-800/50 backdrop-blur-sm"
         >
           <span
             class="text-[10px] md:text-sm font-semibold text-emerald-600 dark:text-emerald-300 tracking-wide uppercase"
@@ -745,7 +749,7 @@ const scrollToAbout = () => {
         </div>
 
         <h1
-          class="text-4xl md:text-6xl lg:text-7xl font-bold tracking-tight mb-4 md:mb-8 text-zinc-800 dark:text-white leading-[1.1]"
+          class="text-3xl md:text-6xl lg:text-7xl font-bold tracking-tight mb-2 md:mb-8 text-zinc-800 dark:text-white leading-[1.1]"
         >
           <span class="ml7-name flex flex-col">
             <span class="text-wrapper-name block">
@@ -762,7 +766,7 @@ const scrollToAbout = () => {
 
         <p
           id="hero-quote"
-          class="text-xs md:text-xl text-zinc-600 dark:text-zinc-300 mb-3 md:mb-8 md:max-w-lg leading-relaxed px-2 md:px-0"
+          class="text-[11px] md:text-xl text-zinc-600 dark:text-zinc-300 mb-2 md:mb-8 md:max-w-lg leading-relaxed px-2 md:px-0"
         >
           <span
             class="quote-text"
@@ -790,7 +794,7 @@ const scrollToAbout = () => {
         </div>
 
         <div
-          class="mt-3 md:mt-12 flex items-center justify-center md:justify-start gap-4 md:gap-0 md:space-x-6"
+          class="mt-2 md:mt-12 flex items-center justify-center md:justify-start gap-4 md:gap-0 md:space-x-6"
         >
           <a
             href="https://github.com/wildan-se"
@@ -846,8 +850,10 @@ const scrollToAbout = () => {
   animation-delay: 2s;
 }
 
-.animate-float {
-  animation: float 6s ease-in-out infinite;
+/* Enhanced floating animation — multi-axis orbit with glow pulse */
+.animate-float-orbit {
+  animation: float-orbit 5s ease-in-out infinite;
+  animation-delay: var(--float-delay, 0s);
 }
 
 @keyframes blob {
@@ -865,13 +871,22 @@ const scrollToAbout = () => {
   }
 }
 
-@keyframes float {
-  0%,
-  100% {
-    transform: translateY(0px);
+@keyframes float-orbit {
+  0%, 100% {
+    transform: translateY(0px) translateX(0px) scale(1);
+    box-shadow: 0 4px 15px rgba(16, 185, 129, 0.15);
+  }
+  25% {
+    transform: translateY(-10px) translateX(4px) scale(1.05);
+    box-shadow: 0 8px 25px rgba(16, 185, 129, 0.25);
   }
   50% {
-    transform: translateY(-15px);
+    transform: translateY(-18px) translateX(-3px) scale(1.02);
+    box-shadow: 0 12px 30px rgba(16, 185, 129, 0.3);
+  }
+  75% {
+    transform: translateY(-8px) translateX(5px) scale(1.06);
+    box-shadow: 0 6px 20px rgba(16, 185, 129, 0.2);
   }
 }
 
@@ -914,8 +929,14 @@ const scrollToAbout = () => {
 
 /* Fixed height: typewriter chars won't push layout below */
 #hero-quote {
-  min-height: 4.875em;     /* reserves 3 lines of leading-relaxed (1.625) */
-  display: block;          /* normal block, height won't collapse         */
+  min-height: 3em;           /* mobile: 2 lines approx */
+  display: block;
+}
+
+@media (min-width: 768px) {
+  #hero-quote {
+    min-height: 4.875em;     /* desktop: reserves 3 lines */
+  }
 }
 
 .quote-text {
