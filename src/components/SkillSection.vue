@@ -520,20 +520,29 @@ onUnmounted(() => {
               class="neural-line-bg"
               d="M 100 0 C 180 150, 20 250, 100 400 C 180 550, 20 650, 100 800 C 180 950, 20 1000, 100 1000" 
               fill="none" 
-              stroke="rgba(99, 102, 241, 0.1)" 
+              stroke="rgba(16, 185, 129, 0.15)" 
               stroke-width="4"
               vector-effect="non-scaling-stroke"
             />
             <!-- Glowing active line, animated via offset -->
             <path 
-              class="neural-line-path drop-shadow-[0_0_8px_rgba(99,102,241,0.8)]"
+              class="neural-line-path drop-shadow-[0_0_8px_rgba(16,185,129,0.8)]"
               d="M 100 0 C 180 150, 20 250, 100 400 C 180 550, 20 650, 100 800 C 180 950, 20 1000, 100 1000" 
               fill="none" 
-              stroke="#818cf8" 
+              stroke="url(#neuralGradient)" 
               stroke-width="5"
               stroke-linecap="round"
               vector-effect="non-scaling-stroke"
             />
+            <!-- Gradient definition for green-to-white -->
+            <defs>
+              <linearGradient id="neuralGradient" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="0%" stop-color="#ffffff" stop-opacity="0.9" />
+                <stop offset="30%" stop-color="#34d399" stop-opacity="1" />
+                <stop offset="70%" stop-color="#10b981" stop-opacity="1" />
+                <stop offset="100%" stop-color="#ffffff" stop-opacity="0.7" />
+              </linearGradient>
+            </defs>
           </svg>
         </div>
 

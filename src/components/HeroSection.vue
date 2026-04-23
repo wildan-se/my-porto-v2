@@ -7,7 +7,7 @@ import {
   Instagram,
 } from "lucide-vue-next";
 import { useDark } from "@vueuse/core";
-import { ref, onMounted, onUnmounted } from "vue";
+import { ref, reactive, onMounted, onUnmounted } from "vue";
 import anime from "animejs/lib/anime.es.js";
 
 const isDark = useDark();
@@ -20,6 +20,7 @@ const layer2Target = ref(null);
 const layer3Target = ref(null);
 const blob1Target = ref(null);
 const blob2Target = ref(null);
+const portraitWrapperRef = ref(null);
 
 // SVG Paths for Tech Stack
 const techSvgs = {
@@ -396,6 +397,133 @@ const techIcons = [
   },
 ];
 
+// ── Drag State for Tech Icons ─────────────────────────────────────────
+// RAF-based drag approach for buttery-smooth 60fps dragging.
+// CSS animation is fully disabled during drag, then gracefully restored.
+const dragState = reactive({
+  activeIdx: -1,
+  startX: 0,
+  startY: 0,
+  isDragging: false,
+  currentX: 0,
+  currentY: 0,
+});
+
+// Persist each icon's dropped offset so it stays after release
+const iconOffsets = reactive(
+  techIcons.map(() => ({ x: 0, y: 0 }))
+);
+
+// Refs for icon DOM elements
+const iconRefs = ref([]);
+let dragRaf = null;
+
+const getPointerPos = (e) => {
+  if (e.touches && e.touches.length > 0) {
+    return { x: e.touches[0].clientX, y: e.touches[0].clientY };
+  }
+  return { x: e.clientX, y: e.clientY };
+};
+
+// RAF loop for smooth drag rendering
+const dragLoop = () => {
+  if (dragState.activeIdx < 0) return;
+  const el = iconRefs.value[dragState.activeIdx];
+  if (el) {
+    el.style.transform = `translate(${dragState.currentX}px, ${dragState.currentY}px) scale(1.15) rotate(${dragState.currentX * 0.02}deg)`;
+  }
+  dragRaf = requestAnimationFrame(dragLoop);
+};
+
+const onIconPointerDown = (e, idx) => {
+  e.preventDefault();
+  e.stopPropagation();
+  const pos = getPointerPos(e);
+  dragState.activeIdx = idx;
+  dragState.startX = pos.x - iconOffsets[idx].x;
+  dragState.startY = pos.y - iconOffsets[idx].y;
+  dragState.currentX = iconOffsets[idx].x;
+  dragState.currentY = iconOffsets[idx].y;
+  dragState.isDragging = true;
+
+  const el = iconRefs.value[idx];
+  if (el) {
+    // Kill CSS animation completely — no fight with JS
+    el.style.animationName = 'none';
+    el.style.animationPlayState = 'paused';
+    // No transition during drag for instant response
+    el.style.transition = 'none';
+    el.style.zIndex = '9999';
+    el.style.cursor = 'grabbing';
+    el.style.filter = 'drop-shadow(0 0 12px rgba(16, 185, 129, 0.6))';
+    el.style.transform = `translate(${iconOffsets[idx].x}px, ${iconOffsets[idx].y}px) scale(1.15)`;
+  }
+
+  // Start RAF drag loop
+  if (dragRaf) cancelAnimationFrame(dragRaf);
+  dragRaf = requestAnimationFrame(dragLoop);
+
+  window.addEventListener('mousemove', onIconPointerMove, { passive: false });
+  window.addEventListener('mouseup', onIconPointerUp);
+  window.addEventListener('touchmove', onIconPointerMove, { passive: false });
+  window.addEventListener('touchend', onIconPointerUp);
+};
+
+const onIconPointerMove = (e) => {
+  if (dragState.activeIdx < 0) return;
+  e.preventDefault();
+  const pos = getPointerPos(e);
+  const dx = pos.x - dragState.startX;
+  const dy = pos.y - dragState.startY;
+
+  // Update position for RAF loop
+  dragState.currentX = dx;
+  dragState.currentY = dy;
+  iconOffsets[dragState.activeIdx].x = dx;
+  iconOffsets[dragState.activeIdx].y = dy;
+};
+
+const onIconPointerUp = () => {
+  const idx = dragState.activeIdx;
+  if (idx < 0) return;
+
+  // Stop RAF loop
+  if (dragRaf) {
+    cancelAnimationFrame(dragRaf);
+    dragRaf = null;
+  }
+
+  const el = iconRefs.value[idx];
+  if (el) {
+    // Smooth spring-back with bounce effect
+    el.style.transition = 'transform 0.5s cubic-bezier(0.25, 1.5, 0.5, 1), filter 0.4s ease, box-shadow 0.4s ease';
+    el.style.transform = `translate(${iconOffsets[idx].x}px, ${iconOffsets[idx].y}px) scale(1) rotate(0deg)`;
+    el.style.filter = '';
+    el.style.cursor = 'grab';
+
+    // After spring transition, re-enable CSS float animation from new position
+    setTimeout(() => {
+      if (el) {
+        el.style.setProperty('--drag-x', `${iconOffsets[idx].x}px`);
+        el.style.setProperty('--drag-y', `${iconOffsets[idx].y}px`);
+        el.style.transition = '';
+        el.style.transform = '';
+        el.style.animationName = '';
+        el.style.animationPlayState = '';
+        el.style.zIndex = '';
+      }
+    }, 550);
+  }
+
+  dragState.activeIdx = -1;
+  dragState.isDragging = false;
+
+  window.removeEventListener('mousemove', onIconPointerMove);
+  window.removeEventListener('mouseup', onIconPointerUp);
+  window.removeEventListener('touchmove', onIconPointerMove);
+  window.removeEventListener('touchend', onIconPointerUp);
+};
+
 // ... rest of script ...
 // (Retaining existing logic, just verifying imports and setup)
 
@@ -623,6 +751,7 @@ onUnmounted(() => {
   window.removeEventListener("mousemove", onMouseMove);
   window.removeEventListener("scroll", onScroll);
   cancelAnimationFrame(mouseRaf);
+  if (dragRaf) cancelAnimationFrame(dragRaf);
   if (typewriterTimer) clearTimeout(typewriterTimer);
 });
 
@@ -659,6 +788,7 @@ const scrollToAbout = () => {
     >
       <!-- 3D Geometric Portrait (Left Side) -->
       <div
+        ref="portraitWrapperRef"
         class="relative flex justify-center md:justify-end order-1 h-[180px] md:h-[400px] perspective-1000 group cursor-pointer md:pr-8"
       >
         <!-- Main Portrait Wrapper -->
@@ -698,46 +828,10 @@ const scrollToAbout = () => {
             ></div>
           </div>
         </div>
-
-        <!-- Floating Tech Icons — OUTSIDE preserve-3d context so they render in front -->
-        <div class="absolute inset-0 flex justify-center md:justify-end md:pr-8 pointer-events-none">
-          <div class="relative w-36 h-36 md:w-80 md:h-80 lg:w-96 lg:h-96 z-50">
-            <div
-              v-for="(icon, idx) in techIcons"
-              :key="icon.name"
-              class="pointer-events-auto block absolute p-1.5 md:p-2.5 bg-white/90 dark:bg-zinc-800/90 backdrop-blur-sm rounded-lg md:rounded-xl shadow-lg md:shadow-xl ring-1 ring-emerald-500/20 dark:ring-emerald-400/20 animate-float-orbit"
-              :style="`${icon.pos} --float-delay: ${icon.delay}; --float-offset: ${idx * 30}deg`"
-              :title="icon.name"
-            >
-              <svg
-                :viewBox="icon.icon.viewBox"
-                class="w-4 h-4 md:w-6 md:h-6 lg:w-8 lg:h-8"
-                :class="{
-                  'dark:brightness-0 dark:invert': [
-                    'Mikrotik',
-                    'Express',
-                    'IoT',
-                  ].includes(icon.name),
-                }"
-                xmlns="http://www.w3.org/2000/svg"
-              >
-                <path
-                  v-for="(path, i) in icon.icon.paths"
-                  :key="i"
-                  :d="path.d"
-                  :fill="path.fill"
-                  :fill-rule="path.fillRule"
-                  :stroke="path.stroke"
-                  :stroke-width="path.strokeWidth"
-                />
-              </svg>
-            </div>
-          </div>
-        </div>
       </div>
 
       <!-- Text Side (Right) -->
-      <div class="text-center md:text-left order-2 z-10 md:pl-8 mt-0 md:mt-0">
+      <div class="text-center md:text-left order-2 md:pl-8 mt-0 md:mt-0">
         <div
           class="inline-block px-2 py-0.5 mb-1 md:px-3 md:py-1.5 md:mb-6 rounded-full bg-emerald-100/50 dark:bg-emerald-900/30 border border-emerald-200/50 dark:border-emerald-800/50 backdrop-blur-sm"
         >
@@ -821,6 +915,49 @@ const scrollToAbout = () => {
       </div>
     </div>
 
+    <!-- ★ Floating Tech Icons — Section-level overlay, ABOVE everything ★ -->
+    <div class="absolute inset-0 pointer-events-none" style="z-index: 9999;">
+      <div class="max-w-6xl w-full mx-auto grid grid-cols-1 md:grid-cols-2 gap-2 md:gap-12 items-center h-full">
+        <div class="relative flex justify-center md:justify-end h-[180px] md:h-[400px] md:pr-8">
+          <div class="relative w-36 h-36 md:w-80 md:h-80 lg:w-96 lg:h-96">
+            <div
+              v-for="(icon, idx) in techIcons"
+              :key="'overlay-' + icon.name"
+              :ref="(el) => { if (el) iconRefs[idx] = el }"
+              class="pointer-events-auto block absolute p-1.5 md:p-2.5 bg-white/90 dark:bg-zinc-800/90 backdrop-blur-sm rounded-lg md:rounded-xl shadow-lg md:shadow-xl ring-1 ring-emerald-500/20 dark:ring-emerald-400/20 animate-float-orbit cursor-grab select-none touch-none"
+              :style="`${icon.pos} --float-delay: ${icon.delay}; --float-offset: ${idx * 30}deg; --drag-x: ${iconOffsets[idx].x}px; --drag-y: ${iconOffsets[idx].y}px;`"
+              :title="icon.name"
+              @mousedown="onIconPointerDown($event, idx)"
+              @touchstart="onIconPointerDown($event, idx)"
+            >
+              <svg
+                :viewBox="icon.icon.viewBox"
+                class="w-4 h-4 md:w-6 md:h-6 lg:w-8 lg:h-8 pointer-events-none"
+                :class="{
+                  'dark:brightness-0 dark:invert': [
+                    'Mikrotik',
+                    'Express',
+                    'IoT',
+                  ].includes(icon.name),
+                }"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  v-for="(path, i) in icon.icon.paths"
+                  :key="i"
+                  :d="path.d"
+                  :fill="path.fill"
+                  :fill-rule="path.fillRule"
+                  :stroke="path.stroke"
+                  :stroke-width="path.strokeWidth"
+                />
+              </svg>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
     <!-- Scroll Down Indicator -->
     <div
       class="absolute bottom-6 sm:bottom-10 left-1/2 transform -translate-x-1/2 animate-bounce cursor-pointer z-20"
@@ -850,10 +987,24 @@ const scrollToAbout = () => {
   animation-delay: 2s;
 }
 
-/* Enhanced floating animation — multi-axis orbit with glow pulse */
+/* Enhanced floating animation — gentle orbit with glow pulse
+   Uses --drag-x / --drag-y CSS props so the animation continues
+   from wherever the user dropped the icon.                      */
 .animate-float-orbit {
   animation: float-orbit 5s ease-in-out infinite;
   animation-delay: var(--float-delay, 0s);
+  transition: filter 0.3s ease, box-shadow 0.3s ease;
+  z-index: 999; /* Always in front */
+  will-change: transform;
+}
+
+.animate-float-orbit:hover {
+  box-shadow: 0 8px 25px rgba(16, 185, 129, 0.35);
+  filter: drop-shadow(0 0 6px rgba(16, 185, 129, 0.4));
+}
+
+.animate-float-orbit:active {
+  cursor: grabbing;
 }
 
 @keyframes blob {
@@ -873,20 +1024,20 @@ const scrollToAbout = () => {
 
 @keyframes float-orbit {
   0%, 100% {
-    transform: translateY(0px) translateX(0px) scale(1);
+    transform: translate(var(--drag-x, 0px), var(--drag-y, 0px)) scale(1);
     box-shadow: 0 4px 15px rgba(16, 185, 129, 0.15);
   }
   25% {
-    transform: translateY(-10px) translateX(4px) scale(1.05);
-    box-shadow: 0 8px 25px rgba(16, 185, 129, 0.25);
+    transform: translate(calc(var(--drag-x, 0px) + 3px), calc(var(--drag-y, 0px) - 8px)) scale(1.03);
+    box-shadow: 0 8px 25px rgba(16, 185, 129, 0.22);
   }
   50% {
-    transform: translateY(-18px) translateX(-3px) scale(1.02);
-    box-shadow: 0 12px 30px rgba(16, 185, 129, 0.3);
+    transform: translate(calc(var(--drag-x, 0px) - 2px), calc(var(--drag-y, 0px) - 14px)) scale(1.01);
+    box-shadow: 0 12px 30px rgba(16, 185, 129, 0.28);
   }
   75% {
-    transform: translateY(-8px) translateX(5px) scale(1.06);
-    box-shadow: 0 6px 20px rgba(16, 185, 129, 0.2);
+    transform: translate(calc(var(--drag-x, 0px) + 4px), calc(var(--drag-y, 0px) - 6px)) scale(1.04);
+    box-shadow: 0 6px 20px rgba(16, 185, 129, 0.18);
   }
 }
 
