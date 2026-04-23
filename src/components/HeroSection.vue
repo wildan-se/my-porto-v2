@@ -637,7 +637,7 @@ const scrollToAbout = () => {
 <template>
   <section
     id="home"
-    class="relative min-h-screen flex items-center overflow-hidden px-4 py-10 sm:px-6 md:p-6 md:pt-24"
+    class="relative min-h-screen flex items-center overflow-hidden px-4 py-6 sm:px-6 sm:py-10 md:p-6 md:pt-24"
   >
     <!-- Background Elements -->
     <div
@@ -655,85 +655,93 @@ const scrollToAbout = () => {
 
     <div
       ref="heroContainerTarget"
-      class="max-w-6xl w-full mx-auto grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-12 items-center h-full will-change-transform origin-center"
+      class="max-w-6xl w-full mx-auto grid grid-cols-1 md:grid-cols-2 gap-3 sm:gap-4 md:gap-12 items-center justify-items-center md:justify-items-stretch h-full will-change-transform origin-center"
     >
       <!-- 3D Geometric Portrait (Left Side) -->
       <div
-        class="relative flex justify-center md:justify-end order-1 h-[220px] md:h-[400px] perspective-1000 group cursor-pointer md:pr-8"
+        class="relative flex items-end justify-center md:items-center md:justify-end order-1 h-[200px] md:h-[400px] perspective-1000 group md:pr-8 pb-2 md:pb-0"
       >
-        <!-- Main Portrait Wrapper -->
-        <div
-          ref="portraitTarget"
-          class="relative w-40 h-40 md:w-80 md:h-80 lg:w-96 lg:h-96 transform-style-3d transition-transform duration-75 ease-out will-change-transform"
-        >
-          <!-- Back Layer: Large Hexagon Outline -->
+        <!-- Sized box — hosts both the 3D portrait AND the icon overlay.
+             Icons MUST sit in a sibling OUTSIDE the 3D context, because
+             layer3 (image) uses translateZ(60px) which wins over plain z-index. -->
+        <div class="relative w-36 h-36 sm:w-40 sm:h-40 md:w-80 md:h-80 lg:w-96 lg:h-96">
+          <!-- 3D tilt portrait -->
           <div
-            ref="layer1Target"
-            class="absolute inset-0 border-2 border-emerald-500/30 rounded-3xl will-change-transform"
+            ref="portraitTarget"
+            class="absolute inset-0 transform-style-3d transition-transform duration-75 ease-out will-change-transform cursor-pointer"
           >
-            <div class="w-full h-full transform rotate-12 scale-110"></div>
-          </div>
-
-          <!-- Middle Layer: Solid Shape -->
-          <div
-            ref="layer2Target"
-            class="absolute inset-4 bg-linear-to-br from-emerald-600 to-lime-600 rounded-3xl opacity-20 will-change-transform"
-          >
-            <div class="w-full h-full transform -rotate-6"></div>
-          </div>
-
-          <!-- Front Layer: Image Mask -->
-          <div
-            ref="layer3Target"
-            class="absolute inset-0 z-20 overflow-hidden rounded-[2rem] shadow-2xl border-4 border-white dark:border-zinc-800 transform-style-3d bg-zinc-200 will-change-transform"
-          >
-            <img
-              src="/src/assets/myfoto.webp"
-              alt="Foto Profil Muhammad Wildan Septiano - Full Stack Developer"
-              class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
-            />
-            <!-- Overlay Gradient -->
+            <!-- Back Layer: Large Hexagon Outline -->
             <div
-              class="absolute inset-0 bg-linear-to-t from-emerald-900/40 to-transparent"
-            ></div>
+              ref="layer1Target"
+              class="absolute inset-0 border-2 border-emerald-500/30 rounded-3xl will-change-transform"
+            >
+              <div class="w-full h-full transform rotate-12 scale-110"></div>
+            </div>
+
+            <!-- Middle Layer: Solid Shape -->
+            <div
+              ref="layer2Target"
+              class="absolute inset-4 bg-linear-to-br from-emerald-600 to-lime-600 rounded-3xl opacity-20 will-change-transform"
+            >
+              <div class="w-full h-full transform -rotate-6"></div>
+            </div>
+
+            <!-- Front Layer: Image Mask -->
+            <div
+              ref="layer3Target"
+              class="absolute inset-0 z-20 overflow-hidden rounded-4xl shadow-2xl border-4 border-white dark:border-zinc-800 transform-style-3d bg-zinc-200 will-change-transform"
+            >
+              <img
+                src="/src/assets/myfoto.webp"
+                alt="Foto Profil Muhammad Wildan Septiano - Full Stack Developer"
+                class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
+              />
+              <!-- Overlay Gradient -->
+              <div
+                class="absolute inset-0 bg-linear-to-t from-emerald-900/40 to-transparent"
+              ></div>
+            </div>
           </div>
 
-          <!-- Floating Elements (Tech Icons) - Show fewer on mobile -->
-          <div
-            v-for="icon in techIcons"
-            :key="icon.name"
-            class="block absolute z-30 p-1 md:p-2 bg-white dark:bg-zinc-800 rounded-lg md:rounded-xl shadow-md md:shadow-xl animate-float"
-            :style="`${icon.pos} animation-delay: ${icon.delay}`"
-            :title="icon.name"
-          >
-            <svg
-              :viewBox="icon.icon.viewBox"
-              class="w-3 h-3 md:w-6 md:h-6 lg:w-8 lg:h-8"
-              :class="{
-                'dark:brightness-0 dark:invert': [
-                  'Mikrotik',
-                  'Express',
-                  'IoT',
-                ].includes(icon.name),
-              }"
-              xmlns="http://www.w3.org/2000/svg"
+          <!-- Floating Tech Icons — sibling of the 3D container, flat 2D stacking,
+               always in front of the image regardless of parallax Z translation. -->
+          <div class="absolute inset-0 z-40 pointer-events-none">
+            <div
+              v-for="icon in techIcons"
+              :key="icon.name"
+              class="pointer-events-auto block absolute p-1 md:p-2 bg-white dark:bg-zinc-800 rounded-lg md:rounded-xl shadow-md md:shadow-xl animate-float"
+              :style="`${icon.pos} animation-delay: ${icon.delay}`"
+              :title="icon.name"
             >
-              <path
-                v-for="(path, i) in icon.icon.paths"
-                :key="i"
-                :d="path.d"
-                :fill="path.fill"
-                :fill-rule="path.fillRule"
-                :stroke="path.stroke"
-                :stroke-width="path.strokeWidth"
-              />
-            </svg>
+              <svg
+                :viewBox="icon.icon.viewBox"
+                class="w-3 h-3 md:w-6 md:h-6 lg:w-8 lg:h-8"
+                :class="{
+                  'dark:brightness-0 dark:invert': [
+                    'Mikrotik',
+                    'Express',
+                    'IoT',
+                  ].includes(icon.name),
+                }"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  v-for="(path, i) in icon.icon.paths"
+                  :key="i"
+                  :d="path.d"
+                  :fill="path.fill"
+                  :fill-rule="path.fillRule"
+                  :stroke="path.stroke"
+                  :stroke-width="path.strokeWidth"
+                />
+              </svg>
+            </div>
           </div>
         </div>
       </div>
 
       <!-- Text Side (Right) -->
-      <div class="text-center md:text-left order-2 z-10 md:pl-8">
+      <div class="text-center md:text-left order-2 z-10 md:pl-8 w-full max-w-md md:max-w-none mx-auto md:mx-0">
         <div
           class="inline-block px-2.5 py-1 mb-2 md:px-3 md:py-1.5 md:mb-6 rounded-full bg-emerald-100/50 dark:bg-emerald-900/30 border border-emerald-200/50 dark:border-emerald-800/50 backdrop-blur-sm"
         >
@@ -745,7 +753,7 @@ const scrollToAbout = () => {
         </div>
 
         <h1
-          class="text-4xl md:text-6xl lg:text-7xl font-bold tracking-tight mb-4 md:mb-8 text-zinc-800 dark:text-white leading-[1.1]"
+          class="text-[2rem] sm:text-4xl md:text-6xl lg:text-7xl font-bold tracking-tight mb-3 md:mb-8 text-zinc-800 dark:text-white leading-[1.05] md:leading-[1.1]"
         >
           <span class="ml7-name flex flex-col">
             <span class="text-wrapper-name block">
@@ -762,7 +770,7 @@ const scrollToAbout = () => {
 
         <p
           id="hero-quote"
-          class="text-xs md:text-xl text-zinc-600 dark:text-zinc-300 mb-3 md:mb-8 md:max-w-lg leading-relaxed px-2 md:px-0"
+          class="text-[11px] sm:text-xs md:text-xl text-zinc-600 dark:text-zinc-300 mb-3 md:mb-8 md:max-w-lg leading-snug md:leading-relaxed px-1 md:px-0"
         >
           <span
             class="quote-text"
@@ -776,21 +784,21 @@ const scrollToAbout = () => {
           <a
             href="/cv_muhammad_wildan_septiano.pdf"
             target="_blank"
-            class="px-4 py-2 md:px-8 md:py-3.5 bg-zinc-900 text-white rounded-full font-medium hover:bg-zinc-800 hover:-translate-y-0.5 transition-all dark:bg-emerald-600 dark:hover:bg-emerald-500 flex items-center gap-1.5 shadow-md md:shadow-xl shadow-emerald-500/20 text-xs md:text-base"
+            class="px-3.5 py-2 md:px-8 md:py-3.5 bg-zinc-900 text-white rounded-full font-medium hover:bg-zinc-800 hover:-translate-y-0.5 transition-all dark:bg-emerald-600 dark:hover:bg-emerald-500 inline-flex items-center gap-1.5 shadow-md md:shadow-xl shadow-emerald-500/20 text-[11px] sm:text-xs md:text-base whitespace-nowrap"
           >
-            <FileText class="w-4 h-4 sm:w-5 sm:h-5" />
+            <FileText class="w-3.5 h-3.5 sm:w-4 sm:h-4 md:w-5 md:h-5" />
             <span>Download CV</span>
           </a>
           <a
             href="#contact"
-            class="px-4 py-2 md:px-8 md:py-3.5 glass-card text-zinc-700 rounded-full font-medium hover:bg-white/80 transition-colors dark:text-zinc-300 dark:hover:bg-zinc-800/80 text-xs md:text-base"
+            class="px-3.5 py-2 md:px-8 md:py-3.5 glass-card text-zinc-700 rounded-full font-medium hover:bg-white/80 transition-colors dark:text-zinc-300 dark:hover:bg-zinc-800/80 text-[11px] sm:text-xs md:text-base whitespace-nowrap"
           >
             Contact Me
           </a>
         </div>
 
         <div
-          class="mt-3 md:mt-12 flex items-center justify-center md:justify-start gap-4 md:gap-0 md:space-x-6"
+          class="mt-4 md:mt-12 flex items-center justify-center md:justify-start gap-5 md:gap-0 md:space-x-6"
         >
           <a
             href="https://github.com/wildan-se"
