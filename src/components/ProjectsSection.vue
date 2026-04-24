@@ -646,7 +646,7 @@ onUnmounted(() => {
             >
               <span
                 aria-hidden="true"
-                class="text-7xl md:text-8xl font-bold text-zinc-300 dark:text-zinc-800/50 block -mb-8"
+                class="text-7xl md:text-8xl font-bold text-zinc-500 dark:text-zinc-500 block -mb-8"
                 >00</span
               >
               <h3
@@ -741,10 +741,13 @@ onUnmounted(() => {
                     >
                   </div>
                   <button
-                    class="p-2 rounded-full border border-zinc-200 dark:border-zinc-700 hover:border-emerald-500 dark:hover:border-emerald-400 transition-all duration-300 group-hover:scale-110 group-hover:rotate-12"
+                    type="button"
+                    :aria-label="`Buka preview project ${project.title}`"
+                    class="p-2 rounded-full border border-zinc-300 dark:border-zinc-700 hover:border-emerald-600 dark:hover:border-emerald-400 transition-all duration-300 group-hover:scale-110 group-hover:rotate-12 focus:outline-none focus:ring-2 focus:ring-emerald-500/50"
                   >
                     <ExternalLink
-                      class="w-3.5 h-3.5 text-zinc-500 dark:text-zinc-400 group-hover:text-emerald-600 dark:group-hover:text-emerald-400 transition-colors"
+                      aria-hidden="true"
+                      class="w-3.5 h-3.5 text-zinc-600 dark:text-zinc-400 group-hover:text-emerald-700 dark:group-hover:text-emerald-400 transition-colors"
                     />
                   </button>
                 </div>
