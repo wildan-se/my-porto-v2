@@ -6,11 +6,9 @@ import {
   FileText,
   Instagram,
 } from "lucide-vue-next";
-import { useDark } from "@vueuse/core";
-import { ref, onMounted, onUnmounted } from "vue";
-import anime from "animejs/lib/anime.es.js";
-
-const isDark = useDark();
+import { ref, computed, onMounted, onUnmounted } from "vue";
+// Served from public/ so the URL is stable and can be preloaded from index.html.
+const myFotoUrl = "/myfoto.webp";
 
 // Refs for direct DOM manipulation (Performance Optimization)
 const heroContainerTarget = ref(null);
@@ -543,28 +541,24 @@ const animate = () => {
   mouseRaf = requestAnimationFrame(animate);
 };
 
-// --- Name Animation: Elegant stagger reveal ────────────────────────────
-// opacity + y only = pure compositor = zero repaint, zero lag
-const initNameAnimation = () => {
-  const nameEls = document.querySelectorAll('.ml7-name .letters');
-  if (!nameEls.length) return;
-
-  // Process all lines of the name
-  nameEls.forEach(el => {
-    el.innerHTML = el.textContent.replace(/\S/g, "<span class='letter'>$&</span>");
-  });
-
-  const letters = document.querySelectorAll('.ml7-name .letter');
-
-  anime({
-    targets: letters,
-    opacity : [0, 1],
-    translateY: ['1.5em', 0],
-    duration: 1000,
-    easing  : 'easeOutExpo',
-    delay   : anime.stagger(38),
-  });
-};
+// --- Name Animation: CSS-only stagger reveal ──────────────────────────
+// Replaces animejs (saves ~17 KiB bundle). Each letter gets an inline
+// animation-delay; CSS keyframe handles the opacity + translateY.
+const nameLines = [
+  { text: "Muhammad", cls: "" },
+  { text: "Wildan", cls: "text-emerald-500 dark:text-emerald-400" },
+  { text: "Septiano", cls: "" },
+];
+const letters = computed(() => {
+  let i = 0;
+  return nameLines.map((line) => ({
+    cls: line.cls,
+    chars: Array.from(line.text).map((ch) => ({
+      ch,
+      delay: `${i++ * 38}ms`,
+    })),
+  }));
+});
 
 
 // --- Quote: Typewriter Effect (pure JS — zero animejs overhead)
@@ -615,7 +609,6 @@ onMounted(() => {
   window.addEventListener("mousemove", onMouseMove, { passive: true });
   window.addEventListener("scroll", onScroll, { passive: true });
   mouseRaf = requestAnimationFrame(animate);
-  initNameAnimation();
   initQuoteAnimation();
 });
 
@@ -692,8 +685,13 @@ const scrollToAbout = () => {
               class="absolute inset-0 z-20 overflow-hidden rounded-4xl shadow-2xl border-4 border-white dark:border-zinc-800 transform-style-3d bg-zinc-200 will-change-transform"
             >
               <img
-                src="/src/assets/myfoto.webp"
+                :src="myFotoUrl"
                 alt="Foto Profil Muhammad Wildan Septiano - Full Stack Developer"
+                width="384"
+                height="384"
+                fetchpriority="high"
+                loading="eager"
+                decoding="async"
                 class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
               />
               <!-- Overlay Gradient -->
@@ -755,15 +753,21 @@ const scrollToAbout = () => {
         <h1
           class="text-[2rem] sm:text-4xl md:text-6xl lg:text-7xl font-bold tracking-tight mb-3 md:mb-8 text-zinc-800 dark:text-white leading-[1.05] md:leading-[1.1]"
         >
-          <span class="ml7-name flex flex-col">
-            <span class="text-wrapper-name block">
-              <span class="letters">Muhammad</span>
-            </span>
-            <span class="text-wrapper-name block text-emerald-500 dark:text-emerald-400">
-              <span class="letters">Wildan</span>
-            </span>
-            <span class="text-wrapper-name block">
-              <span class="letters">Septiano</span>
+          <span class="ml7-name flex flex-col" aria-label="Muhammad Wildan Septiano">
+            <span
+              v-for="(line, i) in letters"
+              :key="i"
+              class="text-wrapper-name block"
+              :class="line.cls"
+              aria-hidden="true"
+            >
+              <span
+                v-for="(c, j) in line.chars"
+                :key="j"
+                class="letter"
+                :style="{ animationDelay: c.delay }"
+                >{{ c.ch }}</span
+              >
             </span>
           </span>
         </h1>
@@ -898,11 +902,29 @@ const scrollToAbout = () => {
      Opacity animation sudah cukup menyembunyikan efek bleed. */
 }
 
-/* :deep() required: .letter injected via innerHTML */
-.ml7-name :deep(.letter) {
+/* CSS-only stagger reveal — each letter gets an inline animation-delay */
+.ml7-name .letter {
   display: inline-block;
   color: inherit;
+  opacity: 0;
+  transform: translateY(1.5em);
+  animation: letter-reveal 1s cubic-bezier(0.19, 1, 0.22, 1) forwards;
   will-change: transform, opacity;
+}
+
+@keyframes letter-reveal {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ml7-name .letter {
+    opacity: 1 !important;
+    transform: none !important;
+    animation: none !important;
+  }
 }
 
 

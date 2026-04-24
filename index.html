@@ -57,14 +57,32 @@
       property="twitter:image"
       content="https://wlsedev.netlify.app/assets/banner-web-anda.png"
     />
-    <!-- Google Fonts: Inter -->
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap"
-      rel="stylesheet"
-    />
     <meta name="google-site-verification" content="6yUY9_oJhB-6Glba4sAPhN0yxaYQzVfg1YvvY7ERnzQ" />
+    <meta name="theme-color" content="#10b981" />
+
+    <!-- LCP image preload — hero portrait lives in /public/ so the URL is stable
+         across builds. fetchpriority=high signals this resource is critical. -->
+    <link rel="preload" as="image" href="/myfoto.webp" fetchpriority="high" type="image/webp" />
+
+    <!-- Critical inline CSS — paints page shell before bundled CSS loads,
+         eliminates FOUC/CLS during the initial 200–400ms. Kept under 1 KiB. -->
+    <style>
+      :root { color-scheme: light dark; }
+      html, body { margin: 0; padding: 0; }
+      body {
+        font-family: Inter, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
+        background: #fafafa;
+        color: #18181b;
+        min-height: 100vh;
+      }
+      @media (prefers-color-scheme: dark) {
+        body { background: #09090b; color: #fafafa; }
+      }
+      #app { min-height: 100vh; }
+      #home { min-height: 100vh; display: flex; align-items: center; }
+    </style>
   </head>
 
   <body class="font-sans antialiased">
