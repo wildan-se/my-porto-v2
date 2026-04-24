@@ -61,7 +61,7 @@ const projects = [
     demo: "#",
     code: "#",
     color: "bg-emerald-500", // Card header color
-    accent: "text-emerald-500",
+    accent: "text-emerald-700 dark:text-emerald-400",
     category: "Web App",
   },
   {
@@ -85,7 +85,7 @@ const projects = [
     demo: "#",
     code: "#",
     color: "bg-emerald-500",
-    accent: "text-emerald-500",
+    accent: "text-emerald-700 dark:text-emerald-400",
     category: "Personal",
   },
   {
@@ -125,7 +125,7 @@ const projects = [
     demo: "#",
     code: "#",
     color: "bg-lime-500",
-    accent: "text-lime-500",
+    accent: "text-lime-700 dark:text-lime-400",
     category: "Personal",
   },
   {
@@ -180,7 +180,7 @@ Sistem menggunakan protokol MQTT untuk komunikasi bidirectional yang cepat dan r
     demo: "#",
     code: "#",
     color: "bg-emerald-500",
-    accent: "text-emerald-500",
+    accent: "text-emerald-700 dark:text-emerald-400",
     category: "IoT",
   },
 ];
@@ -343,14 +343,14 @@ onUnmounted(() => {
       <!-- Intro Text - Mobile Only -->
       <div class="md:hidden mb-8 sm:mb-10 text-center relative">
         <p
-          class="text-xs font-bold uppercase tracking-[0.3em] text-emerald-600 dark:text-emerald-400 mb-3"
+          class="text-xs font-bold uppercase tracking-[0.3em] text-emerald-700 dark:text-emerald-400 mb-3"
         >
           Portfolio
         </p>
         <h2
           class="text-3xl sm:text-4xl font-bold mb-3 text-zinc-800 dark:text-white"
         >
-          My <span class="text-emerald-600 dark:text-emerald-400">Projects</span>
+          My <span class="text-emerald-700 dark:text-emerald-400">Projects</span>
         </h2>
         <p
           class="text-base sm:text-lg text-zinc-500 dark:text-zinc-400 max-w-sm mx-auto"
@@ -365,21 +365,24 @@ onUnmounted(() => {
         <div class="flex items-center justify-center gap-3 mb-6">
           <button
             @click="prevCard"
+            type="button"
+            aria-label="Project sebelumnya"
             :disabled="currentCardIndex === 0"
-            class="p-2.5 rounded-full border-2 transition-all duration-300 disabled:opacity-30 disabled:cursor-not-allowed hover:scale-110 active:scale-95"
+            class="p-2.5 rounded-full border-2 transition-all duration-300 disabled:opacity-30 disabled:cursor-not-allowed hover:scale-110 active:scale-95 focus:outline-none focus:ring-2 focus:ring-emerald-500/50"
             :class="
               currentCardIndex === 0
                 ? 'bg-zinc-100 dark:bg-zinc-800 border-zinc-200 dark:border-zinc-700'
-                : 'bg-white dark:bg-zinc-900 border-emerald-500 dark:border-emerald-400 hover:bg-emerald-50 dark:hover:bg-emerald-950/30 shadow-lg shadow-emerald-500/20'
+                : 'bg-white dark:bg-zinc-900 border-emerald-600 dark:border-emerald-400 hover:bg-emerald-50 dark:hover:bg-emerald-950/30 shadow-lg shadow-emerald-500/20'
             "
           >
             <svg
               xmlns="http://www.w3.org/2000/svg"
+              aria-hidden="true"
               class="w-4 h-4 transition-colors"
               :class="
                 currentCardIndex === 0
-                  ? 'text-zinc-400'
-                  : 'text-emerald-600 dark:text-emerald-400'
+                  ? 'text-zinc-500'
+                  : 'text-emerald-700 dark:text-emerald-400'
               "
               fill="none"
               viewBox="0 0 24 24"
@@ -395,28 +398,31 @@ onUnmounted(() => {
           </button>
 
           <div
-            class="px-4 py-2 rounded-full bg-emerald-600 dark:bg-emerald-500 text-white text-sm font-bold min-w-[80px] text-center shadow-lg"
+            class="px-4 py-2 rounded-full bg-emerald-700 dark:bg-emerald-500 text-white text-sm font-bold min-w-[80px] text-center shadow-lg"
           >
             {{ currentCardIndex + 1 }} of {{ projects.length }}
           </div>
 
           <button
             @click="nextCard"
+            type="button"
+            aria-label="Project selanjutnya"
             :disabled="currentCardIndex === projects.length - 1"
-            class="p-2.5 rounded-full border-2 transition-all duration-300 disabled:opacity-30 disabled:cursor-not-allowed hover:scale-110 active:scale-95"
+            class="p-2.5 rounded-full border-2 transition-all duration-300 disabled:opacity-30 disabled:cursor-not-allowed hover:scale-110 active:scale-95 focus:outline-none focus:ring-2 focus:ring-emerald-500/50"
             :class="
               currentCardIndex === projects.length - 1
                 ? 'bg-zinc-100 dark:bg-zinc-800 border-zinc-200 dark:border-zinc-700'
-                : 'bg-white dark:bg-zinc-900 border-emerald-500 dark:border-emerald-400 hover:bg-emerald-50 dark:hover:bg-emerald-950/30 shadow-lg shadow-emerald-500/20'
+                : 'bg-white dark:bg-zinc-900 border-emerald-600 dark:border-emerald-400 hover:bg-emerald-50 dark:hover:bg-emerald-950/30 shadow-lg shadow-emerald-500/20'
             "
           >
             <svg
               xmlns="http://www.w3.org/2000/svg"
+              aria-hidden="true"
               class="w-4 h-4 transition-colors"
               :class="
                 currentCardIndex === projects.length - 1
-                  ? 'text-zinc-400'
-                  : 'text-emerald-600 dark:text-emerald-400'
+                  ? 'text-zinc-500'
+                  : 'text-emerald-700 dark:text-emerald-400'
               "
               fill="none"
               viewBox="0 0 24 24"
@@ -494,8 +500,7 @@ onUnmounted(() => {
                     >0{{ index + 1 }}</span
                   >
                   <span
-                    class="flex-1 h-px bg-gradient-to-r opacity-50"
-                    :class="`from-${project.accent.replace('text-', '')}`"
+                    class="flex-1 h-px bg-gradient-to-r from-emerald-500/60 to-transparent opacity-50"
                   ></span>
                 </div>
 
@@ -513,16 +518,21 @@ onUnmounted(() => {
                 <!-- Action Buttons -->
                 <div class="flex gap-2">
                   <button
-                    class="flex-1 py-2.5 px-3 bg-emerald-600 hover:bg-emerald-700 dark:bg-emerald-500 dark:hover:bg-emerald-600 text-white text-sm font-semibold rounded-lg transition-all duration-300 flex items-center justify-center gap-2 shadow-lg hover:-translate-y-0.5"
+                    type="button"
+                    :aria-label="`Lihat detail project ${project.title}`"
+                    class="flex-1 py-2.5 px-3 bg-emerald-700 hover:bg-emerald-800 dark:bg-emerald-500 dark:hover:bg-emerald-600 text-white text-sm font-semibold rounded-lg transition-all duration-300 flex items-center justify-center gap-2 shadow-lg hover:-translate-y-0.5 focus:outline-none focus:ring-2 focus:ring-emerald-500/50"
                   >
-                    <ExternalLink class="w-3.5 h-3.5" />
+                    <ExternalLink class="w-3.5 h-3.5" aria-hidden="true" />
                     View Details
                   </button>
                   <button
-                    class="p-2.5 border border-zinc-200 dark:border-zinc-700 hover:border-emerald-500 dark:hover:border-emerald-400 hover:bg-emerald-50 dark:hover:bg-emerald-950/30 rounded-lg transition-all duration-300 hover:-translate-y-0.5"
+                    type="button"
+                    :aria-label="`Lihat repository GitHub ${project.title}`"
+                    class="p-2.5 border border-zinc-300 dark:border-zinc-700 hover:border-emerald-600 dark:hover:border-emerald-400 hover:bg-emerald-50 dark:hover:bg-emerald-950/30 rounded-lg transition-all duration-300 hover:-translate-y-0.5 focus:outline-none focus:ring-2 focus:ring-emerald-500/50"
                   >
                     <Github
-                      class="w-4 h-4 text-zinc-600 dark:text-zinc-300 hover:text-emerald-600 dark:hover:text-emerald-400"
+                      class="w-4 h-4 text-zinc-700 dark:text-zinc-300 hover:text-emerald-700 dark:hover:text-emerald-400"
+                      aria-hidden="true"
                     />
                   </button>
                 </div>
@@ -580,12 +590,12 @@ onUnmounted(() => {
           <div class="flex items-center gap-6">
             <div class="flex flex-col items-center gap-2 shrink-0">
               <span
-                class="text-[10px] font-bold uppercase tracking-[0.3em] text-emerald-600 dark:text-emerald-400"
+                class="text-[10px] font-bold uppercase tracking-[0.3em] text-emerald-700 dark:text-emerald-400"
                 >Works</span
               >
               <span class="w-px h-10 bg-zinc-300 dark:bg-zinc-700"></span>
               <span
-                class="text-[10px] font-mono font-bold text-zinc-400 dark:text-zinc-600"
+                class="text-[10px] font-mono font-bold text-zinc-500 dark:text-zinc-500"
                 >0{{ projects.length }}</span
               >
             </div>
@@ -594,7 +604,7 @@ onUnmounted(() => {
                 class="text-4xl lg:text-5xl font-black text-zinc-900 dark:text-white leading-none tracking-tight"
               >
                 My
-                <span class="text-emerald-600 dark:text-emerald-400"
+                <span class="text-emerald-700 dark:text-emerald-400"
                   >Projects</span
                 >
               </h2>
@@ -606,7 +616,7 @@ onUnmounted(() => {
             </div>
           </div>
           <div
-            class="flex items-center gap-2 text-xs text-zinc-400 dark:text-zinc-600 uppercase tracking-widest shrink-0"
+            class="flex items-center gap-2 text-xs text-zinc-600 dark:text-zinc-400 uppercase tracking-widest shrink-0"
           >
             <span>Scroll to explore</span>
             <svg
@@ -635,14 +645,15 @@ onUnmounted(() => {
               class="intro-card shrink-0 w-[42vw] lg:w-[32vw] flex flex-col justify-center pr-8 relative"
             >
               <span
-                class="text-7xl md:text-8xl font-bold text-zinc-200 dark:text-zinc-800/50 block -mb-8"
+                aria-hidden="true"
+                class="text-7xl md:text-8xl font-bold text-zinc-300 dark:text-zinc-800/50 block -mb-8"
                 >00</span
               >
               <h3
                 class="text-3xl md:text-4xl lg:text-5xl font-bold text-zinc-800 dark:text-white leading-tight mb-3"
               >
                 Crafting Digital
-                <span class="text-emerald-600 dark:text-emerald-400"
+                <span class="text-emerald-700 dark:text-emerald-400"
                   >Solutions</span
                 >
               </h3>

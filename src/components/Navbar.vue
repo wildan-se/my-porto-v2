@@ -161,16 +161,19 @@ const toggleTheme = async () => {
           <!-- Dark Mode Toggle -->
           <button
             @click="toggleTheme"
+            type="button"
+            :aria-label="isDark ? 'Aktifkan mode terang' : 'Aktifkan mode gelap'"
+            :aria-pressed="isDark"
             class="p-2.5 rounded-full cursor-pointer focus:outline-none focus:ring-2 focus:ring-emerald-500/50 transition-all duration-300 group relative overflow-hidden"
             :class="
               isDark
                 ? 'hover:bg-emerald-500/10 text-emerald-400'
-                : 'hover:bg-emerald-500/10 text-emerald-600'
+                : 'hover:bg-emerald-500/10 text-emerald-700'
             "
           >
             <transition name="icon-rotate" mode="out-in">
-              <Sun v-if="isDark" key="sun" class="h-5 w-5" />
-              <Moon v-else key="moon" class="h-5 w-5" />
+              <Sun v-if="isDark" key="sun" class="h-5 w-5" aria-hidden="true" />
+              <Moon v-else key="moon" class="h-5 w-5" aria-hidden="true" />
             </transition>
           </button>
         </div>

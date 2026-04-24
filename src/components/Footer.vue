@@ -43,9 +43,9 @@ const socials = [
           <span
             class="text-xl font-bold text-zinc-900 dark:text-white tracking-tight"
           >
-            &lt;<span class="text-emerald-500">WLSE</span>/&gt;
+            &lt;<span class="text-emerald-700 dark:text-emerald-400">WLSE</span>/&gt;
           </span>
-          <p class="text-sm text-zinc-500 dark:text-zinc-400 leading-relaxed">
+          <p class="text-sm text-zinc-600 dark:text-zinc-400 leading-relaxed">
             Sebaik-baik nya manusia adalah
             <span class="text-zinc-700 dark:text-zinc-200 font-medium"
               >yang paling bermanfaat bagi manusia lainnya.</span
@@ -56,7 +56,7 @@ const socials = [
         <!-- Nav links -->
         <nav class="flex flex-col gap-2">
           <p
-            class="text-[11px] font-semibold uppercase tracking-widest text-zinc-400 dark:text-zinc-500 mb-1"
+            class="text-[11px] font-semibold uppercase tracking-widest text-zinc-600 dark:text-zinc-400 mb-1"
           >
             Navigation
           </p>
@@ -64,7 +64,7 @@ const socials = [
             v-for="link in navLinks"
             :key="link.label"
             :href="link.href"
-            class="text-sm text-zinc-500 dark:text-zinc-400 hover:text-emerald-500 dark:hover:text-emerald-400 transition-colors"
+            class="text-sm text-zinc-600 dark:text-zinc-400 hover:text-emerald-700 dark:hover:text-emerald-400 transition-colors focus:outline-none focus:text-emerald-700 dark:focus:text-emerald-400"
           >
             {{ link.label }}
           </a>
@@ -73,7 +73,7 @@ const socials = [
         <!-- Socials -->
         <div class="flex flex-col gap-2">
           <p
-            class="text-[11px] font-semibold uppercase tracking-widest text-zinc-400 dark:text-zinc-500 mb-1"
+            class="text-[11px] font-semibold uppercase tracking-widest text-zinc-600 dark:text-zinc-400 mb-1"
           >
             Find Me
           </p>
@@ -82,11 +82,12 @@ const socials = [
               v-for="s in socials"
               :key="s.label"
               :href="s.href"
-              :title="s.label"
+              :aria-label="`${s.label} (tab baru)`"
               target="_blank"
-              class="w-9 h-9 flex items-center justify-center rounded-xl bg-zinc-200/70 dark:bg-zinc-800 text-zinc-500 dark:text-zinc-400 hover:bg-emerald-500 hover:text-white dark:hover:bg-emerald-500 dark:hover:text-white transition-all duration-200"
+              rel="noopener noreferrer"
+              class="w-9 h-9 flex items-center justify-center rounded-xl bg-zinc-200 dark:bg-zinc-800 text-zinc-700 dark:text-zinc-300 hover:bg-emerald-600 hover:text-white dark:hover:bg-emerald-500 dark:hover:text-white transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-emerald-500/50"
             >
-              <component :is="s.icon" class="w-4 h-4" />
+              <component :is="s.icon" class="w-4 h-4" aria-hidden="true" />
             </a>
           </div>
         </div>
@@ -99,7 +100,7 @@ const socials = [
       <div
         class="mt-6 flex flex-col sm:flex-row items-center justify-center gap-2"
       >
-        <p class="text-xs text-zinc-400 dark:text-zinc-500">
+        <p class="text-xs text-zinc-600 dark:text-zinc-400">
           &copy; {{ new Date().getFullYear() }} Muhammad Wildan Septiano. All
           rights reserved.
         </p>

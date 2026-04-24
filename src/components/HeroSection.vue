@@ -741,10 +741,10 @@ const scrollToAbout = () => {
       <!-- Text Side (Right) -->
       <div class="text-center md:text-left order-2 z-10 md:pl-8 w-full max-w-md md:max-w-none mx-auto md:mx-0">
         <div
-          class="inline-block px-2.5 py-1 mb-2 md:px-3 md:py-1.5 md:mb-6 rounded-full bg-emerald-100/50 dark:bg-emerald-900/30 border border-emerald-200/50 dark:border-emerald-800/50 backdrop-blur-sm"
+          class="inline-block px-2.5 py-1 mb-2 md:px-3 md:py-1.5 md:mb-6 rounded-full bg-emerald-100 dark:bg-emerald-900/40 border border-emerald-300/70 dark:border-emerald-700/50 backdrop-blur-sm"
         >
           <span
-            class="text-[10px] md:text-sm font-semibold text-emerald-600 dark:text-emerald-300 tracking-wide uppercase"
+            class="text-[10px] md:text-sm font-semibold text-emerald-800 dark:text-emerald-200 tracking-wide uppercase"
           >
             Mau nya Fullstack Developer
           </span>
@@ -753,13 +753,13 @@ const scrollToAbout = () => {
         <h1
           class="text-[2rem] sm:text-4xl md:text-6xl lg:text-7xl font-bold tracking-tight mb-3 md:mb-8 text-zinc-800 dark:text-white leading-[1.05] md:leading-[1.1]"
         >
-          <span class="ml7-name flex flex-col" aria-label="Muhammad Wildan Septiano">
+          <span class="sr-only">Muhammad Wildan Septiano</span>
+          <span class="ml7-name flex flex-col" aria-hidden="true">
             <span
               v-for="(line, i) in letters"
               :key="i"
               class="text-wrapper-name block"
               :class="line.cls"
-              aria-hidden="true"
             >
               <span
                 v-for="(c, j) in line.chars"
@@ -788,9 +788,10 @@ const scrollToAbout = () => {
           <a
             href="/cv_muhammad_wildan_septiano.pdf"
             target="_blank"
+            rel="noopener noreferrer"
             class="px-3.5 py-2 md:px-8 md:py-3.5 bg-zinc-900 text-white rounded-full font-medium hover:bg-zinc-800 hover:-translate-y-0.5 transition-all dark:bg-emerald-600 dark:hover:bg-emerald-500 inline-flex items-center gap-1.5 shadow-md md:shadow-xl shadow-emerald-500/20 text-[11px] sm:text-xs md:text-base whitespace-nowrap"
           >
-            <FileText class="w-3.5 h-3.5 sm:w-4 sm:h-4 md:w-5 md:h-5" />
+            <FileText class="w-3.5 h-3.5 sm:w-4 sm:h-4 md:w-5 md:h-5" aria-hidden="true" />
             <span>Download CV</span>
           </a>
           <a
@@ -807,21 +808,27 @@ const scrollToAbout = () => {
           <a
             href="https://github.com/wildan-se"
             target="_blank"
-            class="text-zinc-400 hover:text-zinc-900 dark:hover:text-white transition-colors transform hover:scale-110"
+            rel="noopener noreferrer"
+            aria-label="Buka profil GitHub Muhammad Wildan Septiano (tab baru)"
+            class="text-zinc-600 hover:text-zinc-900 dark:text-zinc-400 dark:hover:text-white transition-colors transform hover:scale-110 inline-flex items-center justify-center p-1.5 rounded-full focus:outline-none focus:ring-2 focus:ring-emerald-500/50"
           >
-            <Github class="w-4 h-4 md:w-6 md:h-6" />
+            <Github class="w-4 h-4 md:w-6 md:h-6" aria-hidden="true" />
           </a>
           <a
             href="https://www.linkedin.com/in/muhammadwildanseptiano/"
             target="_blank"
-            class="text-zinc-400 hover:text-zinc-900 dark:hover:text-white transition-colors transform hover:scale-110"
+            rel="noopener noreferrer"
+            aria-label="Buka profil LinkedIn Muhammad Wildan Septiano (tab baru)"
+            class="text-zinc-600 hover:text-zinc-900 dark:text-zinc-400 dark:hover:text-white transition-colors transform hover:scale-110 inline-flex items-center justify-center p-1.5 rounded-full focus:outline-none focus:ring-2 focus:ring-emerald-500/50"
           >
-            <Linkedin class="w-4 h-4 md:w-6 md:h-6" />
+            <Linkedin class="w-4 h-4 md:w-6 md:h-6" aria-hidden="true" />
           </a>
           <a
             href="https://www.instagram.com/wlse._/"
             target="_blank"
-            class="text-zinc-400 hover:text-zinc-900 dark:hover:text-white transition-colors transform hover:scale-110"
+            rel="noopener noreferrer"
+            aria-label="Buka profil Instagram (tab baru)"
+            class="text-zinc-600 hover:text-zinc-900 dark:text-zinc-400 dark:hover:text-white transition-colors transform hover:scale-110 inline-flex items-center justify-center p-1.5 rounded-full focus:outline-none focus:ring-2 focus:ring-emerald-500/50"
           >
             <Instagram class="w-4 h-4 md:w-6 md:h-6" />
           </a>

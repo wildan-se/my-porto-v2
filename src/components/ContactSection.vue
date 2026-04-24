@@ -38,7 +38,7 @@ const contacts = [
       <!-- Section header -->
       <div class="text-center mb-12">
         <span
-          class="inline-block px-3 py-1 mb-3 rounded-full text-xs font-semibold uppercase tracking-widest bg-emerald-100/60 dark:bg-emerald-900/30 text-emerald-600 dark:text-emerald-400 border border-emerald-200/50 dark:border-emerald-700/50"
+          class="inline-block px-3 py-1 mb-3 rounded-full text-xs font-semibold uppercase tracking-widest bg-emerald-100 dark:bg-emerald-900/40 text-emerald-800 dark:text-emerald-200 border border-emerald-300/70 dark:border-emerald-700/50"
         >
           Contact
         </span>
@@ -85,7 +85,7 @@ const contacts = [
             <h3 class="text-xl sm:text-2xl font-bold text-white mb-3">
               Hubungi Saya
             </h3>
-            <p class="text-sm text-zinc-400 leading-relaxed mb-8 text-justify">
+            <p class="text-sm text-zinc-300 leading-relaxed mb-8 text-justify">
               Saya terbuka untuk proyek lepas dan kolaborasi. Jangan ragu untuk
               menyapa!
             </p>
@@ -123,7 +123,7 @@ const contacts = [
             <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
               <div>
                 <label
-                  class="block text-xs font-semibold text-zinc-500 dark:text-zinc-400 uppercase tracking-wider mb-1.5"
+                  class="block text-xs font-semibold text-zinc-700 dark:text-zinc-300 uppercase tracking-wider mb-1.5"
                   >Nama</label
                 >
                 <input
@@ -136,7 +136,7 @@ const contacts = [
               </div>
               <div>
                 <label
-                  class="block text-xs font-semibold text-zinc-500 dark:text-zinc-400 uppercase tracking-wider mb-1.5"
+                  class="block text-xs font-semibold text-zinc-700 dark:text-zinc-300 uppercase tracking-wider mb-1.5"
                   >Email</label
                 >
                 <input
@@ -151,7 +151,7 @@ const contacts = [
 
             <div>
               <label
-                class="block text-xs font-semibold text-zinc-500 dark:text-zinc-400 uppercase tracking-wider mb-1.5"
+                class="block text-xs font-semibold text-zinc-700 dark:text-zinc-300 uppercase tracking-wider mb-1.5"
                 >Pesan</label
               >
               <textarea
@@ -165,7 +165,7 @@ const contacts = [
 
             <button
               type="submit"
-              class="w-full flex items-center justify-center gap-2 py-3 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white text-sm font-semibold transition-all duration-200 hover:-translate-y-0.5 shadow-lg shadow-emerald-500/25 group"
+              class="w-full flex items-center justify-center gap-2 py-3 rounded-xl bg-emerald-700 hover:bg-emerald-600 text-white text-sm font-semibold transition-all duration-200 hover:-translate-y-0.5 shadow-lg shadow-emerald-500/25 group focus:outline-none focus:ring-2 focus:ring-emerald-500/50"
             >
               <Send class="w-4 h-4" />
               Kirim via WhatsApp
@@ -174,7 +174,7 @@ const contacts = [
               />
             </button>
 
-            <p class="text-center text-xs text-zinc-400 dark:text-zinc-500">
+            <p class="text-center text-xs text-zinc-600 dark:text-zinc-400">
               Pesan akan dikirim langsung ke WhatsApp saya.
             </p>
           </form>
