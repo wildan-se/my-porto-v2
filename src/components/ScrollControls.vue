@@ -22,18 +22,12 @@ const checkScroll = () => {
 };
 
 const scrollToTop = () => {
-    // Dynamic duration based on current position (min 1s, max 3s)
-    const duration = Math.min(Math.max(window.scrollY / 1500, 1), 3);
-    gsap.to(window, { duration: duration, scrollTo: 0, ease: "power4.inOut" });
+    gsap.to(window, { duration: 0.8, scrollTo: 0, ease: "power3.inOut" });
 };
 
 const scrollToBottom = () => {
     const maxScroll = document.documentElement.scrollHeight - window.innerHeight;
-    const distance = maxScroll - window.scrollY;
-    // Dynamic duration based on distance (min 1s, max 3s)
-    const duration = Math.min(Math.max(distance / 1500, 1), 3);
-    
-    gsap.to(window, { duration: duration, scrollTo: maxScroll, ease: "power4.inOut" });
+    gsap.to(window, { duration: 0.8, scrollTo: maxScroll, ease: "power3.inOut" });
 };
 
 onMounted(() => {
