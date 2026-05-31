@@ -1,13 +1,17 @@
 <script setup>
+import { defineAsyncComponent } from "vue";
 import Navbar from "./components/Navbar.vue";
 import HeroSection from "./components/HeroSection.vue";
 import AboutSection from "./components/AboutSection.vue";
-import CertificatesSection from "./components/CertificatesSection.vue";
-import ProjectsSection from "./components/ProjectsSection.vue";
 import SkillSection from "./components/SkillSection.vue";
-import ContactSection from "./components/ContactSection.vue";
-import Footer from "./components/Footer.vue";
 import ScrollControls from "./components/ScrollControls.vue";
+import Footer from "./components/Footer.vue";
+
+// Lazy-load heavy below-fold sections — each becomes a separate JS chunk
+// loaded only after the initial paint, reducing main bundle size.
+const CertificatesSection = defineAsyncComponent(() => import("./components/CertificatesSection.vue"));
+const ProjectsSection = defineAsyncComponent(() => import("./components/ProjectsSection.vue"));
+const ContactSection = defineAsyncComponent(() => import("./components/ContactSection.vue"));
 </script>
 
 <template>

@@ -402,6 +402,16 @@ const mouse = { x: 0, y: 0 };
 const smoothMouse = { x: 0, y: 0 };
 const scrollState = { current: 0, smooth: 0 };
 
+// Cache viewport dimensions — reading innerWidth/Height inside rAF causes forced reflow.
+// Updated only on resize so the animation loop stays reflow-free.
+let vpW = 0;
+let vpH = 0;
+let resizeTimer = null;
+const onResize = () => {
+  clearTimeout(resizeTimer);
+  resizeTimer = setTimeout(() => { vpW = window.innerWidth; vpH = window.innerHeight; }, 150);
+};
+
 let mouseRaf = null;
 
 // LERP (Linear Interpolation) Formula with higher precision
@@ -410,13 +420,10 @@ const lerp = (start, end, factor) => {
   return start + (end - start) * factor;
 };
 
-// Mouse move handler - utilizing window dimensions for normalization
+// Mouse move handler - uses cached viewport dims to avoid forced reflow
 const onMouseMove = (e) => {
-  // Normalize coordinates to -1 to 1 range
-  // x: -1 (left) to 1 (right)
-  // y: -1 (top) to 1 (bottom)
-  mouse.x = (e.clientX / window.innerWidth - 0.5) * 2;
-  mouse.y = (e.clientY / window.innerHeight - 0.5) * 2;
+  mouse.x = (e.clientX / vpW - 0.5) * 2;
+  mouse.y = (e.clientY / vpH - 0.5) * 2;
 };
 
 const onScroll = () => {
@@ -451,7 +458,7 @@ const animate = () => {
 
   // --- Hero Container Fade & Parallax ---
   if (heroContainerTarget.value) {
-    const progress = Math.min(scrollY / window.innerHeight, 1);
+    const progress = Math.min(scrollY / vpH, 1);
     const opacity = (1 - progress * 1.5).toFixed(3);
     
     if (opacity > 0) {
@@ -604,10 +611,13 @@ const initQuoteAnimation = () => {
 };
 
 onMounted(() => {
+  vpW = window.innerWidth;
+  vpH = window.innerHeight;
   scrollState.current = window.scrollY;
   scrollState.smooth = window.scrollY;
   window.addEventListener("mousemove", onMouseMove, { passive: true });
   window.addEventListener("scroll", onScroll, { passive: true });
+  window.addEventListener("resize", onResize, { passive: true });
   mouseRaf = requestAnimationFrame(animate);
   initQuoteAnimation();
 });
@@ -615,6 +625,8 @@ onMounted(() => {
 onUnmounted(() => {
   window.removeEventListener("mousemove", onMouseMove);
   window.removeEventListener("scroll", onScroll);
+  window.removeEventListener("resize", onResize);
+  clearTimeout(resizeTimer);
   cancelAnimationFrame(mouseRaf);
   if (typewriterTimer) clearTimeout(typewriterTimer);
 });
@@ -686,6 +698,8 @@ const scrollToAbout = () => {
             >
               <img
                 :src="myFotoUrl"
+                srcset="/myfoto.webp 408w"
+                sizes="(max-width: 640px) 144px, (max-width: 768px) 160px, (max-width: 1024px) 320px, 384px"
                 alt="Foto Profil Muhammad Wildan Septiano - Full Stack Developer"
                 width="384"
                 height="384"

@@ -64,6 +64,11 @@
          across builds. fetchpriority=high signals this resource is critical. -->
     <link rel="preload" as="image" href="/myfoto.webp" fetchpriority="high" type="image/webp" />
 
+    <!-- DNS prefetch for external origins used by the page -->
+    <link rel="dns-prefetch" href="https://fonts.bunny.net" />
+    <link rel="dns-prefetch" href="https://www.codepolitan.com" />
+    <link rel="dns-prefetch" href="https://www.dicoding.com" />
+
     <!-- Critical inline CSS — paints page shell before bundled CSS loads,
          eliminates FOUC/CLS during the initial 200–400ms. Kept under 1 KiB. -->
     <style>

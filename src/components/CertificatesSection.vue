@@ -396,7 +396,7 @@ const imgTransform = computed(
             :key="cat"
             type="button"
             @click="activeCategory = cat"
-            class="px-3 py-1.5 rounded-full text-xs font-semibold border transition-colors"
+            class="px-3 py-1.5 rounded-full text-xs font-semibold border transition-colors cursor-pointer"
             :class="
               activeCategory === cat
                 ? 'bg-emerald-600 text-white border-emerald-600'
@@ -412,7 +412,7 @@ const imgTransform = computed(
             :key="year"
             type="button"
             @click="activeYear = year"
-            class="px-3 py-1.5 rounded-full text-xs font-semibold border transition-colors"
+            class="px-3 py-1.5 rounded-full text-xs font-semibold border transition-colors cursor-pointer"
             :class="
               activeYear === year
                 ? 'bg-zinc-900 text-white border-zinc-900 dark:bg-white dark:text-zinc-900'
@@ -426,7 +426,7 @@ const imgTransform = computed(
             v-if="hasFilters"
             type="button"
             @click="resetFilters"
-            class="ml-2 text-xs text-emerald-600 dark:text-emerald-400 hover:underline"
+            class="ml-2 text-xs text-emerald-600 dark:text-emerald-400 hover:underline cursor-pointer"
           >
             Reset
           </button>
@@ -459,7 +459,7 @@ const imgTransform = computed(
               <button
                 type="button"
                 @click="openCert(cert)"
-                class="w-full text-left rounded-2xl border border-zinc-200/70 dark:border-zinc-800 bg-white/70 dark:bg-zinc-900/50 p-5 hover:shadow-xl hover:shadow-emerald-500/10 transition-all"
+                class="group w-full text-left rounded-2xl border border-zinc-200/70 dark:border-zinc-800 bg-white/70 dark:bg-zinc-900/50 p-5 hover:shadow-xl hover:shadow-emerald-500/10 hover:border-emerald-400/50 dark:hover:border-emerald-600/50 transition-all cursor-pointer"
               >
                 <div
                   class="flex items-center justify-between text-xs text-zinc-500 dark:text-zinc-400"
@@ -485,7 +485,7 @@ const imgTransform = computed(
                 <p class="text-sm text-zinc-600 dark:text-zinc-400 mt-3">
                   {{ cert.description }}
                 </p>
-                <p class="text-xs text-emerald-600 dark:text-emerald-400 mt-4">
+                <p class="text-xs text-emerald-600 dark:text-emerald-400 mt-4 group-hover:underline inline-flex items-center gap-1">
                   View details →
                 </p>
               </button>
@@ -551,7 +551,7 @@ const imgTransform = computed(
                 <button
                   type="button"
                   @click="closeCert"
-                  class="shrink-0 mt-0.5 w-8 h-8 rounded-full flex items-center justify-center bg-zinc-100 dark:bg-zinc-900 text-zinc-500 hover:text-zinc-900 dark:hover:text-white hover:bg-zinc-200 dark:hover:bg-zinc-800 transition-colors"
+                  class="shrink-0 mt-0.5 w-8 h-8 rounded-full flex items-center justify-center bg-zinc-100 dark:bg-zinc-900 text-zinc-500 hover:text-zinc-900 dark:hover:text-white hover:bg-zinc-200 dark:hover:bg-zinc-800 transition-colors cursor-pointer"
                   aria-label="Close"
                 >
                   <X class="w-4 h-4" />
@@ -632,7 +632,7 @@ const imgTransform = computed(
                   :href="selectedCert.verifyUrl"
                   target="_blank"
                   rel="noopener noreferrer"
-                  class="flex-1 inline-flex items-center justify-center gap-2 px-4 py-2.5 rounded-full bg-emerald-600 hover:bg-emerald-500 active:bg-emerald-700 text-white text-sm font-semibold transition-colors shadow-[0_8px_20px_rgba(16,185,129,0.3)]"
+                  class="flex-1 inline-flex items-center justify-center gap-2 px-4 py-2.5 rounded-full bg-emerald-600 hover:bg-emerald-500 active:bg-emerald-700 text-white text-sm font-semibold transition-colors shadow-[0_8px_20px_rgba(16,185,129,0.3)] cursor-pointer"
                 >
                   Verify Certificate
                   <ExternalLink class="w-4 h-4" />
@@ -640,7 +640,7 @@ const imgTransform = computed(
                 <button
                   type="button"
                   @click="closeCert"
-                  class="flex-1 sm:flex-none px-5 py-2.5 rounded-full border border-zinc-200 dark:border-zinc-700 text-sm text-zinc-600 dark:text-zinc-300 hover:bg-zinc-100 dark:hover:bg-zinc-900 transition-colors"
+                  class="flex-1 sm:flex-none px-5 py-2.5 rounded-full border border-zinc-200 dark:border-zinc-700 text-sm text-zinc-600 dark:text-zinc-300 hover:bg-zinc-100 dark:hover:bg-zinc-900 transition-colors cursor-pointer"
                 >
                   Tutup
                 </button>
@@ -672,7 +672,7 @@ const imgTransform = computed(
                 type="button"
                 @click="zoomOut"
                 :disabled="imgZoom <= 0.5"
-                class="w-9 h-9 rounded-full bg-white/10 hover:bg-white/20 disabled:opacity-30 flex items-center justify-center text-white transition-colors"
+                class="w-9 h-9 rounded-full bg-white/10 hover:bg-white/20 disabled:opacity-30 disabled:cursor-not-allowed flex items-center justify-center text-white transition-colors cursor-pointer"
                 aria-label="Zoom out"
               >
                 <ZoomOut class="w-4 h-4" />
@@ -682,7 +682,7 @@ const imgTransform = computed(
                 type="button"
                 @click="zoomIn"
                 :disabled="imgZoom >= 4"
-                class="w-9 h-9 rounded-full bg-white/10 hover:bg-white/20 disabled:opacity-30 flex items-center justify-center text-white transition-colors"
+                class="w-9 h-9 rounded-full bg-white/10 hover:bg-white/20 disabled:opacity-30 disabled:cursor-not-allowed flex items-center justify-center text-white transition-colors cursor-pointer"
                 aria-label="Zoom in"
               >
                 <ZoomIn class="w-4 h-4" />
@@ -690,7 +690,7 @@ const imgTransform = computed(
               <button
                 type="button"
                 @click="rotateCw"
-                class="w-9 h-9 rounded-full bg-white/10 hover:bg-white/20 flex items-center justify-center text-white transition-colors"
+                class="w-9 h-9 rounded-full bg-white/10 hover:bg-white/20 flex items-center justify-center text-white transition-colors cursor-pointer"
                 aria-label="Rotate"
               >
                 <RotateCw class="w-4 h-4" />
@@ -698,7 +698,7 @@ const imgTransform = computed(
               <button
                 type="button"
                 @click="closeImgViewer"
-                class="w-9 h-9 rounded-full bg-white/10 hover:bg-white/20 flex items-center justify-center text-white transition-colors ml-1"
+                class="w-9 h-9 rounded-full bg-white/10 hover:bg-white/20 flex items-center justify-center text-white transition-colors cursor-pointer ml-1"
                 aria-label="Close viewer"
               >
                 <X class="w-4 h-4" />
