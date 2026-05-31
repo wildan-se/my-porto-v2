@@ -48,6 +48,7 @@ const scrollTo = (e, href) => {
 
 const navLinks = [
   { name: "About", href: "#about" },
+  { name: "Certificates", href: "#certificates" },
   { name: "Projects", href: "#projects" },
   { name: "Contact", href: "#contact" },
 ];
@@ -162,7 +163,9 @@ const toggleTheme = async () => {
           <button
             @click="toggleTheme"
             type="button"
-            :aria-label="isDark ? 'Aktifkan mode terang' : 'Aktifkan mode gelap'"
+            :aria-label="
+              isDark ? 'Aktifkan mode terang' : 'Aktifkan mode gelap'
+            "
             :aria-pressed="isDark"
             class="p-2.5 rounded-full cursor-pointer focus:outline-none focus:ring-2 focus:ring-emerald-500/50 transition-all duration-300 group relative overflow-hidden"
             :class="
@@ -210,9 +213,7 @@ const toggleTheme = async () => {
           v-show="isMenuOpen"
           class="absolute top-full left-0 right-0 mt-2 mx-auto w-full max-w-[calc(100%-2rem)] md:hidden rounded-2xl shadow-xl border overflow-hidden"
           :class="
-            isDark
-              ? 'bg-zinc-900 border-zinc-800'
-              : 'bg-white border-zinc-200'
+            isDark ? 'bg-zinc-900 border-zinc-800' : 'bg-white border-zinc-200'
           "
         >
           <div class="p-2 space-y-1">

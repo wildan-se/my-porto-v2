@@ -2,6 +2,7 @@
 import Navbar from "./components/Navbar.vue";
 import HeroSection from "./components/HeroSection.vue";
 import AboutSection from "./components/AboutSection.vue";
+import CertificatesSection from "./components/CertificatesSection.vue";
 import ProjectsSection from "./components/ProjectsSection.vue";
 import SkillSection from "./components/SkillSection.vue";
 import ContactSection from "./components/ContactSection.vue";
@@ -19,6 +20,7 @@ import ScrollControls from "./components/ScrollControls.vue";
       <HeroSection />
       <AboutSection />
       <SkillSection />
+      <CertificatesSection />
       <ProjectsSection />
       <ContactSection />
     </main>

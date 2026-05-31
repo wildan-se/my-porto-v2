@@ -4,7 +4,13 @@
       "Bash(npx vite *)",
       "Bash(npm uninstall *)",
       "Bash(npm install *)",
-      "Bash(node -e ' *)"
+      "Bash(node -e ' *)",
+      "WebFetch(domain:www.codepolitan.com)",
+      "WebFetch(domain:www.dicoding.com)",
+      "mcp__plugin_everything-claude-code_playwright__browser_navigate",
+      "Bash(findstr -i \"jpeg\\\\|jpg\\\\|eskul\\\\|lsp\\\\|sanken\")",
+      "PowerShell(Get-ChildItem \"c:\\\\Users\\\\Muhammad Wildan\\\\Desktop\\\\portofolio-v2\\\\dist\\\\assets\" | Where-Object { $_.Name -match \"jpeg|jpg|eskul|lsp|sanken\" })",
+      "PowerShell(Get-Process -Name \"node\" -ErrorAction SilentlyContinue)"
     ]
   }
 }

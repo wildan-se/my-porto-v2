@@ -296,7 +296,9 @@ onMounted(() => {
       ease: "none",
       scrollTrigger: {
         trigger: container,
+        start: "top top",
         pin: true,
+        pinSpacing: true,
         scrub: 0.5,
         end: "+=2000",
         anticipatePin: 1,
@@ -337,9 +339,11 @@ onUnmounted(() => {
   <section
     id="projects"
     ref="sectionRef"
-    class="pt-16 sm:pt-20 pb-16 sm:pb-20 md:py-0 transition-colors relative w-full"
+    class="pt-16 sm:pt-20 pb-16 sm:pb-20 md:py-0 transition-colors relative w-full isolate"
   >
-    <div class="w-full max-w-[1920px] mx-auto px-4 sm:px-6 md:px-8 lg:px-12 xl:px-16">
+    <div
+      class="w-full max-w-[1920px] mx-auto px-4 sm:px-6 md:px-8 lg:px-12 xl:px-16"
+    >
       <!-- Intro Text - Mobile Only -->
       <div class="md:hidden mb-8 sm:mb-10 text-center relative">
         <p
@@ -350,7 +354,8 @@ onUnmounted(() => {
         <h2
           class="text-3xl sm:text-4xl font-bold mb-3 text-zinc-800 dark:text-white"
         >
-          My <span class="text-emerald-700 dark:text-emerald-400">Projects</span>
+          My
+          <span class="text-emerald-700 dark:text-emerald-400">Projects</span>
         </h2>
         <p
           class="text-base sm:text-lg text-zinc-500 dark:text-zinc-400 max-w-sm mx-auto"
@@ -657,9 +662,7 @@ onUnmounted(() => {
                   >Solutions</span
                 >
               </h3>
-              <p
-                class="text-sm text-zinc-600 dark:text-zinc-400 mb-6 max-w-xs"
-              >
+              <p class="text-sm text-zinc-600 dark:text-zinc-400 mb-6 max-w-xs">
                 Koleksi karya terbaik yang menggabungkan kreativitas, teknologi,
                 dan passion untuk menciptakan solusi yang meaningful.
               </p>
@@ -995,10 +998,9 @@ onUnmounted(() => {
                           :class="`${selectedProject.color} text-white`"
                           >{{ i + 1 }}</span
                         >
-                        <span
-                          class="text-[11px] text-zinc-300 leading-tight"
-                          >{{ feature }}</span
-                        >
+                        <span class="text-[11px] text-zinc-300 leading-tight">{{
+                          feature
+                        }}</span>
                       </div>
                     </div>
                   </div>
