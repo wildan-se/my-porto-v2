@@ -13,18 +13,10 @@ const toggleDark = useToggle(isDark);
 const isMenuOpen = ref(false);
 const isAnimating = ref(false);
 
-// Instant scroll detection with requestAnimationFrame
 const isScrolled = ref(false);
-let ticking = false;
 
 const onScroll = () => {
-  if (!ticking) {
-    requestAnimationFrame(() => {
-      isScrolled.value = window.scrollY > 20;
-      ticking = false;
-    });
-    ticking = true;
-  }
+  isScrolled.value = window.scrollY > 20;
 };
 
 onMounted(() => {

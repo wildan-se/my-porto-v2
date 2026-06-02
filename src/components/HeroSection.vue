@@ -16,8 +16,7 @@ const portraitTarget = ref(null);
 const layer1Target = ref(null);
 const layer2Target = ref(null);
 const layer3Target = ref(null);
-const blob1Target = ref(null);
-const blob2Target = ref(null);
+// Blobs are CSS-only now — no JS refs needed
 
 // SVG Paths for Tech Stack
 const techSvgs = {
@@ -397,155 +396,120 @@ const techIcons = [
 // ... rest of script ...
 // (Retaining existing logic, just verifying imports and setup)
 
-// State tracking variables (plain JS objects are faster than reactive refs for animation loops)
+const scrollY = ref(0);
+const smoothScrollY = ref(0);
+let scrollRaf = null;
+
+// Portrait tilt — only active during hover, not on every scroll tick
 const mouse = { x: 0, y: 0 };
 const smoothMouse = { x: 0, y: 0 };
-const scrollState = { current: 0, smooth: 0 };
+let tiltRaf = null;
+let isPortraitHovered = false;
 
-// Cache viewport dimensions — reading innerWidth/Height inside rAF causes forced reflow.
-// Updated only on resize so the animation loop stays reflow-free.
-let vpW = 0;
+// Cache viewport height — read once, update on resize
 let vpH = 0;
 let resizeTimer = null;
-const onResize = () => {
-  clearTimeout(resizeTimer);
-  resizeTimer = setTimeout(() => { vpW = window.innerWidth; vpH = window.innerHeight; }, 150);
+
+const lerp = (a, b, t) => a + (b - a) * t;
+
+// --- Scroll parallax loop — only runs while scrolling ---
+const cache = { tf: '', op: '' };
+
+const scrollLoop = () => {
+  const target = window.scrollY;
+  const diff = target - smoothScrollY.value;
+  if (Math.abs(diff) < 0.5) {
+    smoothScrollY.value = target;
+    scrollRaf = null;
+    // Clear will-change when done to free compositor layer
+    if (heroContainerTarget.value) heroContainerTarget.value.style.willChange = 'auto';
+    return;
+  }
+  smoothScrollY.value = lerp(smoothScrollY.value, target, 0.12);
+  applyScrollTransform(smoothScrollY.value);
+  scrollRaf = requestAnimationFrame(scrollLoop);
 };
 
-let mouseRaf = null;
-
-// LERP (Linear Interpolation) Formula with higher precision
-// Formula: start + (end - start) * interpolation_factor
-const lerp = (start, end, factor) => {
-  return start + (end - start) * factor;
-};
-
-// Mouse move handler - uses cached viewport dims to avoid forced reflow
-const onMouseMove = (e) => {
-  mouse.x = (e.clientX / vpW - 0.5) * 2;
-  mouse.y = (e.clientY / vpH - 0.5) * 2;
+const applyScrollTransform = (sy) => {
+  if (!heroContainerTarget.value || !vpH) return;
+  const progress = Math.min(sy / vpH, 1);
+  const opacity = Math.max(0, 1 - progress * 1.6).toFixed(3);
+  const scale = (1 - progress * 0.08).toFixed(3);
+  const yOff = (sy * 0.4).toFixed(1);
+  const tf = `translate3d(0,${yOff}px,0) scale(${scale})`;
+  if (cache.tf === tf && cache.op === opacity) return;
+  cache.tf = tf; cache.op = opacity;
+  heroContainerTarget.value.style.transform = tf;
+  heroContainerTarget.value.style.opacity = opacity;
 };
 
 const onScroll = () => {
-  scrollState.current = window.scrollY;
+  // Promote layer only while actively scrolling
+  if (!scrollRaf && heroContainerTarget.value) {
+    heroContainerTarget.value.style.willChange = 'transform, opacity';
+  }
+  if (!scrollRaf) scrollRaf = requestAnimationFrame(scrollLoop);
 };
 
-// Main Animation Loop
-// cache for previous styles to prevent redundant DOM writes
-const cache = { bg: '', port: '', l1: '', l2: '', l3: '', b1: '', b2: '', op: '' };
+// --- Portrait tilt — runs only while hovered ---
+const tiltCache = { tf: '' };
 
-const animate = () => {
-  // 1. Calculate deltas to see if we reached target
-  const dX = mouse.x - smoothMouse.x;
-  const dY = mouse.y - smoothMouse.y;
-  const dS = scrollState.current - scrollState.smooth;
+const tiltLoop = () => {
+  smoothMouse.x = lerp(smoothMouse.x, mouse.x, 0.1);
+  smoothMouse.y = lerp(smoothMouse.y, mouse.y, 0.1);
+  const dX = Math.abs(mouse.x - smoothMouse.x);
+  const dY = Math.abs(mouse.y - smoothMouse.y);
 
-  // Threshold check to avoid processing when idle (saves CPU/GPU lag)
-  if (Math.abs(dX) < 0.001 && Math.abs(dY) < 0.001 && Math.abs(dS) < 0.1) {
-    mouseRaf = requestAnimationFrame(animate);
-    return; // Sleep! No DOM updates needed.
+  const rX = (smoothMouse.y * -10).toFixed(2);
+  const rY = (smoothMouse.x * 10).toFixed(2);
+  const tf = `perspective(1000px) rotateX(${rX}deg) rotateY(${rY}deg)`;
+  if (tiltCache.tf !== tf && portraitTarget.value) {
+    tiltCache.tf = tf;
+    portraitTarget.value.style.transform = tf;
   }
 
-  // 2. Smooth out values using LERP
-  smoothMouse.x = lerp(smoothMouse.x, mouse.x, 0.08);
-  smoothMouse.y = lerp(smoothMouse.y, mouse.y, 0.08);
-  scrollState.smooth = lerp(scrollState.smooth, scrollState.current, 0.1);
-
-  // 3. Calculate values for transforms (Math pre-calc)
-  const scrollY = scrollState.smooth;
-  const mouseX = smoothMouse.x;
-  const mouseY = smoothMouse.y;
-
-  // --- Hero Container Fade & Parallax ---
-  if (heroContainerTarget.value) {
-    const progress = Math.min(scrollY / vpH, 1);
-    const opacity = (1 - progress * 1.5).toFixed(3);
-    
-    if (opacity > 0) {
-      const scale = (1 - progress * 0.1).toFixed(3);
-      const yOffset = (scrollY * 0.5).toFixed(1);
-      const style = `translate3d(0, ${yOffset}px, 0) scale(${scale})`;
-      
-      if (cache.bg !== style || cache.op !== opacity) {
-        heroContainerTarget.value.style.opacity = opacity;
-        heroContainerTarget.value.style.transform = style;
-        heroContainerTarget.value.style.willChange = 'transform, opacity';
-        cache.bg = style;
-        cache.op = opacity;
+  if (isPortraitHovered && (dX > 0.001 || dY > 0.001)) {
+    tiltRaf = requestAnimationFrame(tiltLoop);
+  } else if (!isPortraitHovered) {
+    // Spring back to neutral
+    if (Math.abs(smoothMouse.x) > 0.002 || Math.abs(smoothMouse.y) > 0.002) {
+      mouse.x = 0; mouse.y = 0;
+      tiltRaf = requestAnimationFrame(tiltLoop);
+    } else {
+      if (portraitTarget.value) {
+        portraitTarget.value.style.transform = 'perspective(1000px) rotateX(0deg) rotateY(0deg)';
+        portraitTarget.value.style.willChange = 'auto';
       }
+      tiltRaf = null;
     }
+  } else {
+    tiltRaf = requestAnimationFrame(tiltLoop);
   }
+};
 
-  // --- 3D Portrait Tilt ---
-  if (portraitTarget.value) {
-    const rotateX = (mouseY * -10).toFixed(2);
-    const rotateY = (mouseX * 10).toFixed(2);
-    const style = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg)`;
-    if (cache.port !== style) {
-      portraitTarget.value.style.transform = style;
-      portraitTarget.value.style.willChange = 'transform';
-      cache.port = style;
-    }
-  }
+const onMouseMove = (e) => {
+  if (!isPortraitHovered) return;
+  const rect = portraitTarget.value?.closest('.perspective-1000')?.getBoundingClientRect();
+  if (!rect) return;
+  mouse.x = ((e.clientX - rect.left) / rect.width - 0.5) * 2;
+  mouse.y = ((e.clientY - rect.top) / rect.height - 0.5) * 2;
+};
 
-  // --- Layer Parallax (Geometric Shapes) ---
-  if (layer1Target.value) {
-    const x = (mouseX * -20).toFixed(1);
-    const y = (mouseY * -20 + scrollY * 0.1).toFixed(1);
-    const style = `translate3d(${x}px, ${y}px, 20px)`;
-    if (cache.l1 !== style) {
-      layer1Target.value.style.transform = style;
-      layer1Target.value.style.willChange = 'transform';
-      cache.l1 = style;
-    }
-  }
+const onPortraitEnter = () => {
+  isPortraitHovered = true;
+  if (portraitTarget.value) portraitTarget.value.style.willChange = 'transform';
+  if (!tiltRaf) tiltRaf = requestAnimationFrame(tiltLoop);
+};
 
-  if (layer2Target.value) {
-    const x = (mouseX * -40).toFixed(1);
-    const y = (mouseY * -40 + scrollY * 0.2).toFixed(1);
-    const style = `translate3d(${x}px, ${y}px, 40px)`;
-    if (cache.l2 !== style) {
-      layer2Target.value.style.transform = style;
-      layer2Target.value.style.willChange = 'transform';
-      cache.l2 = style;
-    }
-  }
+const onPortraitLeave = () => {
+  isPortraitHovered = false;
+  // tiltLoop will spring back and stop itself
+  if (!tiltRaf) tiltRaf = requestAnimationFrame(tiltLoop);
+};
 
-  if (layer3Target.value) {
-    const x = (mouseX * -60).toFixed(1);
-    const y = (mouseY * -60 + scrollY * 0.05).toFixed(1);
-    const style = `translate3d(${x}px, ${y}px, 60px)`;
-    if (cache.l3 !== style) {
-      layer3Target.value.style.transform = style;
-      layer3Target.value.style.willChange = 'transform';
-      cache.l3 = style;
-    }
-  }
-
-  // --- Background Blobs ---
-  if (blob1Target.value) {
-    const x = (mouseX * -40).toFixed(1);
-    const y = (mouseY * -30 + scrollY * 0.08).toFixed(1);
-    const style = `translate3d(${x}px, ${y}px, 0)`;
-    if (cache.b1 !== style) {
-      blob1Target.value.style.transform = style;
-      blob1Target.value.style.willChange = 'transform';
-      cache.b1 = style;
-    }
-  }
-
-  if (blob2Target.value) {
-    const x = (mouseX * 25).toFixed(1);
-    const y = (mouseY * 20 + scrollY * 0.12).toFixed(1);
-    const style = `translate3d(${x}px, ${y}px, 0)`;
-    if (cache.b2 !== style) {
-      blob2Target.value.style.transform = style;
-      blob2Target.value.style.willChange = 'transform';
-      cache.b2 = style;
-    }
-  }
-
-  mouseRaf = requestAnimationFrame(animate);
+const onResize = () => {
+  clearTimeout(resizeTimer);
+  resizeTimer = setTimeout(() => { vpH = window.innerHeight; }, 150);
 };
 
 // --- Name Animation: CSS-only stagger reveal ──────────────────────────
@@ -611,23 +575,21 @@ const initQuoteAnimation = () => {
 };
 
 onMounted(() => {
-  vpW = window.innerWidth;
   vpH = window.innerHeight;
-  scrollState.current = window.scrollY;
-  scrollState.smooth = window.scrollY;
-  window.addEventListener("mousemove", onMouseMove, { passive: true });
+  smoothScrollY.value = window.scrollY;
+  // Apply initial state without animation
+  applyScrollTransform(window.scrollY);
   window.addEventListener("scroll", onScroll, { passive: true });
   window.addEventListener("resize", onResize, { passive: true });
-  mouseRaf = requestAnimationFrame(animate);
   initQuoteAnimation();
 });
 
 onUnmounted(() => {
-  window.removeEventListener("mousemove", onMouseMove);
   window.removeEventListener("scroll", onScroll);
   window.removeEventListener("resize", onResize);
   clearTimeout(resizeTimer);
-  cancelAnimationFrame(mouseRaf);
+  if (scrollRaf) cancelAnimationFrame(scrollRaf);
+  if (tiltRaf) cancelAnimationFrame(tiltRaf);
   if (typewriterTimer) clearTimeout(typewriterTimer);
 });
 
@@ -644,18 +606,10 @@ const scrollToAbout = () => {
     id="home"
     class="relative min-h-screen flex items-center overflow-hidden px-4 py-6 sm:px-6 sm:py-10 md:p-6 md:pt-24"
   >
-    <!-- Background Elements -->
-    <div
-      class="absolute inset-0 -z-10 pointer-events-none select-none overflow-hidden"
-    >
-      <div
-        ref="blob1Target"
-        class="absolute -top-[10%] -left-[10%] w-[300px] h-[300px] sm:w-[600px] sm:h-[600px] bg-emerald-500/20 rounded-full blur-[80px] sm:blur-[100px] animate-blob will-change-transform"
-      ></div>
-      <div
-        ref="blob2Target"
-        class="absolute bottom-[10%] right-[10%] w-[250px] h-[250px] sm:w-[500px] sm:h-[500px] bg-lime-500/20 rounded-full blur-[80px] sm:blur-[100px] animate-blob animation-delay-2000 will-change-transform"
-      ></div>
+    <!-- Background blobs — CSS-only, no JS, no compositor conflict -->
+    <div class="absolute inset-0 -z-10 pointer-events-none select-none overflow-hidden">
+      <div class="hero-blob hero-blob--1"></div>
+      <div class="hero-blob hero-blob--2"></div>
     </div>
 
     <div
@@ -665,36 +619,31 @@ const scrollToAbout = () => {
       <!-- 3D Geometric Portrait (Left Side) -->
       <div
         class="relative flex items-end justify-center md:items-center md:justify-end order-1 h-[200px] md:h-[400px] perspective-1000 group md:pr-8 pb-2 md:pb-0"
+        @mouseenter="onPortraitEnter"
+        @mouseleave="onPortraitLeave"
+        @mousemove="onMouseMove"
       >
-        <!-- Sized box — hosts both the 3D portrait AND the icon overlay.
-             Icons MUST sit in a sibling OUTSIDE the 3D context, because
-             layer3 (image) uses translateZ(60px) which wins over plain z-index. -->
         <div class="relative w-36 h-36 sm:w-40 sm:h-40 md:w-80 md:h-80 lg:w-96 lg:h-96">
-          <!-- 3D tilt portrait -->
+          <!-- 3D tilt portrait — JS only on hover -->
           <div
             ref="portraitTarget"
-            class="absolute inset-0 transform-style-3d transition-transform duration-75 ease-out will-change-transform cursor-pointer"
+            class="absolute inset-0 transform-style-3d cursor-pointer"
+            style="transition: transform 0.5s ease-out;"
           >
-            <!-- Back Layer: Large Hexagon Outline -->
-            <div
-              ref="layer1Target"
-              class="absolute inset-0 border-2 border-emerald-500/30 rounded-3xl will-change-transform"
-            >
+            <!-- Back Layer -->
+            <div class="absolute inset-0 border-2 border-emerald-500/30 rounded-3xl">
               <div class="w-full h-full transform rotate-12 scale-110"></div>
             </div>
 
-            <!-- Middle Layer: Solid Shape -->
-            <div
-              ref="layer2Target"
-              class="absolute inset-4 bg-linear-to-br from-emerald-600 to-lime-600 rounded-3xl opacity-20 will-change-transform"
-            >
+            <!-- Middle Layer -->
+            <div class="absolute inset-4 bg-linear-to-br from-emerald-600 to-lime-600 rounded-3xl opacity-20">
               <div class="w-full h-full transform -rotate-6"></div>
             </div>
 
-            <!-- Front Layer: Image Mask -->
+            <!-- Front Layer: Image -->
             <div
               ref="layer3Target"
-              class="absolute inset-0 z-20 overflow-hidden rounded-4xl shadow-2xl border-4 border-white dark:border-zinc-800 transform-style-3d bg-zinc-200 will-change-transform"
+              class="absolute inset-0 z-20 overflow-hidden rounded-4xl shadow-2xl border-4 border-white dark:border-zinc-800 transform-style-3d bg-zinc-200"
             >
               <img
                 :src="myFotoUrl"
@@ -871,12 +820,32 @@ const scrollToAbout = () => {
   transform-style: preserve-3d;
 }
 
-.animate-blob {
-  animation: blob 10s infinite;
+/* CSS-only blobs — opacity animation only, no transform, no repaint */
+.hero-blob {
+  position: absolute;
+  border-radius: 9999px;
+  pointer-events: none;
 }
-
-.animation-delay-2000 {
-  animation-delay: 2s;
+.hero-blob--1 {
+  top: -10%; left: -10%;
+  width: clamp(300px, 50vw, 600px);
+  height: clamp(300px, 50vw, 600px);
+  background: rgba(16,185,129,0.18);
+  filter: blur(80px);
+  animation: blob-fade 8s ease-in-out infinite;
+}
+.hero-blob--2 {
+  bottom: 10%; right: 10%;
+  width: clamp(250px, 40vw, 500px);
+  height: clamp(250px, 40vw, 500px);
+  background: rgba(132,204,22,0.15);
+  filter: blur(80px);
+  animation: blob-fade 10s ease-in-out infinite reverse;
+  animation-delay: -3s;
+}
+@keyframes blob-fade {
+  0%, 100% { opacity: 0.6; }
+  50%       { opacity: 1;   }
 }
 
 .animate-float {

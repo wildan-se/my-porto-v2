@@ -57,7 +57,7 @@ onMounted(() => {
   const typewriter = new Typewriter(typewriterTarget.value, {
     loop: false,
     delay: 40,
-    cursor: "▌", // Block cursor
+    cursor: "▌",
   });
 
   let htmlContent = "";
@@ -69,50 +69,51 @@ onMounted(() => {
   });
 
   typewriter.typeString(htmlContent).start();
-
-  loop();
 });
 
 onUnmounted(() => {
-  if (animationFrameId) cancelAnimationFrame(animationFrameId);
+  if (animationFrameId) {
+    cancelAnimationFrame(animationFrameId);
+    animationFrameId = null;
+  }
 });
 
 const lerp = (start, end, factor) => {
   return start + (end - start) * factor;
 };
 
-// Physics Loop
+// Physics Loop — only runs while mouse is active, auto-stops when idle
 const loop = () => {
   if (!cardRef.value) return;
 
-  // Smoothly interpolate towards target
   currentIdx.value.x = lerp(currentIdx.value.x, targetIdx.value.x, 0.1);
   currentIdx.value.y = lerp(currentIdx.value.y, targetIdx.value.y, 0.1);
 
-  // Apply Transform directly to DOM
   const rotateY = (currentIdx.value.x * 12).toFixed(2);
   const rotateX = (currentIdx.value.y * -12).toFixed(2);
 
-  // Check if active to avoid unnecessary string construction when idle
-  if (
+  const active =
     Math.abs(currentIdx.value.x) > 0.001 ||
-    Math.abs(currentIdx.value.y) > 0.001
-  ) {
-    // Note: Perspective is now on the container, so we just rotate
-    cardRef.value.style.transform = `scale3d(1.02, 1.02, 1.02) rotateX(${rotateX}deg) rotateY(${rotateY}deg)`;
-  } else {
-    cardRef.value.style.transform =
-      "scale3d(1, 1, 1) rotateX(0deg) rotateY(0deg)";
-  }
+    Math.abs(currentIdx.value.y) > 0.001;
 
-  animationFrameId = requestAnimationFrame(loop);
+  if (active) {
+    cardRef.value.style.transform = `scale3d(1.02, 1.02, 1.02) rotateX(${rotateX}deg) rotateY(${rotateY}deg)`;
+    animationFrameId = requestAnimationFrame(loop);
+  } else {
+    cardRef.value.style.transform = "scale3d(1, 1, 1) rotateX(0deg) rotateY(0deg)";
+    animationFrameId = null;
+  }
 };
 
 // Event Listeners attached to CONTAINER (Stable Hitbox)
 const handleMouseEnter = () => {
   if (containerRef.value && cardRef.value) {
     bounds = containerRef.value.getBoundingClientRect();
-    cardRef.value.style.transition = "none"; // Disable transition for instant JS control
+    cardRef.value.style.transition = "none";
+    // Start loop only if not already running
+    if (!animationFrameId) {
+      animationFrameId = requestAnimationFrame(loop);
+    }
   }
 };
 

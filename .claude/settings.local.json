@@ -10,7 +10,9 @@
       "mcp__plugin_everything-claude-code_playwright__browser_navigate",
       "Bash(findstr -i \"jpeg\\\\|jpg\\\\|eskul\\\\|lsp\\\\|sanken\")",
       "PowerShell(Get-ChildItem \"c:\\\\Users\\\\Muhammad Wildan\\\\Desktop\\\\portofolio-v2\\\\dist\\\\assets\" | Where-Object { $_.Name -match \"jpeg|jpg|eskul|lsp|sanken\" })",
-      "PowerShell(Get-Process -Name \"node\" -ErrorAction SilentlyContinue)"
+      "PowerShell(Get-Process -Name \"node\" -ErrorAction SilentlyContinue)",
+      "Bash(cp \"c:/Users/Muhammad Wildan/Desktop/portofolio-v2/src/assets/mongodb-svgrepo-com.svg\" \"c:/Users/Muhammad Wildan/Desktop/portofolio-v2/src/assets/mongodb-logo.svg\")",
+      "Bash(cp \"c:/Users/Muhammad Wildan/Desktop/portofolio-v2/src/assets/php2-svgrepo-com.svg\" \"c:/Users/Muhammad Wildan/Desktop/portofolio-v2/src/assets/php-logo.svg\")"
     ]
   }
 }
